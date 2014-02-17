@@ -18,12 +18,12 @@ public class AdditionClient {
 		// System.setSecurityManager(new RMISecurityManager());
 		// }
 
-		MyInterface hello;
+		AdditionInterface hello;
 		try {
 			System.setSecurityManager(new RMISecurityManager());
 			// hello = (MyInterface) Naming.lookup("rmi://localhost/Multi");
-			Registry registry = LocateRegistry.getRegistry("localhost", 3232);
-			hello = (MyInterface) registry.lookup("Multi");
+			Registry registry = LocateRegistry.getRegistry("192.168.1.9", 3232);
+			hello = (AdditionInterface) registry.lookup("multi");
 
 			int result = hello.oper(7, 20);
 			System.out.println("Result is :" + result);

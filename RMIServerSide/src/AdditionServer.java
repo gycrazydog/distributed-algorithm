@@ -11,13 +11,13 @@ public class AdditionServer {
 			   System.setSecurityManager(new RMISecurityManager());
  
 			   Addition addition = new Addition();			   		   
-			   //Naming.rebind("rmi://localhost/Addition", addition);
+//			   Naming.rebind("rmi://localhost/Addition", addition);
 			   
 			   Registry registry = LocateRegistry.createRegistry(3233);
-	            registry.rebind("Addition", addition);
+	           registry.rebind("Addition", addition);
 			   System.out.println("Addition Server is ready.");
 			   }catch (Exception e) {
 				   System.out.println("Addition Server failed: " + e);
-				}
+			   }
 		   }
 }

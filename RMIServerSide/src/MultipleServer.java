@@ -14,7 +14,7 @@ public class MultipleServer {
 			  // Naming.rebind("rmi://localhost/Multi", Multi);
  
 			   Registry registry = LocateRegistry.createRegistry(3232);
-	            registry.rebind("rmiServer", Multi);
+	            registry.rebind("multi", Multi);
 			   
 			   System.out.println("Multiple Server is ready.");
 			   }catch (Exception e) {

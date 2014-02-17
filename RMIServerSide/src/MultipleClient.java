@@ -5,15 +5,17 @@ import java.rmi.registry.Registry;
 
 public class MultipleClient {
 	public static void main(String[] args) {
-		MyInterface hello;
+		AdditionInterface hello;
 		try {
+			System.out.println("enter!!!!!!");
 			System.setSecurityManager(new RMISecurityManager());
 			// hello = (MyInterface)Naming.lookup("rmi://localhost/Addition");
+			Registry registry = LocateRegistry.getRegistry("145.94.180.35",3233);
+			System.out.println("aaaaaaaaaaaaaaaa");
+			System.out.println(registry.toString());
+			hello = (AdditionInterface) registry.lookup("ABC");
 
-			Registry registry = LocateRegistry.getRegistry("localhost", 3232);
-			hello = (MyInterface) registry.lookup("Addition");
-
-			int result = hello.oper(9, 20);
+			int result = hello.oper(9, 25);
 			System.out.println("Result is :" + result);
 
 		} catch (Exception e) {

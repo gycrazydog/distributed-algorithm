@@ -3,7 +3,7 @@
 import java.rmi.*;
 import java.rmi.server.*;
 
-public class Multiple extends UnicastRemoteObject implements MyInterface {
+public class Multiple extends UnicastRemoteObject implements AdditionInterface {
 
 	public Multiple() throws RemoteException {
 	}
