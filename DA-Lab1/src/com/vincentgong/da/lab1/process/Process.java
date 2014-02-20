@@ -25,7 +25,7 @@ public class Process {
 		
 	}
 	
-	public void SendMsg(String ip, int port, Msg msg){
+	public void SendMsg(String ip, int port, String name,Msg msg){
 		
 	}
 	
