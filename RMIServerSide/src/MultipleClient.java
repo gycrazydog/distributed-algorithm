@@ -11,8 +11,6 @@ public class MultipleClient {
 			System.setSecurityManager(new RMISecurityManager());
 			// hello = (MyInterface)Naming.lookup("rmi://localhost/Addition");
 			Registry registry = LocateRegistry.getRegistry("145.94.180.35",3233);
-			System.out.println("aaaaaaaaaaaaaaaa");
-			System.out.println(registry.toString());
 			hello = (AdditionInterface) registry.lookup("ABC");
 
 			int result = hello.oper(9, 25);
