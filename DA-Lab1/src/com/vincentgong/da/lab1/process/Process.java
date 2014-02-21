@@ -8,7 +8,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -26,6 +25,11 @@ public class Process implements IProcessInterface{
 	private SClock clock;
 	private PriorityQueue msgQ;
 	private List processesList;
+	
+	public static void main(){
+		Process pr = new Process();
+		pr.regProcessWithNewRegistry("TEST", 3233);
+	}
 
 	public void Process() {
 		this.clock = new SClock();
