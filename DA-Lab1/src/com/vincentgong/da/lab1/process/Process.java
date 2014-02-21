@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import com.vincentgong.da.lab1.commom.IProcessInterface;
 import com.vincentgong.da.lab1.commom.ProcessItem;
 import com.vincentgong.da.lab1.commom.Utils;
 import com.vincentgong.da.lab1.message.Msg;
@@ -16,7 +17,7 @@ import com.vincentgong.da.lab1.message.Msg;
  * @author vincentgong
  * 
  */
-public class Process {
+public class Process implements IProcessInterface{
 
 	private SClock clock;
 	private PriorityQueue msgQ;
@@ -29,11 +30,16 @@ public class Process {
 	}
 
 	public void Receive(Msg msg) {
-		
+		msg.clock.increase();
 	}
 
 	public void SendMsg(String ip, int port, String name, Msg msg) {
+		this.clock.increase();
+	}
+	
+	public boolean deliver(){
 		
+		return false;
 	}
 	
 	public void broadcast(Msg msg){
@@ -42,6 +48,12 @@ public class Process {
 			ProcessItem pi = (ProcessItem) it.next();
 			this.SendMsg(pi.IP, pi.port, pi.name, msg);
 		}
+	}
+
+	@Override
+	public void post(Msg msg) {
+		// TODO Auto-generated method stub
+		this.Receive(msg);
 	}
 
 }

@@ -20,7 +20,7 @@ public class Utils {
 	public final String processFilePath = "./resource/processes.properties";
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 	}
 
 	public static Utils getInstance() {
