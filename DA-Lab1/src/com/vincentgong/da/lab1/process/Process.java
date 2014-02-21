@@ -3,6 +3,10 @@
  */
 package com.vincentgong.da.lab1.process;
 
+import java.rmi.RMISecurityManager;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -54,6 +58,27 @@ public class Process implements IProcessInterface{
 	public void post(Msg msg) {
 		// TODO Auto-generated method stub
 		this.Receive(msg);
+	}
+	
+	public void regProcess(Registry registry, String name){
+		   try {
+			   System.setSecurityManager(new RMISecurityManager());
+	            registry.rebind(name, this);
+ 
+			   System.out.println("Server is ready: "+name);
+			   }catch (Exception e) {
+				   System.out.println(name + " server failed: " + e);
+				}
+	}
+	
+	public void regProcessWithNewRegistry(String name, int port){
+		try {
+			Registry registry = LocateRegistry.createRegistry(port);
+			this.regProcess(registry, name);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
