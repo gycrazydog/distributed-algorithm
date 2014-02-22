@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.vincentgong.da.lab1.commom;
+package nl.tudelft.da.lab1.commom;
 
 import java.io.FileInputStream;
 import java.io.InputStream;

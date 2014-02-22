@@ -1,15 +1,21 @@
 /**
  * 
  */
-package com.vincentgong.da.lab1.process;
+package nl.tudelft.da.lab1.process;
+
+import java.io.Serializable;
 
 /**
  * @author vincentgong
  * 
  */
-public class SClock {
+public class SClock implements Serializable{
 
-	private int clock = 0;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3L;
+	private int clock;
 
 	/**
 	 * @param args
@@ -19,6 +25,14 @@ public class SClock {
 
 	}
 
+	public SClock(int c){
+		this.clock = c;
+	}
+	
+	public SClock(){
+		this.clock = 0;
+	}
+	
 	public int increase() {
 		this.clock++;
 		return currentClock();
@@ -34,5 +48,9 @@ public class SClock {
 
 	public void mergeClock(int newClock) {
 		this.clock = newClock > this.clock ? newClock : this.clock;
+	}
+	@Override
+	public String toString(){
+		return Integer.toString(this.currentClock());
 	}
 }
