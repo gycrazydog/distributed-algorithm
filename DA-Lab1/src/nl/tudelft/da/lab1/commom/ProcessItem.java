@@ -19,11 +19,11 @@ public class ProcessItem implements Serializable{
 	public int port = 3323;
 	public String id;
 	
-	public ProcessItem(String IP, int port, String name) {
+	public ProcessItem(String IP, int port, String id) {
 		// TODO Auto-generated constructor stub
 		this.IP = IP;
 		this.port = port;
-		this.id = name;
+		this.id = id;
 	}
 
 	@Override
