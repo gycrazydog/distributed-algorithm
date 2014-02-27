@@ -32,55 +32,32 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 	private PriorityQueue<Msg> msgQ;
 	private List processesList;
 	private String id;
-	private int port;
-	private String ip;
 
 	public static void main(String[] args) throws RemoteException {
-		String id = args[0];
-		String ip = args[1];
-		int port = Integer.parseInt(args[2]);
-
-		Process pr = new Process(id, ip, port);
-		pr.regProcessWithNewRegistry(ip, port);
-
-		while (true) {
-			try {
-				Thread.sleep(1500);
-				pr.broadcast(pr.randomMsg(pr.clock));
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private Msg randomMsg(SClock sc) {
-		// TODO Auto-generated method stub
-		Msg msg = new Msg("message " + sc.currentClock() + "!" , this.ip, this.port, this.id, sc.increase());
-		return msg;
-	}
-
-	public Process(String ProcessID, String ip, int port)
-			throws RemoteException {
-		this.id = ProcessID;
-		this.ip = ip;
-		this.port= port;
-		this.clock = new SClock();
+		Process pr = new Process(args[0]);
+		pr.regProcessWithNewRegistry(args[1], Integer.valueOf(args[2]));
 		
-		Comparator<Msg> OrderIsdn = new Comparator<Msg>() {
-			public int compare(Msg m1, Msg m2) {
-				int clock1 = m1.clock.currentClock();
-				int clock2 = m2.clock.currentClock();
-				if (clock1 == clock2) {
-					return m1.sender.id.compareTo(m2.sender.id);
-				} else {
-					return clock1 < clock2 ? -1 : 1;
-				}
-			}
-		};
-		this.msgQ = new PriorityQueue<Msg>(11, OrderIsdn);
-		this.processesList = Utils.getInstance().getProcessesList();
+	}
 
+	public Process(String ProcessID) throws RemoteException {
+		this.id = ProcessID;
+		this.clock = new SClock();
+		Comparator<Msg> OrderIsdn =  new Comparator<Msg>(){  
+            public int compare(Msg m1, Msg m2) {  
+            	int clock1 = m1.clock.currentClock();
+            	int clock2 = m2.clock.currentClock();
+                if(clock1==clock2){
+                	return m1.sender.id.compareTo(m2.sender.id);
+                }
+                else
+                {
+                	return clock1<clock2? -1:1;
+                }
+            }
+		};
+		this.msgQ = new PriorityQueue<Msg>(11,OrderIsdn);
+		this.processesList = Utils.getInstance().getProcessesList();
+		
 	}
 
 	public void Receive(AbstractMsg absmsg) {
@@ -88,21 +65,22 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		absmsg.clock.increase();
 		if (absmsg instanceof Msg) {
 			Msg msg = (Msg) absmsg;
-			msg.AckQueue = new HashMap<String, Boolean>();
+			msg.AckQueue = new HashMap<String,Boolean>();
 			this.msgQ.add(msg);
 			System.out.println(msg.toString());
-		} else if (absmsg instanceof Ack) {
+		}
+		else if(absmsg instanceof Ack){
 			Ack ack = (Ack) absmsg;
-			for (Msg message : this.msgQ) {
-				if (message.clock.currentClock() == ack.msgClock.currentClock()
-						&& message.sender.equals(ack.msgSender)) {
-					message.AckQueue.put(ack.sender.id, true);
+			for(Msg message: this.msgQ){
+				if(message.clock.currentClock()==ack.msgClock.currentClock()
+				&& message.sender.equals(ack.msgSender)){
+					message.AckQueue.put(ack.sender.id,true);
 					break;
 				}
 			}
 			System.out.println(ack.toString());
 		}
-
+		
 	}
 
 	public void SendMsg(String ip, int port, String name, Msg msg) {
@@ -120,7 +98,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 	public boolean deliver() {
 		Msg topMsg = this.msgQ.peek();
-		if (topMsg.AckQueue.size() == this.processesList.size())
+		if(topMsg.AckQueue.size() == this.processesList.size())
 			return true;
 		return false;
 	}
@@ -159,8 +137,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 			e.printStackTrace();
 		}
 	}
-
-	public String getID() {
+	public String getID(){
 		return this.id;
 	}
 }
