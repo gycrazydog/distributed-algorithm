@@ -44,7 +44,7 @@ public class Msg extends AbstractMsg  {
 
 	@Override
 	public String toString() {
-		String line = "Clock: " + this.clock.toString() + " from "
+		String line = "Clock: " + this.clock.toString() + " msg from "
 				+ this.sender.toShortString() + " Msg: " + content;
 		return line;
 	}

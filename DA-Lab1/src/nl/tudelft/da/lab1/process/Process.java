@@ -34,6 +34,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 	private String id;
 	private String ip;
 	private int port;
+	private ProcessItem pi;
 	
 	public static void main(String[] args) throws RemoteException {
 		String id = args[0];
@@ -42,11 +43,11 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 		Process pr = new Process(id, ip, port);
 		pr.regProcessWithNewRegistry(id, port);
-
+		
 		while (true) {
 			try {
 				Thread.sleep(1500);
-				pr.broadcast(pr.randomMsg(pr.clock));
+				//pr.broadcast(pr.randomMsg(pr.clock));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -81,13 +82,15 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		};
 		this.msgQ = new PriorityQueue<Msg>(11,OrderIsdn);
 		this.processesList = Utils.getInstance().getProcessesList();
+		this.pi = new ProcessItem(this.ip,this.port,this.id); 
 	}
 
 	public void Receive(AbstractMsg absmsg) {
 		this.clock.increase();
-		absmsg.clock.increase();
 		if (absmsg instanceof Msg) {
 			Msg msg = (Msg) absmsg;
+			Ack ack = new Ack(this.pi, this.clock, msg.sender, msg.clock);
+			this.broadcast(ack);
 			msg.AckQueue = new HashMap<String,Boolean>();
 			this.msgQ.add(msg);
 			System.out.println(msg.toString());
@@ -106,7 +109,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		
 	}
 
-	public void SendMsg(String ip, int port, String name, Msg msg) {
+	public void SendMsg(String ip, int port, String name, AbstractMsg msg) {
 		this.clock.increase();
 		Registry registry;
 		try {
@@ -126,7 +129,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		return false;
 	}
 
-	public void broadcast(Msg msg) {
+	public void broadcast(AbstractMsg msg) {
 		Iterator it = this.processesList.iterator();
 		while (it.hasNext()) {
 			ProcessItem pi = (ProcessItem) it.next();
@@ -135,7 +138,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 	}
 
 	@Override
-	public void post(Msg msg) {
+	public void post(AbstractMsg msg) {
 		// TODO Auto-generated method stub
 		this.Receive(msg);
 	}
