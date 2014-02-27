@@ -13,4 +13,10 @@ public class Ack extends AbstractMsg {
 		this.msgClock = new SClock(preClock);
 		this.msgSender = preSender;
 	}
+	@Override
+	public String toString() {
+		String line = "Clock: " + this.clock.toString() + " from "
+				+ this.sender.toShortString() ;
+		return line;
+	}
 }

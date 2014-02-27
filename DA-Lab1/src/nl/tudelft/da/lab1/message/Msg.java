@@ -16,7 +16,7 @@ public class Msg extends AbstractMsg  {
 
 	private static final long serialVersionUID = 1L;
 	public String content;
-	public HashMap<ProcessItem,Boolean> AckQueue;
+	public HashMap<String,Boolean> AckQueue;
 	/**
 	 * @param args
 	 */
