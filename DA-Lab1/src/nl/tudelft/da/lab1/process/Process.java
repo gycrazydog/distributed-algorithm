@@ -43,11 +43,11 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 		Process pr = new Process(id, ip, port);
 		pr.regProcessWithNewRegistry(id, port);
-
+		pr.broadcast(pr.randomMsg(pr.clock));
 //		while (true) {
 //			try {
 //				Thread.sleep(1500);
-//				//pr.broadcast(pr.randomMsg(pr.clock));
+//				
 //			} catch (InterruptedException e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
@@ -87,21 +87,42 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 	public void Receive(AbstractMsg absmsg) {
 		this.clock.increase();
 		if (absmsg instanceof Msg) {
+			boolean msgArrived = false;
 			Msg msg = (Msg) absmsg;
-			Ack ack = new Ack(this.pi, this.clock, msg.sender, msg.clock);
-			msg.AckQueue = new HashMap<String, Boolean>();
-			this.msgQ.add(msg);
-			System.out.println(msg.toString());
-			this.broadcast(ack);
-		} else if (absmsg instanceof Ack) {
-			Ack ack = (Ack) absmsg;
-			for (Msg message : this.msgQ) {
-				if (message.clock.currentClock() == ack.msgClock.currentClock()
-						&& message.sender.equals(ack.msgSender)) {
-					message.AckQueue.put(ack.sender.id, true);
-					System.out.println("ACK.sender.id = "+ ack.sender.id);
+
+			for(Msg message: this.msgQ){
+				if(message.clock.currentClock()==msg.clock.currentClock()
+				&& message.sender.equals(msg.sender)){
+					message.content = msg.content;
+					msgArrived = true;
 					break;
 				}
+			}
+			if(!msgArrived)
+			this.msgQ.add(msg);
+			Ack ack = new Ack(this.pi, this.clock, msg.sender, msg.clock);
+			msg.AckQueue = new HashMap<String,Boolean>();
+			System.out.println(msg.toString());
+			this.broadcast(ack);
+
+		}
+		else if(absmsg instanceof Ack){
+			boolean msgArrived = false;
+			Ack ack = (Ack) absmsg;
+			for(Msg message: this.msgQ){
+				if(message.clock.currentClock()==ack.msgClock.currentClock()
+				&& message.sender.equals(ack.msgSender)){
+					message.AckQueue.put(ack.sender.id,true);
+					msgArrived = true;
+					break;
+				}
+			}
+			if(!msgArrived)
+			{
+				Msg tempMsg = new Msg("",ack.msgSender,ack.msgClock);
+				tempMsg.AckQueue = new HashMap<String,Boolean>();
+				tempMsg.AckQueue.put(ack.sender.id, true);
+				this.msgQ.add(tempMsg);
 			}
 			System.out.println(ack.toString());
 			this.checkDeliver();
