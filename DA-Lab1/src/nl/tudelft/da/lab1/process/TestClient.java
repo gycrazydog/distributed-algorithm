@@ -27,17 +27,17 @@ public class TestClient{
 
 		try {
 			System.setSecurityManager(new RMISecurityManager());
-			Registry registry = LocateRegistry.getRegistry("127.0.0.1", 3233);
-			process0 = (IProcessInterface) registry.lookup("Process0");
-			process1 = (IProcessInterface) registry.lookup("Process1");
+			Registry registry = LocateRegistry.getRegistry("145.94.180.18", 3233);
+			process0 = (IProcessInterface) registry.lookup("GCR");
+//			process1 = (IProcessInterface) registry.lookup("Process1");
 			int i = 0;
 			while(true){
 				Thread.sleep(1500);
-				Msg msg0 = new Msg("message!"+i, "127.0.0.1", 3233, "Process0", sc.increase());
-				Msg msg1 = new Msg("message!"+i, "127.0.0.1", 3233, "Process1", sc.increase());
+				Msg msg0 = new Msg("message!"+i, "145.94.181.38", 3233, "GX", sc.increase());
+//				Msg msg1 = new Msg("message!"+i, "127.0.0.1", 3233, "Process1", sc.increase());
 				
 				process0.post(msg0);
-				process1.post(msg1);
+//				process1.post(msg1);
 				System.out.println("Message has been sent. ");
 			}
 			
