@@ -46,7 +46,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		while (true) {
 			try {
 				Thread.sleep(1500);
-				pr.broadcast(pr.randomMsg(pr.clock));
+				//pr.broadcast(pr.randomMsg(pr.clock));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
