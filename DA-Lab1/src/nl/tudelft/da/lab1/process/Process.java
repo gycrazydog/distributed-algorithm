@@ -38,7 +38,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 	public static void main(String[] args) throws RemoteException {
 		String id = args[0];
 		String ip = args[1];
-		int port = Integer.parseInt(args[2]);
+		int port = Integer.parseInt(args[2]); 
 
 		Process pr = new Process(id, ip, port);
 		pr.regProcessWithNewRegistry(id, port);
