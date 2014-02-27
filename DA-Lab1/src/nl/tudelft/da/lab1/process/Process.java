@@ -34,8 +34,36 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 	private String id;
 
 	public static void main(String[] args) throws RemoteException {
-		Process pr = new Process(args[0]);
-		pr.regProcessWithNewRegistry(args[1], Integer.valueOf(args[2]));
+		String id = args[0];
+		String ip = args[1];
+		int port = Integer.parseInt(args[2]);
+
+		Process pr = new Process(id, ip, port);
+		pr.regProcessWithNewRegistry(id, port);
+
+		while (true) {
+			try {
+				Thread.sleep(1500);
+				pr.broadcast(pr.randomMsg(pr.clock));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private Msg randomMsg(SClock sc) {
+		// TODO Auto-generated method stub
+		Msg msg = new Msg("message " + sc.currentClock() + "!" , this.ip, this.port, this.id, sc.increase());
+		return msg;
+	}
+
+	public Process(String ProcessID, String ip, int port)
+			throws RemoteException {
+		this.id = ProcessID;
+		this.ip = ip;
+		this.port= port;
+		this.clock = new SClock();
 		
 	}
 
