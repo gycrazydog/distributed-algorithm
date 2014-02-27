@@ -27,8 +27,8 @@ public class TestClient{
 
 		try {
 			System.setSecurityManager(new RMISecurityManager());
-			Registry registry = LocateRegistry.getRegistry("145.94.180.18", 3233);
-			process0 = (IProcessInterface) registry.lookup("GCR");
+			Registry registry = LocateRegistry.getRegistry("145.94.181.38", 3233);
+			process0 = (IProcessInterface) registry.lookup("GX");
 //			process1 = (IProcessInterface) registry.lookup("Process1");
 			int i = 0;
 			while(true){
