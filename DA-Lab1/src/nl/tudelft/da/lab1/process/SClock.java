@@ -35,9 +35,9 @@ public class SClock implements Serializable{
 		this.clock = 0;
 	}
 	
-	public int increase() {
+	public SClock increase() {
 		this.clock++;
-		return currentClock();
+		return this;
 	}
 
 	public int currentClock() {
@@ -51,6 +51,7 @@ public class SClock implements Serializable{
 	public void mergeClock(int newClock) {
 		this.clock = newClock > this.clock ? newClock : this.clock;
 	}
+	
 	@Override
 	public String toString(){
 		return Integer.toString(this.currentClock());

@@ -11,6 +11,6 @@ import nl.tudelft.da.lab1.message.Msg;
  * @author vincentgong
  *
  */
-public interface IProcessInterface extends Remote {
+public interface IProcessInterface extends Remote{
 	public void post(Msg msg) throws RemoteException;
 }

@@ -3,8 +3,6 @@
  */
 package nl.tudelft.da.lab1.message;
 
-import java.io.Serializable;
-import java.rmi.Remote;
 import java.util.HashMap;
 
 import nl.tudelft.da.lab1.commom.ProcessItem;

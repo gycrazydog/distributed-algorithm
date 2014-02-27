@@ -32,6 +32,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 	public static void main(String[] args) throws RemoteException {
 		Process pr = new Process(args[0]);
 		pr.regProcessWithNewRegistry(args[1], Integer.valueOf(args[2]));
+		
 	}
 
 	public Process(String ProcessID) throws RemoteException {
@@ -39,6 +40,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		this.clock = new SClock();
 		this.msgQ = new PriorityQueue();
 		this.processesList = Utils.getInstance().getProcessesList();
+		
 	}
 
 	public void Receive(Msg msg) {

@@ -23,21 +23,25 @@ public class TestClient{
 	public static void main(String[] args) {
 		IProcessInterface process0;
 		IProcessInterface process1;
+		SClock sc = new SClock();
 
 		try {
 			System.setSecurityManager(new RMISecurityManager());
 			Registry registry = LocateRegistry.getRegistry("127.0.0.1", 3233);
-			process0 = (IProcessInterface) registry.lookup("Pro0");
-			process1 = (IProcessInterface) registry.lookup("Pro1");
-
-
-			Msg msg0 = new Msg("test0 message!", "127.0.0.1", 3233, "Pro0", new SClock());
-			Msg msg1 = new Msg("test1 message!", "127.0.0.1", 3233, "Pro1", new SClock());
-
-			process0.post(msg0);
-			process1.post(msg1);
+			process0 = (IProcessInterface) registry.lookup("Process0");
+			process1 = (IProcessInterface) registry.lookup("Process1");
+			int i = 0;
+			while(true){
+				Thread.sleep(1500);
+				Msg msg0 = new Msg("message!"+i, "127.0.0.1", 3233, "Process0", sc.increase());
+				Msg msg1 = new Msg("message!"+i, "127.0.0.1", 3233, "Process1", sc.increase());
+				
+				process0.post(msg0);
+				process1.post(msg1);
+				System.out.println("Message has been sent. ");
+			}
 			
-			System.out.println("Message has been sent. ");
+
 
 		} catch (Exception e) {
 			System.out.println("Client exception: " + e);

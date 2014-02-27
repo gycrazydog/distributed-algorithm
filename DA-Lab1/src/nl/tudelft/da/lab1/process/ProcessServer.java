@@ -6,8 +6,11 @@ package nl.tudelft.da.lab1.process;
 import java.rmi.RMISecurityManager;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Iterator;
 
 import nl.tudelft.da.lab1.commom.IProcessInterface;
+import nl.tudelft.da.lab1.commom.ProcessItem;
+import nl.tudelft.da.lab1.commom.Utils;
 
 /**
  * @author vincentgong
@@ -24,10 +27,19 @@ public class ProcessServer {
 			System.setSecurityManager(new RMISecurityManager());
 
 			Registry registry = LocateRegistry.createRegistry(3233);
-			IProcessInterface process0 = new Process("process0");
-			IProcessInterface process1 = new Process("process1");
-			registry.rebind("Pro0", process0);
-			registry.rebind("Pro1", process1);
+			Iterator it = Utils.getInstance().getProcessesList().iterator();
+
+			int i = 0;
+			while (it.hasNext()) {
+				
+				Thread.sleep(1000);
+				ProcessItem pi = (ProcessItem) it.next();
+				IProcessInterface process = new Process(pi.name);
+				registry.rebind("Process" + i, process);
+				
+				System.out.println("Process" + i + " is running.");
+				i++;
+			}
 
 			System.out.println("Server is ready.");
 		} catch (Exception e) {
