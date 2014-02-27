@@ -45,7 +45,6 @@ public class Utils {
 		Properties prop = new Properties();
     	InputStream input = null;
     	List processList = new LinkedList();
-    	
 
 		try {
 			input = new FileInputStream(processFilePath);

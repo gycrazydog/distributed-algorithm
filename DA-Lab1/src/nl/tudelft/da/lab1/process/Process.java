@@ -27,13 +27,15 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 	private SClock clock;
 	private PriorityQueue msgQ;
 	private List processesList;
+	private String ID;
 
 	public static void main(String[] args) throws RemoteException {
-		Process pr = new Process();
-		pr.regProcessWithNewRegistry("Process", 3233);
+		Process pr = new Process(args[0]);
+		pr.regProcessWithNewRegistry(args[1], Integer.valueOf(args[2]));
 	}
 
-	public Process() throws RemoteException {
+	public Process(String ProcessID) throws RemoteException {
+		this.ID = ProcessID;
 		this.clock = new SClock();
 		this.msgQ = new PriorityQueue();
 		this.processesList = Utils.getInstance().getProcessesList();
@@ -96,23 +98,5 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 			e.printStackTrace();
 		}
 	}
-
-//	@Override
-//	public void post(Msg msg) throws RemoteException {
-//		// TODO Auto-generated method stub
-//		System.out.println("inpost");
-//	}
-
-//	@Override
-//	public void postString(String s) {
-//		// TODO Auto-generated method stub
-//		System.out.println(s);
-//	}
-
-//	@Override
-//	public int oper(int a, int b) {
-//		// TODO Auto-generated method stub
-//		return a+b;
-//	}
 
 }
