@@ -32,11 +32,13 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 	private PriorityQueue<Msg> msgQ;
 	private List processesList;
 	private String id;
-
+	private String ip;
+	private int port;
+	
 	public static void main(String[] args) throws RemoteException {
 		String id = args[0];
 		String ip = args[1];
-		int port = Integer.parseInt(args[2]);
+		int port = Integer.parseInt(args[2]); 
 
 		Process pr = new Process(id, ip, port);
 		pr.regProcessWithNewRegistry(id, port);
