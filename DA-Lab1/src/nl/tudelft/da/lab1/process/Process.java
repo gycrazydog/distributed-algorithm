@@ -112,8 +112,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		try {
 			registry = LocateRegistry.getRegistry(ip, port);
 			IProcessInterface process = (IProcessInterface) registry.lookup(name);
-			Process curProcess = (Process)process;
-			curProcess.Receive(msg);
+			process.post(msg);
 		} catch (RemoteException | NotBoundException e) {
 			System.out.println("Msg Send Failed!!!");
 			e.printStackTrace();
