@@ -27,7 +27,7 @@ public class TestClient{
 			Registry registry = LocateRegistry.getRegistry("127.0.0.1", 3233);
 			process = (IProcessInterface) registry.lookup("TEST");
 
-			Msg msg = new Msg("test2 message!", "127.0.0.1", 3222, "YEBE");
+			Msg msg = new Msg("test2 message!", "127.0.0.1", 3222, "YEBE", null);
 			process.post(msg);
 			
 			System.out.println("Message has been sent. ");

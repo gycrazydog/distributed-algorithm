@@ -3,6 +3,7 @@
  */
 package nl.tudelft.da.lab1.process;
 
+import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -29,7 +30,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 	public static void main(String[] args) throws RemoteException {
 		Process pr = new Process();
-		pr.regProcessWithNewRegistry("TEST", 3233);
+		pr.regProcessWithNewRegistry("Process", 3233);
 	}
 
 	public Process() throws RemoteException {
@@ -45,6 +46,15 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 	public void SendMsg(String ip, int port, String name, Msg msg) {
 		this.clock.increase();
+		Registry registry;
+		try {
+			registry = LocateRegistry.getRegistry(ip, port);
+			Process process = (Process) registry.lookup("Process");
+			process.Receive(msg);
+		} catch (RemoteException | NotBoundException e) {
+			System.out.println("Msg Send Failed!!!");
+			e.printStackTrace();
+		}
 	}
 
 	public boolean deliver() {
