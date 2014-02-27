@@ -37,6 +37,8 @@ public class ProcessItem implements Serializable{
 		String str = this.id + "@"+ this.IP + ":" + this.port;
 		return str;
 	}
+	
+	@Override
 	public boolean equals(Object newprocess)
 	{
 		ProcessItem npi = (ProcessItem)newprocess;

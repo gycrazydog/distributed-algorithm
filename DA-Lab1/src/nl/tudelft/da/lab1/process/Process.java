@@ -105,6 +105,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 				}
 			}
 			System.out.println(ack.toString());
+			this.checkDeliver();
 		}
 		
 	}
@@ -122,11 +123,12 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		}
 	}
 
-	public boolean deliver() {
+	public boolean checkDeliver() {
 		Msg topMsg = this.msgQ.peek();
 		if(topMsg.AckQueue.size() == this.processesList.size())
 		{	
 			System.out.println("delivered msg "+topMsg+" !!!");
+			this.msgQ.poll();
 			return true;
 		}
 		return false;
