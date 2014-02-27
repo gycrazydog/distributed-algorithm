@@ -41,7 +41,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		int port = Integer.parseInt(args[2]);
 
 		Process pr = new Process(id, ip, port);
-		pr.regProcessWithNewRegistry(ip, port);
+		pr.regProcessWithNewRegistry(id, port);
 
 		while (true) {
 			try {
