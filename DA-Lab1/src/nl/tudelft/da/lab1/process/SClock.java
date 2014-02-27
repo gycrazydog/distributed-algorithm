@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author vincentgong
- * 
+ * @author canrangou
  */
 public class SClock implements Serializable{
 
@@ -24,7 +24,9 @@ public class SClock implements Serializable{
 		// TODO Auto-generated method stub
 
 	}
-
+	public SClock(SClock curClock){
+		this.clock = curClock.clock;
+	}
 	public SClock(int c){
 		this.clock = c;
 	}

@@ -18,7 +18,7 @@ public class ProcessItem implements Serializable{
 	public String IP;
 	public int port = 3323;
 	public String name;
-
+	
 	public ProcessItem(String IP, int port, String name) {
 		// TODO Auto-generated constructor stub
 		this.IP = IP;
@@ -37,5 +37,12 @@ public class ProcessItem implements Serializable{
 		String str = this.name + "@"+ this.IP + ":" + this.port;
 		return str;
 	}
-
+	public boolean equals(Object newprocess)
+	{
+		ProcessItem npi = (ProcessItem)newprocess;
+		if(this.IP.equals(npi.IP)&&this.port==npi.port&&this.name.equals(npi.name))
+		return true;
+		else
+		return false;
+	}
 }

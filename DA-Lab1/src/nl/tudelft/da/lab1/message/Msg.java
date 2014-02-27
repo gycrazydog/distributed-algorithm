@@ -5,6 +5,7 @@ package nl.tudelft.da.lab1.message;
 
 import java.io.Serializable;
 import java.rmi.Remote;
+import java.util.HashMap;
 
 import nl.tudelft.da.lab1.commom.ProcessItem;
 import nl.tudelft.da.lab1.process.SClock;
@@ -13,16 +14,11 @@ import nl.tudelft.da.lab1.process.SClock;
  * @author vincentgong
  * 
  */
-public class Msg implements Serializable, Remote   {
+public class Msg extends AbstractMsg  {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	public SClock clock;
 	public String content;
-	public ProcessItem sender;
-
+	public HashMap<ProcessItem,Boolean> AckQueue;
 	/**
 	 * @param args
 	 */
@@ -35,15 +31,15 @@ public class Msg implements Serializable, Remote   {
 		this.clock = new SClock();
 	}
 
-	public Msg(String content, ProcessItem sender){
-		this.clock = new SClock();
+	public Msg(String content, ProcessItem sender,SClock curClock){
+		this.clock = new SClock(curClock);
 		this.content = content;
 		this.sender = sender;
 	}
 
 	public Msg(String content, String senderIP, int senderPort,
-			String senderName){
-		this.clock = new SClock();
+			String senderName,SClock curClock){
+		this.clock = new SClock(curClock);
 		this.content = content;
 		this.sender = new ProcessItem(senderIP, senderPort, senderName);
 	}
