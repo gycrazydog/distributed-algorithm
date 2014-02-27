@@ -66,12 +66,6 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		this.ip = ip;
 		this.port= port;
 		this.clock = new SClock();
-		
-	}
-
-	public Process(String ProcessID) throws RemoteException {
-		this.id = ProcessID;
-		this.clock = new SClock();
 		Comparator<Msg> OrderIsdn =  new Comparator<Msg>(){  
             public int compare(Msg m1, Msg m2) {  
             	int clock1 = m1.clock.currentClock();
@@ -87,7 +81,6 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		};
 		this.msgQ = new PriorityQueue<Msg>(11,OrderIsdn);
 		this.processesList = Utils.getInstance().getProcessesList();
-		
 	}
 
 	public void Receive(AbstractMsg absmsg) {
