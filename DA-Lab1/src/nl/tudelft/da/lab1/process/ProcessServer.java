@@ -34,7 +34,7 @@ public class ProcessServer {
 				
 				Thread.sleep(1000);
 				ProcessItem pi = (ProcessItem) it.next();
-				IProcessInterface process = new Process(pi.id);
+				IProcessInterface process = new Process(pi.id, "127.0.0.1", 3233);
 				registry.rebind("Process" + i, process);
 				
 				System.out.println("Process" + i + " is running.");

@@ -42,7 +42,6 @@ public class TestClient{
 			}
 			
 
-
 		} catch (Exception e) {
 			System.out.println("Client exception: " + e);
 		}
