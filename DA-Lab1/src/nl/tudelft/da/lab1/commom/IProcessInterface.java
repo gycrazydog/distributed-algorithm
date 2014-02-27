@@ -5,6 +5,7 @@ package nl.tudelft.da.lab1.commom;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import nl.tudelft.da.lab1.message.AbstractMsg;
 import nl.tudelft.da.lab1.message.Msg;
 
 /**
@@ -12,5 +13,5 @@ import nl.tudelft.da.lab1.message.Msg;
  *
  */
 public interface IProcessInterface extends Remote{
-	public void post(Msg msg) throws RemoteException;
+	public void post(AbstractMsg msg) throws RemoteException;
 }

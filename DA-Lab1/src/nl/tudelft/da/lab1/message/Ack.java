@@ -15,7 +15,7 @@ public class Ack extends AbstractMsg {
 	}
 	@Override
 	public String toString() {
-		String line = "Clock: " + this.clock.toString() + " from "
+		String line = "Clock: " + this.clock.toString() + " ack from "
 				+ this.sender.toShortString() ;
 		return line;
 	}
