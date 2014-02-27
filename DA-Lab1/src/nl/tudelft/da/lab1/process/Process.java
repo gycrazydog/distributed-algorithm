@@ -43,16 +43,17 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 		Process pr = new Process(id, ip, port);
 		pr.regProcessWithNewRegistry(id, port);
-		pr.broadcast(pr.randomMsg(pr.clock));
-//		while (true) {
-//			try {
-//				Thread.sleep(1500);
-//				
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+//		pr.broadcast(pr.randomMsg(pr.clock));
+			
+		while (true) {
+			try {
+				Thread.sleep(1500);
+				pr.broadcast(pr.randomMsg(pr.clock));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private Msg randomMsg(SClock sc) {
@@ -86,6 +87,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 	public void Receive(AbstractMsg absmsg) {
 		this.clock.increase();
+		this.clock.mergeClock(absmsg.clock.currentClock()+1);
 		if (absmsg instanceof Msg) {
 			boolean msgArrived = false;
 			Msg msg = (Msg) absmsg;
