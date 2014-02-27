@@ -47,7 +47,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		while (true) {
 			try {
 				Thread.sleep(1500);
-				pr.broadcast(pr.randomMsg(pr.clock));
+				//pr.broadcast(pr.randomMsg(pr.clock));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -124,9 +124,11 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 	public boolean checkDeliver() {
 		Msg topMsg = this.msgQ.peek();
-		if (!this.msgQ.isEmpty()
-				&& topMsg.AckQueue.size() == this.processesList.size()) {
-			System.out.println("delivered msg " + topMsg + " !!!");
+
+		System.out.println("check deliver!!"+" topMsg ackqueue size is "+topMsg.AckQueue.size());
+		if(!this.msgQ.isEmpty()&&topMsg.AckQueue.size() == this.processesList.size())
+		{	
+			System.out.println("delivered msg "+topMsg+" !!!");
 			this.msgQ.poll();
 			return true;
 		}
