@@ -43,16 +43,16 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 		Process pr = new Process(id, ip, port);
 		pr.regProcessWithNewRegistry(id, port);
-		pr.broadcast(pr.randomMsg(pr.clock));
-//		while (true) {
-//			try {
-//				Thread.sleep(1500);
-//				
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+
+		while (true) {
+			try {
+				Thread.sleep(1500);
+				pr.broadcast(pr.randomMsg(pr.clock));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private Msg randomMsg(SClock sc) {
