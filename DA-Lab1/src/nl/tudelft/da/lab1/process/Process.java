@@ -44,15 +44,15 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		Process pr = new Process(id, ip, port);
 		pr.regProcessWithNewRegistry(id, port);
 
-		while (true) {
-			try {
-				Thread.sleep(1500);
-				//pr.broadcast(pr.randomMsg(pr.clock));
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		while (true) {
+//			try {
+//				Thread.sleep(1500);
+//				//pr.broadcast(pr.randomMsg(pr.clock));
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 	}
 
 	private Msg randomMsg(SClock sc) {
@@ -89,16 +89,17 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		if (absmsg instanceof Msg) {
 			Msg msg = (Msg) absmsg;
 			Ack ack = new Ack(this.pi, this.clock, msg.sender, msg.clock);
-			this.broadcast(ack);
 			msg.AckQueue = new HashMap<String, Boolean>();
 			this.msgQ.add(msg);
 			System.out.println(msg.toString());
+			this.broadcast(ack);
 		} else if (absmsg instanceof Ack) {
 			Ack ack = (Ack) absmsg;
 			for (Msg message : this.msgQ) {
 				if (message.clock.currentClock() == ack.msgClock.currentClock()
 						&& message.sender.equals(ack.msgSender)) {
 					message.AckQueue.put(ack.sender.id, true);
+					System.out.println("ACK.sender.id = "+ ack.sender.id);
 					break;
 				}
 			}
@@ -124,7 +125,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 	public boolean checkDeliver() {
 		Msg topMsg = this.msgQ.peek();
-
+		if(!this.msgQ.isEmpty())
 		System.out.println("check deliver!!"+" topMsg ackqueue size is "+topMsg.AckQueue.size());
 		if(!this.msgQ.isEmpty()&&topMsg.AckQueue.size() == this.processesList.size())
 		{	
