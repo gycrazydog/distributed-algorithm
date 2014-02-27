@@ -125,7 +125,10 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 	public boolean deliver() {
 		Msg topMsg = this.msgQ.peek();
 		if(topMsg.AckQueue.size() == this.processesList.size())
+		{	
+			System.out.println("delivered msg "+topMsg+" !!!");
 			return true;
+		}
 		return false;
 	}
 
