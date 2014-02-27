@@ -26,7 +26,7 @@ import nl.tudelft.da.lab1.message.Msg;
  * @author vincentgong
  * 
  */
-public class Process extends UnicastRemoteObject implements IProcessInterface {
+public class Process extends UnicastRemoteObject implements IProcessInterface { 
 
 	private SClock clock;
 	private PriorityQueue<Msg> msgQ;
