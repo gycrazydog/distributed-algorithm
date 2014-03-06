@@ -56,7 +56,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		while (true) {
 			try {
 				Thread.sleep(1500);
-				pr.broadcast(pr.randomMsg(pr.clock));
+				pr.broadcast(pr.randomMsg(pr.clock.increase().currentClock()));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -64,10 +64,10 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		}
 	}
 
-	private Msg randomMsg(SClock sc) {
+	private Msg randomMsg(int sclock) {
 		// TODO Auto-generated method stub
-		Msg msg = new Msg("message " + sc.currentClock() + "!", this.ip,
-				this.port, this.id, sc.increase());
+		Msg msg = new Msg("message " + sclock + "!", this.ip,
+				this.port, this.id, sclock);
 		return msg;
 	}
 
@@ -113,11 +113,11 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 				msg.AckQueue = new HashMap<String, Boolean>();
 				this.msgQ.add(msg);
 			}
-			Ack ack = new Ack(this.pi, this.clock, msg.sender, msg.clock);
+			Ack ack = new Ack(this.pi, this.clock.currentClock(), msg.sender, msg.clock.currentClock());
 			
 			System.out.println("Receive Msg: " + msg.toString());
 			String log = Utils.getInstance().getCurrentDate() + " @SClock: "
-					+ this.clock.currentClock() + " Receive Msg: "
+					+ this.clock.currentClock() + " Rec Msg: "
 					+ msg.toString();
 			Logger.getInstance().log(log);
 			
@@ -135,7 +135,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 				}
 			}
 			if (!msgArrived) {
-				Msg tempMsg = new Msg("", ack.msgSender, ack.msgClock);
+				Msg tempMsg = new Msg("", ack.msgSender, ack.msgClock.currentClock());
 				tempMsg.AckQueue = new HashMap<String, Boolean>();
 				tempMsg.AckQueue.put(ack.sender.id, true);
 				this.msgQ.add(tempMsg);

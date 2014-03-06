@@ -30,14 +30,14 @@ public class Msg extends AbstractMsg {
 		this.clock = new SClock();
 	}
 
-	public Msg(String content, ProcessItem sender, SClock curClock) {
+	public Msg(String content, ProcessItem sender, int curClock) {
 		this.clock = new SClock(curClock);
 		this.content = content;
 		this.sender = sender;
 	}
 
 	public Msg(String content, String senderIP, int senderPort,
-			String senderName, SClock curClock) {
+			String senderName, int curClock) {
 		this.clock = new SClock(curClock);
 		this.content = content;
 		this.sender = new ProcessItem(senderIP, senderPort, senderName);
