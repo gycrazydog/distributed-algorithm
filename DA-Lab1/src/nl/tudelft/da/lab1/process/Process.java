@@ -113,10 +113,11 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 			if (!msgArrived) {
 				msg.AckQueue = new HashMap<String, Boolean>();
 				this.msgQ.add(msg);
+
 			}
 			Ack ack = new Ack(this.pi, this.clock.currentClock(), msg.sender, msg.MsgId);
 			
-			System.out.println("Receive Msg: " + msg.toString());
+			System.out.println("Receive Msg : " + msg.toString());
 			String log = Utils.getInstance().getCurrentDate() + " @SClock: "
 					+ this.clock.currentClock() + " Rec Msg: "
 					+ msg.toString();
@@ -136,12 +137,12 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 				}
 			}
 			if (!msgArrived) {
-				Msg tempMsg = new Msg("", ack.msgSender, ack.msgId);
+				Msg tempMsg = new Msg("", ack.msgSender, this.clock.currentClock(),ack.msgId);
 				tempMsg.AckQueue = new HashMap<String, Boolean>();
 				tempMsg.AckQueue.put(ack.sender.id, true);
 				this.msgQ.add(tempMsg);
 			}
-			System.out.println("Receive ACK: " + ack.toString());
+			System.out.println("Receive ACK : " + ack.toString());
 			this.checkDeliver();
 		}
 	}
