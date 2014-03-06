@@ -12,11 +12,12 @@ import nl.tudelft.da.lab1.process.SClock;
  * @author vincentgong
  * 
  */
-public class Msg extends AbstractMsg  {
+public class Msg extends AbstractMsg {
 
 	private static final long serialVersionUID = 1L;
 	public String content;
-	public HashMap<String,Boolean> AckQueue;
+	public HashMap<String, Boolean> AckQueue;
+
 	/**
 	 * @param args
 	 */
@@ -25,18 +26,18 @@ public class Msg extends AbstractMsg  {
 
 	}
 
-	public Msg(){
+	public Msg() {
 		this.clock = new SClock();
 	}
 
-	public Msg(String content, ProcessItem sender,SClock curClock){
+	public Msg(String content, ProcessItem sender, SClock curClock) {
 		this.clock = new SClock(curClock);
 		this.content = content;
 		this.sender = sender;
 	}
 
 	public Msg(String content, String senderIP, int senderPort,
-			String senderName,SClock curClock){
+			String senderName, SClock curClock) {
 		this.clock = new SClock(curClock);
 		this.content = content;
 		this.sender = new ProcessItem(senderIP, senderPort, senderName);

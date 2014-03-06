@@ -101,11 +101,12 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 					break;
 				}
 			}
+			
 			if(!msgArrived)
 			this.msgQ.add(msg);
 			Ack ack = new Ack(this.pi, this.clock, msg.sender, msg.clock);
 			msg.AckQueue = new HashMap<String,Boolean>();
-			System.out.println(msg.toString());
+			System.out.println("Receive: " + msg.toString());
 			this.broadcast(ack);
 
 		}
@@ -127,7 +128,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 				tempMsg.AckQueue.put(ack.sender.id, true);
 				this.msgQ.add(tempMsg);
 			}
-			System.out.println(ack.toString());
+			System.out.println("Receive ACK: " +ack.toString());
 			this.checkDeliver();
 		}
 
