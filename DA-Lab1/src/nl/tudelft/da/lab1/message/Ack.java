@@ -7,16 +7,19 @@ public class Ack extends AbstractMsg {
 	private static final long serialVersionUID = 1L;
 	public SClock msgClock;
 	public ProcessItem msgSender;
-	public Ack(ProcessItem curSender,SClock curClock,ProcessItem preSender,SClock preClock){
+
+	public Ack(ProcessItem curSender, int curClock, ProcessItem preSender,
+			int preClock) {
 		this.clock = new SClock(curClock);
 		this.sender = curSender;
 		this.msgClock = new SClock(preClock);
 		this.msgSender = preSender;
 	}
+
 	@Override
 	public String toString() {
 		String line = "Clock: " + this.clock.toString() + " ack from "
-				+ this.sender.toShortString() ;
+				+ this.sender.toShortString();
 		return line;
 	}
 }
