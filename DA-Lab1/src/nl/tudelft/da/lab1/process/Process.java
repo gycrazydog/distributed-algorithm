@@ -57,7 +57,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		while (true) {
 			try {
 				Thread.sleep(1500);
-//				pr.broadcast(pr.randomMsg(++msg_cnt));
+				//pr.broadcast(pr.randomMsg(++msg_cnt));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -65,10 +65,10 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		}
 	}
 
-	private Msg randomMsg(int sclock) {
+	private Msg randomMsg(int MsgId) {
 		// TODO Auto-generated method stub
-		Msg msg = new Msg("message " + sclock + "!", this.ip,
-				this.port, this.id, sclock);
+		Msg msg = new Msg("message " + MsgId + "!", this.ip,
+				this.port, this.id, MsgId,MsgId);
 		return msg;
 	}
 
@@ -102,7 +102,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 			Msg msg = (Msg) absmsg;
 
 			for (Msg message : this.msgQ) {
-				if (message.clock.currentClock() == msg.clock.currentClock()
+				if (message.MsgId == msg.MsgId
 						&& message.sender.equals(msg.sender)) {
 					message.content = msg.content;
 					msgArrived = true;
@@ -114,7 +114,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 				msg.AckQueue = new HashMap<String, Boolean>();
 				this.msgQ.add(msg);
 			}
-			Ack ack = new Ack(this.pi, this.clock.currentClock(), msg.sender, msg.clock.currentClock());
+			Ack ack = new Ack(this.pi, this.clock.currentClock(), msg.sender, msg.MsgId);
 			
 			System.out.println("Receive Msg: " + msg.toString());
 			String log = Utils.getInstance().getCurrentDate() + " @SClock: "
@@ -128,7 +128,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 			boolean msgArrived = false;
 			Ack ack = (Ack) absmsg;
 			for (Msg message : this.msgQ) {
-				if (message.clock.currentClock() == ack.msgClock.currentClock()
+				if (message.MsgId == ack.msgId
 						&& message.sender.equals(ack.msgSender)) {
 					message.AckQueue.put(ack.sender.id, true);
 					msgArrived = true;
@@ -136,7 +136,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 				}
 			}
 			if (!msgArrived) {
-				Msg tempMsg = new Msg("", ack.msgSender, ack.msgClock.currentClock());
+				Msg tempMsg = new Msg("", ack.msgSender, ack.msgId);
 				tempMsg.AckQueue = new HashMap<String, Boolean>();
 				tempMsg.AckQueue.put(ack.sender.id, true);
 				this.msgQ.add(tempMsg);

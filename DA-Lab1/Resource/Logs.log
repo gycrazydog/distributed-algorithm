@@ -1,0 +1,46 @@
+
+Process Start: GX IP: 145.94.181.138 Port : 3233
+
+2014/03/06 17:52:28 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+2014/03/06 17:52:34 @SClock: 11 Rec Msg: Clock: 10 msg from GX@145.94.181.138:3233 Msg: message 2!
+
+Process Start: GX IP: 145.94.181.138 Port : 3233
+
+2014/03/06 17:55:09 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+2014/03/06 17:55:15 @SClock: 11 Rec Msg: Clock: 10 msg from GX@145.94.181.138:3233 Msg: message 2!
+2014/03/06 17:55:24 @SClock: 20 Rec Msg: Clock: 19 msg from GX@145.94.181.138:3233 Msg: message 3!
+
+Process Start: GX IP: 145.94.181.138 Port : 3233
+
+2014/03/06 17:58:28 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+
+Process Start: GX IP: 145.94.181.138 Port : 3233
+
+
+Process Start: GX IP: 145.94.181.138 Port : 3233
+
+
+Process Start: GX IP: 145.94.181.138 Port : 3233
+
+2014/03/06 20:18:56 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+2014/03/06 20:18:58 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+
+Process Start: GX IP: 145.94.181.138 Port : 3233
+
+2014/03/06 20:23:36 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+2014/03/06 20:23:38 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+
+Process Start: GX IP: 145.94.181.138 Port : 3233
+
+2014/03/06 20:27:35 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+2014/03/06 20:27:37 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+
+Process Start: GX IP: 145.94.181.138 Port : 3233
+
+2014/03/06 20:32:17 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+2014/03/06 20:32:19 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+
+Process Start: GX IP: 145.94.181.138 Port : 3233
+
+2014/03/06 20:41:58 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+2014/03/06 20:42:00 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!

@@ -16,6 +16,7 @@ public class Msg extends AbstractMsg {
 
 	private static final long serialVersionUID = 1L;
 	public String content;
+	public int MsgId;
 	public HashMap<String, Boolean> AckQueue;
 
 	/**
@@ -37,10 +38,11 @@ public class Msg extends AbstractMsg {
 	}
 
 	public Msg(String content, String senderIP, int senderPort,
-			String senderName, int curClock) {
+			String senderName, int curClock, int MsgId) {
 		this.clock = new SClock(curClock);
 		this.content = content;
 		this.sender = new ProcessItem(senderIP, senderPort, senderName);
+		this.MsgId = MsgId;
 	}
 
 	@Override
