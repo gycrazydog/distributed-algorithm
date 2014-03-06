@@ -143,7 +143,6 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 			System.out.println("Receive ACK: " + ack.toString());
 			this.checkDeliver();
 		}
-
 	}
 
 	public void SendMsg(String ip, int port, String name, AbstractMsg msg) {
