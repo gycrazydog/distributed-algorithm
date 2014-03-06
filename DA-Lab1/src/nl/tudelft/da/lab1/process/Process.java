@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 import nl.tudelft.da.lab1.commom.IProcessInterface;
 import nl.tudelft.da.lab1.commom.ProcessItem;
@@ -102,9 +103,11 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 				}
 			}
 			if(!msgArrived)
-			this.msgQ.add(msg);
+			{
+				msg.AckQueue = new HashMap<String,Boolean>();
+				this.msgQ.add(msg);
+			}
 			Ack ack = new Ack(this.pi, this.clock, msg.sender, msg.clock);
-			msg.AckQueue = new HashMap<String,Boolean>();
 			System.out.println(msg.toString());
 			this.broadcast(ack);
 
@@ -151,7 +154,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		Msg topMsg = this.msgQ.peek();
 		if(!this.msgQ.isEmpty())
 		System.out.println("check deliver!!"+" topMsg ackqueue size is "+topMsg.AckQueue.size());
-		if(!this.msgQ.isEmpty()&&topMsg.AckQueue.size() == this.processesList.size())
+		if(!this.msgQ.isEmpty()&&topMsg.AckQueue.size() == this.processesList.size()&&!topMsg.content.equals(""))
 		{	
 			System.out.println("delivered msg "+topMsg+" !!!");
 			this.msgQ.poll();
@@ -161,10 +164,17 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 	}
 
 	public void broadcast(AbstractMsg msg) {
+		Random r = new Random(msg.clock.currentClock());
 		Iterator it = this.processesList.iterator();
 		while (it.hasNext()) {
 			ProcessItem pi = (ProcessItem) it.next();
-			this.SendMsg(pi.IP, pi.port, pi.id, msg);
+			try {
+				Thread.sleep(Math.abs(r.nextInt())%3000);
+				this.SendMsg(pi.IP, pi.port, pi.id, msg);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
