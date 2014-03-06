@@ -56,7 +56,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		while (true) {
 			try {
 				Thread.sleep(1500);
-				pr.broadcast(pr.randomMsg(pr.clock.increase().currentClock()));
+				pr.broadcast(pr.randomMsg(0));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -153,6 +153,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 			registry = LocateRegistry.getRegistry(ip, port);
 			IProcessInterface process = (IProcessInterface) registry
 					.lookup(name);
+			msg.clock.setClock(this.clock.currentClock());
 			process.post(msg);
 		} catch (RemoteException | NotBoundException e) {
 			System.out.println("Msg Send Failed!!!");
