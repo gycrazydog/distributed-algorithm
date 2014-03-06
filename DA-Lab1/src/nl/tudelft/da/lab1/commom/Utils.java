@@ -5,6 +5,9 @@ package nl.tudelft.da.lab1.commom;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,6 +73,13 @@ public class Utils {
 			}
 		}
 		return processList;
+	}
+	
+	public String getCurrentDate(){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		//System.out.println(dateFormat.format(date));
+		return dateFormat.format(date);
 	}
 
 }

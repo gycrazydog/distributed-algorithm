@@ -114,10 +114,13 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 				this.msgQ.add(msg);
 			}
 			Ack ack = new Ack(this.pi, this.clock, msg.sender, msg.clock);
+			
 			System.out.println("Receive Msg: " + msg.toString());
-			Logger.getInstance().log(
-					"At " + this.clock.currentClock() + " Receive Msg: "
-							+ msg.toString());
+			String log = Utils.getInstance().getCurrentDate() + " @SClock: "
+					+ this.clock.currentClock() + " Receive Msg: "
+					+ msg.toString();
+			Logger.getInstance().log(log);
+			
 			this.broadcast(ack);
 
 		} else if (absmsg instanceof Ack) {
@@ -166,9 +169,12 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 				&& topMsg.AckQueue.size() == this.processesList.size()
 				&& !topMsg.content.equals("")) {
 			System.out.println("delivered msg " + topMsg + " !!!");
-			Logger.getInstance().log(
-					"At " + this.clock.currentClock() + " Delivered Msg: "
-							+ topMsg.toString());
+
+			String log = Utils.getInstance().getCurrentDate() + " @SClock: "
+					+ this.clock.currentClock() + " Delivered Msg: "
+					+ topMsg.toString();
+			Logger.getInstance().log(log);
+
 			this.msgQ.poll();
 			return true;
 		}
