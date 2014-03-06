@@ -36,4 +36,14 @@ public class Logger {
 			e.printStackTrace();
 		}
 	}
+	
+	public void logEmptyLine(){
+		try {
+			MyLineWriter.getInstance().writeLine(loggerFilePath, "", true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("Looger File Fails");
+			e.printStackTrace();
+		}
+	}
 }

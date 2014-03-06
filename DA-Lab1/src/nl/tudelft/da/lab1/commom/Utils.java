@@ -20,7 +20,7 @@ public class Utils {
 	 * @param args
 	 */
 	public final String processFilePath = "Resource/processes.properties";
-	public final String logFilePath = "Resource/processes.properties";
+	public final String logFilePath = "Resource/Logs.properties";
 	
 	public static void main(String[] args) {
 		List l = Utils.getInstance().getProcessesList();

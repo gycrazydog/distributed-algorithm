@@ -45,6 +45,10 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 		Process pr = new Process(id, ip, port);
 		pr.regProcessWithNewRegistry(id, port);
+		
+		Logger.getInstance().log("");
+		Logger.getInstance().log("Process Start: "+ id + " IP: " + ip + " Port : "+ port);
+		Logger.getInstance().logEmptyLine();
 
 //		pr.broadcast(pr.randomMsg(pr.clock));
 			
