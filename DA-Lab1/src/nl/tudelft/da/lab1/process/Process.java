@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Comparator;  
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -45,13 +45,14 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 		Process pr = new Process(id, ip, port);
 		pr.regProcessWithNewRegistry(id, port);
-		
+
 		Logger.getInstance().log("");
-		Logger.getInstance().log("Process Start: "+ id + " IP: " + ip + " Port : "+ port);
+		Logger.getInstance().log(
+				"Process Start: " + id + " IP: " + ip + " Port : " + port);
 		Logger.getInstance().logEmptyLine();
 
-//		pr.broadcast(pr.randomMsg(pr.clock));
-			
+		// pr.broadcast(pr.randomMsg(pr.clock));
+
 		while (true) {
 			try {
 				Thread.sleep(1500);
@@ -94,50 +95,49 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 	public void Receive(AbstractMsg absmsg) {
 		this.clock.increase();
-		this.clock.mergeClock(absmsg.clock.currentClock()+1);
+		this.clock.mergeClock(absmsg.clock.currentClock() + 1);
 		if (absmsg instanceof Msg) {
 			boolean msgArrived = false;
 			Msg msg = (Msg) absmsg;
 
-			for(Msg message: this.msgQ){
-				if(message.clock.currentClock()==msg.clock.currentClock()
-				&& message.sender.equals(msg.sender)){
+			for (Msg message : this.msgQ) {
+				if (message.clock.currentClock() == msg.clock.currentClock()
+						&& message.sender.equals(msg.sender)) {
 					message.content = msg.content;
 					msgArrived = true;
 					break;
 				}
 			}
-			
-			if(!msgArrived)
-			{
-				msg.AckQueue = new HashMap<String,Boolean>();
+
+			if (!msgArrived) {
+				msg.AckQueue = new HashMap<String, Boolean>();
 				this.msgQ.add(msg);
 			}
 			Ack ack = new Ack(this.pi, this.clock, msg.sender, msg.clock);
-			System.out.println("Receive Msg: "+ msg.toString());
-			Logger.getInstance().log("Receive Msg: "+ msg.toString());
+			System.out.println("Receive Msg: " + msg.toString());
+			Logger.getInstance().log(
+					"At " + this.clock.currentClock() + " Receive Msg: "
+							+ msg.toString());
 			this.broadcast(ack);
 
-		}
-		else if(absmsg instanceof Ack){
+		} else if (absmsg instanceof Ack) {
 			boolean msgArrived = false;
 			Ack ack = (Ack) absmsg;
-			for(Msg message: this.msgQ){
-				if(message.clock.currentClock()==ack.msgClock.currentClock()
-				&& message.sender.equals(ack.msgSender)){
-					message.AckQueue.put(ack.sender.id,true);
+			for (Msg message : this.msgQ) {
+				if (message.clock.currentClock() == ack.msgClock.currentClock()
+						&& message.sender.equals(ack.msgSender)) {
+					message.AckQueue.put(ack.sender.id, true);
 					msgArrived = true;
 					break;
 				}
 			}
-			if(!msgArrived)
-			{
-				Msg tempMsg = new Msg("",ack.msgSender,ack.msgClock);
-				tempMsg.AckQueue = new HashMap<String,Boolean>();
+			if (!msgArrived) {
+				Msg tempMsg = new Msg("", ack.msgSender, ack.msgClock);
+				tempMsg.AckQueue = new HashMap<String, Boolean>();
 				tempMsg.AckQueue.put(ack.sender.id, true);
 				this.msgQ.add(tempMsg);
 			}
-			System.out.println("Receive ACK: " +ack.toString());
+			System.out.println("Receive ACK: " + ack.toString());
 			this.checkDeliver();
 		}
 
@@ -159,12 +159,16 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 
 	public boolean checkDeliver() {
 		Msg topMsg = this.msgQ.peek();
-		if(!this.msgQ.isEmpty())
-		System.out.println("check deliver!!"+" topMsg ackqueue size is "+topMsg.AckQueue.size());
-		if(!this.msgQ.isEmpty()&&topMsg.AckQueue.size() == this.processesList.size()&&!topMsg.content.equals(""))
-		{	
-			System.out.println("delivered msg "+topMsg+" !!!");
-			Logger.getInstance().log("Delivered Msg: "+ topMsg.toString());
+		if (!this.msgQ.isEmpty())
+			System.out.println("check deliver!!" + " topMsg ackqueue size is "
+					+ topMsg.AckQueue.size());
+		if (!this.msgQ.isEmpty()
+				&& topMsg.AckQueue.size() == this.processesList.size()
+				&& !topMsg.content.equals("")) {
+			System.out.println("delivered msg " + topMsg + " !!!");
+			Logger.getInstance().log(
+					"At " + this.clock.currentClock() + " Delivered Msg: "
+							+ topMsg.toString());
 			this.msgQ.poll();
 			return true;
 		}
@@ -177,7 +181,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		while (it.hasNext()) {
 			ProcessItem pi = (ProcessItem) it.next();
 			try {
-				Thread.sleep(Math.abs(r.nextInt())%3000);
+				Thread.sleep(Math.abs(r.nextInt()) % 3000);
 				this.SendMsg(pi.IP, pi.port, pi.id, msg);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
