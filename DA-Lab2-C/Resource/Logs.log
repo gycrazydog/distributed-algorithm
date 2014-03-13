@@ -1,0 +1,40 @@
+Process Start: A IP: 145.94.180.253 Port : 9527
+Process Start: B IP: 145.94.180.253 Port : 9527
+Process Start: C IP: 145.94.180.253 Port : 9527
+Delivered msg and merged clock. Process Clock @ @1,0,0 msg: Clock: @1,0,0 msg from A@145.94.180.253:9527 Msg: msg from A to B
+
+Msg sent sucessfully. Clock: @1,0,0 msg from A@145.94.180.253:9527 Msg: msg from A to B
+Msg sent sucessfully. Clock: @1,1,0 msg from B@145.94.180.253:9527 Msg: msg from B to A
+Store into buffer. Process Clock @ @0,0,0 msg: Clock: @1,1,0 msg from B@145.94.180.253:9527 Msg: msg from B to C
+
+Msg sent sucessfully. Clock: @1,1,0 msg from B@145.94.180.253:9527 Msg: msg from B to C
+Delivered msg and merged clock. Process Clock @ @1,0,0 msg: Clock: @1,0,0 msg from A@145.94.180.253:9527 Msg: msg from A to C
+
+Delivered msg and merged clock. Process Clock @ @1,1,0 msg: Clock: @1,1,0 msg from B@145.94.180.253:9527 Msg: msg from B to C
+
+Msg sent sucessfully. Clock: @1,0,0 msg from A@145.94.180.253:9527 Msg: msg from A to C
+Process Start: A IP: 145.94.180.253 Port : 9527
+Process Start: B IP: 145.94.180.253 Port : 9527
+Process Start: C IP: 145.94.180.253 Port : 9527
+Delivered msg and merged clock. Process Clock @ @1,0,0 msg: Clock: @1,0,0 msg from A@145.94.180.253:9527 Msg: msg from A to B
+
+Msg sent sucessfully. Clock: @1,0,0 msg from A@145.94.180.253:9527 Msg: msg from A to B
+Msg sent sucessfully. Clock: @1,1,0 msg from B@145.94.180.253:9527 Msg: msg from B to A
+Store into buffer. Process Clock @ @0,0,0 msg: Clock: @1,1,0 msg from B@145.94.180.253:9527 Msg: msg from B to C
+
+Msg sent sucessfully. Clock: @1,1,0 msg from B@145.94.180.253:9527 Msg: msg from B to C
+Delivered msg and merged clock. Process Clock @ @1,0,0 msg: Clock: @1,0,0 msg from A@145.94.180.253:9527 Msg: msg from A to C
+
+Delivered msg and merged clock. Process Clock @ @1,1,0 msg: Clock: @1,1,0 msg from B@145.94.180.253:9527 Msg: msg from B to C
+
+Msg sent sucessfully. Clock: @1,0,0 msg from A@145.94.180.253:9527 Msg: msg from A to C
+Process Start: A id:1 IP: 127.0.0.1 Port : 9527
+Msg sent sucessfully. Clock: @1,0,0 msg from A@127.0.0.1:9527 Msg: msg from A to B
+Process Start: A id:1 IP: 127.0.0.1 Port : 9527
+Process Start: A id:1 IP: 127.0.0.1 Port : 9527
+Msg sent sucessfully. Clock: @1,0,0 msg from A@127.0.0.1:9527 Msg: msg from A to B
+Process Start: A id:1 IP: 127.0.0.1 Port : 9527
+Msg sent sucessfully. Clock: @1,0,0 msg from A@127.0.0.1:9527 Msg: msg from A to B
+Process Start: A id:1 IP: 127.0.0.1 Port : 9527
+Process Start: A id:1 IP: 127.0.0.1 Port : 9527
+Msg sent sucessfully. Clock: @1,0,0 msg from A@127.0.0.1:9527 Msg: msg from A to B

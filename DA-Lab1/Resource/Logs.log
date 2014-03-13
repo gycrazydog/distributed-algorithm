@@ -1,0 +1,14 @@
+
+Process Start: GX IP: 145.94.69.97 Port : 3233
+
+2014/03/13 15:28:31 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.69.97:3233 Msg: message 1!
+2014/03/13 15:28:33 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.69.97:3233 Msg: message 1!
+2014/03/13 15:28:36 @SClock: 11 Rec Msg: Clock: 10 msg from GX@145.94.69.97:3233 Msg: message 2!
+2014/03/13 15:28:40 @SClock: 18 Delivered Msg: Clock: 10 msg from GX@145.94.69.97:3233 Msg: message 2!
+2014/03/13 15:28:45 @SClock: 20 Rec Msg: Clock: 19 msg from GX@145.94.69.97:3233 Msg: message 3!
+2014/03/13 15:28:54 @SClock: 27 Delivered Msg: Clock: 19 msg from GX@145.94.69.97:3233 Msg: message 3!
+2014/03/13 15:28:59 @SClock: 29 Rec Msg: Clock: 28 msg from GX@145.94.69.97:3233 Msg: message 4!
+2014/03/13 15:29:04 @SClock: 36 Delivered Msg: Clock: 28 msg from GX@145.94.69.97:3233 Msg: message 4!
+2014/03/13 15:29:10 @SClock: 38 Rec Msg: Clock: 37 msg from GX@145.94.69.97:3233 Msg: message 5!
+2014/03/13 15:29:14 @SClock: 45 Delivered Msg: Clock: 37 msg from GX@145.94.69.97:3233 Msg: message 5!
+2014/03/13 15:29:17 @SClock: 47 Rec Msg: Clock: 46 msg from GX@145.94.69.97:3233 Msg: message 6!
