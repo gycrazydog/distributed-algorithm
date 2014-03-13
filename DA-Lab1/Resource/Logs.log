@@ -1,46 +1,14 @@
 
-Process Start: GX IP: 145.94.181.138 Port : 3233
+Process Start: GX IP: 145.94.69.97 Port : 3233
 
-2014/03/06 17:52:28 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-2014/03/06 17:52:34 @SClock: 11 Rec Msg: Clock: 10 msg from GX@145.94.181.138:3233 Msg: message 2!
-
-Process Start: GX IP: 145.94.181.138 Port : 3233
-
-2014/03/06 17:55:09 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-2014/03/06 17:55:15 @SClock: 11 Rec Msg: Clock: 10 msg from GX@145.94.181.138:3233 Msg: message 2!
-2014/03/06 17:55:24 @SClock: 20 Rec Msg: Clock: 19 msg from GX@145.94.181.138:3233 Msg: message 3!
-
-Process Start: GX IP: 145.94.181.138 Port : 3233
-
-2014/03/06 17:58:28 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-
-Process Start: GX IP: 145.94.181.138 Port : 3233
-
-
-Process Start: GX IP: 145.94.181.138 Port : 3233
-
-
-Process Start: GX IP: 145.94.181.138 Port : 3233
-
-2014/03/06 20:18:56 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-2014/03/06 20:18:58 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-
-Process Start: GX IP: 145.94.181.138 Port : 3233
-
-2014/03/06 20:23:36 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-2014/03/06 20:23:38 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-
-Process Start: GX IP: 145.94.181.138 Port : 3233
-
-2014/03/06 20:27:35 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-2014/03/06 20:27:37 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-
-Process Start: GX IP: 145.94.181.138 Port : 3233
-
-2014/03/06 20:32:17 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-2014/03/06 20:32:19 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-
-Process Start: GX IP: 145.94.181.138 Port : 3233
-
-2014/03/06 20:41:58 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
-2014/03/06 20:42:00 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.181.138:3233 Msg: message 1!
+2014/03/13 15:28:31 @SClock: 2 Rec Msg: Clock: 1 msg from GX@145.94.69.97:3233 Msg: message 1!
+2014/03/13 15:28:33 @SClock: 9 Delivered Msg: Clock: 1 msg from GX@145.94.69.97:3233 Msg: message 1!
+2014/03/13 15:28:36 @SClock: 11 Rec Msg: Clock: 10 msg from GX@145.94.69.97:3233 Msg: message 2!
+2014/03/13 15:28:40 @SClock: 18 Delivered Msg: Clock: 10 msg from GX@145.94.69.97:3233 Msg: message 2!
+2014/03/13 15:28:45 @SClock: 20 Rec Msg: Clock: 19 msg from GX@145.94.69.97:3233 Msg: message 3!
+2014/03/13 15:28:54 @SClock: 27 Delivered Msg: Clock: 19 msg from GX@145.94.69.97:3233 Msg: message 3!
+2014/03/13 15:28:59 @SClock: 29 Rec Msg: Clock: 28 msg from GX@145.94.69.97:3233 Msg: message 4!
+2014/03/13 15:29:04 @SClock: 36 Delivered Msg: Clock: 28 msg from GX@145.94.69.97:3233 Msg: message 4!
+2014/03/13 15:29:10 @SClock: 38 Rec Msg: Clock: 37 msg from GX@145.94.69.97:3233 Msg: message 5!
+2014/03/13 15:29:14 @SClock: 45 Delivered Msg: Clock: 37 msg from GX@145.94.69.97:3233 Msg: message 5!
+2014/03/13 15:29:17 @SClock: 47 Rec Msg: Clock: 46 msg from GX@145.94.69.97:3233 Msg: message 6!

@@ -52,12 +52,12 @@ public class Process extends UnicastRemoteObject implements IProcessInterface {
 		Logger.getInstance().logEmptyLine();
 
 		int msg_cnt = 0;
-		pr.broadcast(pr.randomMsg(++msg_cnt));
+		//pr.broadcast(pr.randomMsg(++msg_cnt));
 
 		while (true) {
 			try {
 				Thread.sleep(1500);
-				//pr.broadcast(pr.randomMsg(++msg_cnt));
+				pr.broadcast(pr.randomMsg(++msg_cnt));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
