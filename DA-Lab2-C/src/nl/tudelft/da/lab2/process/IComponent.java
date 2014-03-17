@@ -6,6 +6,8 @@ package nl.tudelft.da.lab2.process;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import nl.tudelft.da.lab2.messages.AbstractMsg;
+
 /**
  * @author vincentgong
  *
@@ -13,7 +15,7 @@ import java.util.PriorityQueue;
 public interface IComponent {
 	
 	public PriorityQueue getReqQ();
-	public VClock getVClock();
+	public SClock getSClock();
 	public List getRequestSet();
 	
 	public void MulticastingRequest();
@@ -22,6 +24,6 @@ public interface IComponent {
 	public void ReceivingInquire();
 	public void ReceivingRelinquish();
 	public void ReceivingRelease();
-	public void ReceivingPostponed();
+	public void ReceivingPostponed(AbstractMsg abmsg);
 	
 }

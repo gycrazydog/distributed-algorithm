@@ -1,16 +1,16 @@
-package nl.tudelft.da.lab2.entity;
+package nl.tudelft.da.lab2.messages;
 
 import java.io.Serializable;
 import java.rmi.Remote;
 
-import nl.tudelft.da.lab2.process.VClock;
+import nl.tudelft.da.lab2.process.SClock;
 
 public abstract class AbstractMsg implements Serializable, Remote{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public VClock clock;
+	public SClock clock;
 	public ProcessItem sender;
 	
 	@Override

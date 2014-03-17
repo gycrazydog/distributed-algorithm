@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author vincentgong
  * @author canrangou
  */
-public class SClock implements Serializable{
+public class SClock implements Serializable {
 
 	/**
 	 * 
@@ -24,17 +24,15 @@ public class SClock implements Serializable{
 		// TODO Auto-generated method stub
 
 	}
-//	public SClock(SClock curClock){
-//		this.clock = curClock.clock;
-//	}
-	public SClock(int c){
+
+	public SClock(int c) {
 		this.clock = c;
 	}
-	
-	public SClock(){
+
+	public SClock() {
 		this.clock = 0;
 	}
-	
+
 	public SClock increase() {
 		this.clock++;
 		return this;
@@ -49,11 +47,11 @@ public class SClock implements Serializable{
 	}
 
 	public void mergeClock(int newClock) {
-		this.clock = newClock > this.clock ? newClock : this.clock;
+		this.clock = newClock > this.clock ? newClock + 1 : this.clock + 1;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return Integer.toString(this.currentClock());
 	}
 }

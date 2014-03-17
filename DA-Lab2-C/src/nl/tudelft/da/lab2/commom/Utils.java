@@ -5,6 +5,10 @@ package nl.tudelft.da.lab2.commom;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.rmi.RMISecurityManager;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +17,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import nl.tudelft.da.lab2.entity.ProcessItem;
+import nl.tudelft.da.lab2.messages.ProcessItem;
+import nl.tudelft.da.lab2.process.IProcessInterface;
 
 /**
  * @author vincentgong
@@ -84,4 +89,35 @@ public class Utils {
 		return dateFormat.format(date);
 	}
 
+	public static void regProcess(Registry registry, String name, IProcessInterface process) {
+		try {
+			System.setSecurityManager(new RMISecurityManager());
+			registry.rebind(name, process);
+
+			System.out.println("Server is ready: " + name);
+		} catch (Exception e) {
+			System.out.println(name + " server failed: " + e);
+		}
+	}
+
+	public static void regProcessWithNewRegistry(String name, int port, IProcessInterface process) {
+		try {
+			Registry registry = LocateRegistry.createRegistry(port);
+			regProcess(registry, name, process);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void regProcessWithRegistry(String name, int port, IProcessInterface process) {
+		Registry registry;
+		try {
+			registry = LocateRegistry.getRegistry(port);
+			regProcess(registry, name, process);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

@@ -18,14 +18,15 @@ import java.util.Random;
 
 import nl.tudelft.da.lab2.commom.Logger;
 import nl.tudelft.da.lab2.commom.Utils;
-import nl.tudelft.da.lab2.entity.AbstractMsg;
-import nl.tudelft.da.lab2.entity.Msg;
+import nl.tudelft.da.lab2.messages.AbstractMsg;
+import nl.tudelft.da.lab2.messages.Msg;
 
 /**
  * @author vincentgong
  * 
  */
-public class Process1 extends UnicastRemoteObject implements IProcessInterface, IComponent {
+public class Process1 extends UnicastRemoteObject implements IProcessInterface,
+		IComponent {
 
 	private VClock clock;
 	private PriorityQueue reqQ;
@@ -34,9 +35,8 @@ public class Process1 extends UnicastRemoteObject implements IProcessInterface, 
 	private String ip;
 	private int port;
 	private List reqSetList;
-	
-	private Sender1 sender1;
-	
+
+
 	public static void main(String[] args) throws RemoteException, Exception {
 		// String id = args[0];
 		// String ip = args[1];
@@ -51,13 +51,13 @@ public class Process1 extends UnicastRemoteObject implements IProcessInterface, 
 		// now the Process clock = {0,0,0} by default
 
 		pr.regProcessWithNewRegistry(name, port);
-		Thread t = new Thread(pr.sender1);
-		pr.sender1.run();//start the multiple-threads
-		String line = "Process Start: " + name + " id:"+id + " IP: " + ip + " Port : " + port;
+		// pr.sender1.run();//start the multiple-threads
+		String line = "Process Start: " + name + " id:" + id + " IP: " + ip
+				+ " Port : " + port;
 		System.out.println(line);
 		Logger.getInstance().log(line);
 
-		Thread.sleep(5000);
+		Thread.sleep(2000);
 
 		// Starting to broadcast msg to B and C, respectively.
 		// The Process clock is set to {1,0,0}
@@ -66,8 +66,13 @@ public class Process1 extends UnicastRemoteObject implements IProcessInterface, 
 
 		// a to b
 		Msg msg = new Msg("msg from A to B", ip, port, name, new VClock(
-				pr.clock.clock), id);
+				pr.clock.clock), 1);
 		pr.SendMsg(ip, port, name, msg);
+		
+		Thread.sleep(1000);
+		Msg msg2 = new Msg("msg from A to B", ip, port, name, new VClock(
+				pr.clock.clock), 2);
+		pr.SendMsg(ip, port, name, msg2);
 	}
 
 	public Process1(String ProcessName, int processID, String ip, int port)
@@ -77,7 +82,7 @@ public class Process1 extends UnicastRemoteObject implements IProcessInterface, 
 		this.ip = ip;
 		this.port = port;
 		this.clock = new VClock();
-		
+
 		Comparator OrderIsdn = new Comparator() {
 
 			@Override
@@ -86,16 +91,30 @@ public class Process1 extends UnicastRemoteObject implements IProcessInterface, 
 				return 0;
 			}
 		};
-		this.reqQ = new PriorityQueue(11,OrderIsdn);
-		
+		this.reqQ = new PriorityQueue(11, OrderIsdn);
+
 		this.reqSetList = new ArrayList();
-		
-		this.sender1 = new Sender1();
+
 	}
 
-	public void Receive(AbstractMsg msg) {
-		System.out.println("Receive Msg. Process Clock"+this.clock.toString() +" Msg: " + msg.toString());
-		this.sender1.handle(msg);
+	public void Receive(AbstractMsg abmsg) {
+		System.out.println("Receive Msg. Process Clock" + this.clock.toString()
+				+ " Msg: " + abmsg.toString());
+		// this.sender1.handle(msg);
+		Msg msg = (Msg) abmsg;
+		Thread t1 = new Thread(new Sender1(msg.SenderFiledInVector));
+		t1.start();
+		Thread t2 = new Thread(new Sender1(2));
+		t2.start();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Thread t3 = new Thread(new Sender1(3));
+		t3.start();
+		
 	}
 
 	public void SendMsg(String ip, int port, String name, AbstractMsg msg) {
@@ -108,8 +127,7 @@ public class Process1 extends UnicastRemoteObject implements IProcessInterface, 
 
 			process.post(msg);
 			System.out.println("Msg sent sucessfully. " + msg.toString());
-			Logger.getInstance().log(
-					"Msg sent sucessfully. " + msg.toString());
+			Logger.getInstance().log("Msg sent sucessfully. " + msg.toString());
 
 		} catch (RemoteException | NotBoundException e) {
 			System.out.println("Msg Sent Failed!!! " + msg.toString());
@@ -167,7 +185,7 @@ public class Process1 extends UnicastRemoteObject implements IProcessInterface, 
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public int getID() {
 		return this.id;
 	}
@@ -178,11 +196,11 @@ public class Process1 extends UnicastRemoteObject implements IProcessInterface, 
 		return this.reqQ;
 	}
 
-	@Override
-	public VClock getVClock() {
-		// TODO Auto-generated method stub
-		return this.clock;
-	}
+//	@Override
+//	public VClock getVClock() {
+//		// TODO Auto-generated method stub
+//		return this.clock;
+//	}
 
 	@Override
 	public List getRequestSet() {
@@ -193,42 +211,42 @@ public class Process1 extends UnicastRemoteObject implements IProcessInterface, 
 	@Override
 	public void MulticastingRequest() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void ReceivingRequest() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void ReceivingGrant() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void ReceivingInquire() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void ReceivingRelinquish() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void ReceivingRelease() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void ReceivingPostponed() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

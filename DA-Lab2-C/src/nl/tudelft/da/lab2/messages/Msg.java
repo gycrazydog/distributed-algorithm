@@ -1,7 +1,7 @@
 /**
  * 
  */
-package nl.tudelft.da.lab2.entity;
+package nl.tudelft.da.lab2.messages;
 
 import java.util.HashMap;
 
@@ -27,7 +27,7 @@ public class Msg extends AbstractMsg {
 	}
 
 	public Msg() {
-		this.clock = new VClock();
+		this.clock = new SClock();
 	}
 
 	public Msg(String content, ProcessItem sender, VClock curClock,int SenderFiledInVector) {

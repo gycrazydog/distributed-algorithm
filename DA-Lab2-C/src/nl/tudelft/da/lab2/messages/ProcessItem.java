@@ -1,7 +1,7 @@
 /**
  * 
  */
-package nl.tudelft.da.lab2.entity;
+package nl.tudelft.da.lab2.messages;
 
 import java.io.Serializable;
 
