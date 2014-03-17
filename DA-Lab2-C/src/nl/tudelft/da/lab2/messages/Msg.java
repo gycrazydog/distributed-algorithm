@@ -5,7 +5,7 @@ package nl.tudelft.da.lab2.messages;
 
 import java.util.HashMap;
 
-import nl.tudelft.da.lab2.process.VClock;
+import nl.tudelft.da.lab2.process.SClock;
 
 /**
  * @author vincentgong
@@ -30,16 +30,16 @@ public class Msg extends AbstractMsg {
 		this.clock = new SClock();
 	}
 
-	public Msg(String content, ProcessItem sender, VClock curClock,int SenderFiledInVector) {
-		this.clock = curClock;
+	public Msg(String content, ProcessItem sender, int curClock,int SenderFiledInVector) {
+		this.clock.setClock(curClock);
 		this.content = content;
 		this.sender = sender;
 		this.SenderFiledInVector = SenderFiledInVector;
 	}
 
 	public Msg(String content, String senderIP, int senderPort,
-			String senderName, VClock curClock, int SenderFiledInVector) {
-		this.clock = curClock;
+			String senderName, int curClock, int SenderFiledInVector) {
+		this.clock.setClock(curClock);
 		this.content = content;
 		this.sender = new ProcessItem(senderIP, senderPort, senderName);
 		this.SenderFiledInVector = SenderFiledInVector;

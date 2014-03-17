@@ -11,13 +11,10 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Random;
 
 import nl.tudelft.da.lab2.commom.Logger;
-import nl.tudelft.da.lab2.commom.Utils;
 import nl.tudelft.da.lab2.messages.AbstractMsg;
 import nl.tudelft.da.lab2.messages.Msg;
 
@@ -65,13 +62,11 @@ public class Process1 extends UnicastRemoteObject implements IProcessInterface,
 		// The msg clock = Process clock = {1,0,0}
 
 		// a to b
-		Msg msg = new Msg("msg from A to B", ip, port, name, new VClock(
-				pr.clock.clock), 1);
+		Msg msg = new Msg("msg from A to B", ip, port, name, 0, 1);
 		pr.SendMsg(ip, port, name, msg);
 		
 		Thread.sleep(1000);
-		Msg msg2 = new Msg("msg from A to B", ip, port, name, new VClock(
-				pr.clock.clock), 2);
+		Msg msg2 = new Msg("msg from A to B", ip, port, name, 1, 2);
 		pr.SendMsg(ip, port, name, msg2);
 	}
 
@@ -245,8 +240,14 @@ public class Process1 extends UnicastRemoteObject implements IProcessInterface,
 	}
 
 	@Override
-	public void ReceivingPostponed() {
+	public void ReceivingPostponed(AbstractMsg abmsg) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public SClock getSClock() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
