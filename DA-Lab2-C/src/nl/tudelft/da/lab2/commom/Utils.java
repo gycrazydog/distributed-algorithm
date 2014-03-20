@@ -22,7 +22,7 @@ import nl.tudelft.da.lab2.process.IProcessInterface;
 
 /**
  * @author vincentgong
- *
+ * 
  */
 public class Utils {
 
@@ -31,7 +31,7 @@ public class Utils {
 	 */
 	public final String processFilePath = "Resource/processes.properties";
 	public final String logFilePath = "Resource/Logs.log";
-	
+
 	public static void main(String[] args) {
 		List l = Utils.getInstance().getProcessesList();
 		Utils.getInstance().PrintList(l);
@@ -40,7 +40,7 @@ public class Utils {
 	public void PrintList(List l) {
 		// TODO Auto-generated method stub
 		Iterator it = l.iterator();
-		while(it.hasNext()){
+		while (it.hasNext()) {
 			ProcessItem pi = (ProcessItem) it.next();
 			System.out.println(pi);
 		}
@@ -51,11 +51,11 @@ public class Utils {
 		Utils utils = new Utils();
 		return utils;
 	}
-	
-	public List getProcessesList(){
+
+	public List getProcessesList() {
 		Properties prop = new Properties();
-    	InputStream input = null;
-    	List processList = new LinkedList();
+		InputStream input = null;
+		List processList = new LinkedList();
 
 		try {
 			input = new FileInputStream(processFilePath);
@@ -65,31 +65,42 @@ public class Utils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		if(input==null){
-	            System.out.println("Sorry, unable to find " + processFilePath);
-		    return processList;
+
+		if (input == null) {
+			System.out.println("Sorry, unable to find " + processFilePath);
+			return processList;
 		}
-		
-		if(prop.containsKey("processesAmount")){
-			int processesAmount = Integer.parseInt(prop.getProperty("processesAmount"));
-			for(int i=0;i<processesAmount;i++){
-				String[] line = prop.getProperty("process"+i).split(",");
-				ProcessItem pi = new ProcessItem(line[0],Integer.parseInt(line[1]),line[2]);
+
+		if (prop.containsKey("processesAmount")) {
+			int processesAmount = Integer.parseInt(prop
+					.getProperty("processesAmount"));
+			for (int i = 0; i< processesAmount; i++) {
+				String[] line = prop.getProperty("process" + i).split(",");
+				String[] resourceSetItems = line[3].split(":");
+
+				// parsing the Resource Set
+				List resourceSetList = new LinkedList();
+				for (int j = 0; j < resourceSetItems.length; j++) {
+					resourceSetList.add(resourceSetItems[j]);
+				}
+				ProcessItem pi = new ProcessItem(line[0],
+						Integer.parseInt(line[1]), line[2]);
+				pi.setResourceSet(resourceSetList);
 				processList.add(pi);
 			}
 		}
 		return processList;
 	}
-	
-	public String getCurrentDate(){
+
+	public String getCurrentDate() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
-		//System.out.println(dateFormat.format(date));
+		// System.out.println(dateFormat.format(date));
 		return dateFormat.format(date);
 	}
 
-	public static void regProcess(Registry registry, String name, IProcessInterface process) {
+	public static void regProcess(Registry registry, String name,
+			IProcessInterface process) {
 		try {
 			System.setSecurityManager(new RMISecurityManager());
 			registry.rebind(name, process);
@@ -100,7 +111,8 @@ public class Utils {
 		}
 	}
 
-	public static void regProcessWithNewRegistry(String name, int port, IProcessInterface process) {
+	public static void regProcessWithNewRegistry(String name, int port,
+			IProcessInterface process) {
 		try {
 			Registry registry = LocateRegistry.createRegistry(port);
 			regProcess(registry, name, process);
@@ -110,7 +122,8 @@ public class Utils {
 		}
 	}
 
-	public static void regProcessWithRegistry(String name, int port, IProcessInterface process) {
+	public static void regProcessWithRegistry(String name, int port,
+			IProcessInterface process) {
 		Registry registry;
 		try {
 			registry = LocateRegistry.getRegistry(port);
@@ -118,6 +131,21 @@ public class Utils {
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	public static void regProcessNoMatterRegistryExist(String name, int port,
+			IProcessInterface process) {
+		Registry registry;
+		try {
+			registry = LocateRegistry.getRegistry(port);
+			regProcess(registry, name, process);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			// e.printStackTrace();
+			System.out
+					.println("The registry does not exist. Try to build a new onw.");
+			regProcessWithNewRegistry(name, port, process);
 		}
 	}
 }

@@ -10,9 +10,12 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Random;
 
+import nl.tudelft.da.lab2.messages.ProcessItem;
 import nl.tudelft.da.lab2.commom.Logger;
 import nl.tudelft.da.lab2.commom.Utils;
 import nl.tudelft.da.lab2.messages.AbstractMsg;
@@ -39,9 +42,11 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 	private int id;
 	private String ip;
 	private int port;
-	
+	private List processesItemList;
+
 	//variables for the algorithm
 	private List reqSetList;
+	public Sender sender;
 
 	//status variables
 	private boolean postponed;
@@ -104,6 +109,8 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		//initial the variables for the algorithm
 		this.postponed = false;
 		this.granted = false;
+		
+		this.sender = new Sender(this);
 	}
 
 	public void Receive(AbstractMsg abmsg) {
@@ -111,17 +118,15 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		//merge the process clock and abmsg clock
 		this.clock.mergeClock(abmsg.clock.currentClock());
 		
-		System.out.println("Receive Msg. Process Clock" + this.clock.toString()
+		System.out.println("Receive Msg. Process Clock=" + this.clock.toString()
 				+ " Msg: " + abmsg.toString());
 		
-//		IMsgHandler mh = new AbstractMsgHandler(this, abmsg);
 		// what is the type of message?
 		if(abmsg instanceof Grant){
 			
 		}else if(abmsg instanceof Inquire){
 			
 		}else if(abmsg instanceof Postponed){
-//			mh = new PostponedHandler(this, abmsg);
 			ReceivingPostponed(abmsg);
 		}else if(abmsg instanceof Release){
 			
@@ -133,10 +138,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 			return;
 		}
 		
-//		Thread t = new Thread(mh);
-//		t.start();
-		
-		System.out.println("Msg distributed. Process Clock" + this.clock.toString()
+		System.out.println("Msg distributed. Process Clock=" + this.clock.toString()
 				+ " Msg: " + abmsg.toString());
 	}
 
@@ -164,7 +166,18 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 	}
 
 	public void broadcast(AbstractMsg msg) {
-
+		Random r = new Random();
+		Iterator it = this.processesItemList.iterator();
+		while (it.hasNext()) {
+			ProcessItem pi = (ProcessItem) it.next();
+			try {
+				Thread.sleep(Math.abs(r.nextInt()) % 3000);
+				this.SendMsg(pi.IP, pi.port, pi.name, msg);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -316,5 +329,13 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 
 	public void setReqSetList(List reqSetList) {
 		this.reqSetList = reqSetList;
+	}
+	
+	public List getProcessesItemList() {
+		return processesItemList;
+	}
+
+	public void setProcessesItemList(List processesItemList) {
+		this.processesItemList = processesItemList;
 	}
 }
