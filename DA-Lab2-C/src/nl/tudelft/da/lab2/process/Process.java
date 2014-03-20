@@ -58,7 +58,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 	public int num_of_grants;// the number of grants got from the resource set
 	private SClock clock;// the time stamp, also the clock of the current process
 	//public boolean granted;// whether this process has given the grants to other nodes
-	public Process currentGrant;
+	public Request currentGrant;
 	//current_grant_node: the node that got the grant from the current process
 	//please call getCurrentGrantNode() instead.
 	
@@ -111,11 +111,27 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		this.port = port;
 		this.clock = new SClock();
 
-		Comparator OrderIsdn = new Comparator() {
+		Comparator<Request> OrderIsdn = new Comparator<Request>() {
 			@Override
-			public int compare(Object o1, Object o2) {
+			public int compare(Request m1,Request m2) {
 				// TODO Auto-generated method stub
-				return 0;
+				Process oppo1 = null;
+				Process oppo2 = null;
+				for(int i = 0 ; i< processesItemList.size();i++)
+				{
+					Process pr = (Process)processesItemList.get(i);
+					if(pr.getName().equals(m1.sender))
+						oppo1 = pr;
+					else if(pr.getName().equals(m2.sender))
+						oppo2 = pr;
+				}
+				int clock1 = m1.clock.currentClock();
+				int clock2 = m2.clock.currentClock();
+				if ( clock1 == clock2) {
+					return oppo1.id<oppo2.id?-1 : 1;
+				} else {
+					return clock1 < clock2 ? -1 : 1;
+				}
 			}
 		};
 		this.reqQ = new PriorityQueue(11, OrderIsdn);

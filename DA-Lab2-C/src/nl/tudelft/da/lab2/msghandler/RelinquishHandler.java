@@ -31,8 +31,9 @@ public class RelinquishHandler implements IMsgHandler {
 			}
 		}
 		this.pro.SendMsg(oppo.getIp(), oppo.getPort(), oppo.getName(), new Grant("",this.pro.getName(),this.pro.getClock().currentClock()));
-		this.pro.currentGrant = oppo;
-		this.pro.reqQ.add(new Request(this.rel.content,this.rel.sender,this.rel.clock.currentClock()));
+		Request rq = new Request(this.rel.content,this.rel.sender,this.rel.clock.currentClock());
+		this.pro.reqQ.add(rq);
+		this.pro.currentGrant = rq;
 	}
 
 }

@@ -28,8 +28,8 @@ public class GrantHandler implements IMsgHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			this.pro.num_of_grants = 0;
 		}
-		this.pro.num_of_grants = 0;
 	}
 
 }
