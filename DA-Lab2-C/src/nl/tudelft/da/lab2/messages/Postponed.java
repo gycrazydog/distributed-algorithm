@@ -14,15 +14,12 @@ public class Postponed extends AbstractMsg {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	
-	public String content;
-	
 	public Postponed(String content, String senderProcess, int curClock){
 		this.clock = new SClock(curClock);
 		this.content = content;
 		this.sender = senderProcess;
 	}
+	private static final long serialVersionUID = 1L;
 	
 	public String toString() {
 		String line = "Clock: " + this.clock.toString() + " msg from "

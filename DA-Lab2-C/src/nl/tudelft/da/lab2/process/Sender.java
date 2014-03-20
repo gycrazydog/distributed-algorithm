@@ -19,7 +19,7 @@ public class Sender implements Runnable, Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private double i;
-	private Process process;
+	public Process process;
 
 	public Sender(Process pro) {
 		this.i = Math.random() * 1000;

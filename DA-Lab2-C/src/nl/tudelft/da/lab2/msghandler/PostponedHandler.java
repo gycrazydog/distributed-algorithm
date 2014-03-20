@@ -23,7 +23,6 @@ public class PostponedHandler implements IMsgHandler {
 
 	public PostponedHandler(Process p, AbstractMsg abmsg) {
 		this.msg = (Postponed) abmsg;
-
 	}
 
 	@Override

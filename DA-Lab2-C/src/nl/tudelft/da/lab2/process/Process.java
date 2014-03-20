@@ -26,8 +26,12 @@ import nl.tudelft.da.lab2.messages.Postponed;
 import nl.tudelft.da.lab2.messages.Release;
 import nl.tudelft.da.lab2.messages.Relinquish;
 import nl.tudelft.da.lab2.messages.Request;
+import nl.tudelft.da.lab2.msghandler.GrantHandler;
 import nl.tudelft.da.lab2.msghandler.IMsgHandler;
+import nl.tudelft.da.lab2.msghandler.InquireHandler;
 import nl.tudelft.da.lab2.msghandler.PostponedHandler;
+import nl.tudelft.da.lab2.msghandler.RelinquishHandler;
+import nl.tudelft.da.lab2.msghandler.RequestHandler;
 
 /**
  * @author vincentgong
@@ -37,7 +41,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		IComponent {
 
 	
-	private PriorityQueue reqQ;
+	public PriorityQueue reqQ;
 	
 	private String name;
 	private int id;
@@ -51,16 +55,17 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 	public Sender sender;
 
 	//status variables
-	private int num_of_grants;// the number of grants got from the resource set
+	public int num_of_grants;// the number of grants got from the resource set
 	private SClock clock;// the time stamp, also the clock of the current process
-	private boolean granted;// whether this process has given the grants to other nodes
-	
+	//public boolean granted;// whether this process has given the grants to other nodes
+	public Process currentGrant;
 	//current_grant_node: the node that got the grant from the current process
 	//please call getCurrentGrantNode() instead.
 	
+	public boolean relinquished;
 	private boolean inquiring;// whether this process has given the inquire to other nodes
-	private int resourceSetProcessNumber;// |R|, the number of processes in the Resource Set of the current process.
-	private boolean postponed;// whether this process has been postponed, or has received the postponed message
+	public int resourceSetProcessNumber;// |R|, the number of processes in the Resource Set of the current process.
+	public boolean postponed;// whether this process has been postponed, or has received the postponed message
 
 	//TODO adding all variables
 
@@ -119,8 +124,8 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		
 		//initial the variables for the algorithm
 		this.postponed = false;
-		this.granted = false;
-		
+		this.currentGrant = null;
+		this.relinquished = false;
 		this.sender = new Sender(this);
 	}
 
@@ -134,17 +139,17 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		
 		// what is the type of message?
 		if(abmsg instanceof Grant){
-			
+			ReceivingGrant(abmsg);
 		}else if(abmsg instanceof Inquire){
-			
+			ReceivingInquire(abmsg);
 		}else if(abmsg instanceof Postponed){
 			ReceivingPostponed(abmsg);
 		}else if(abmsg instanceof Release){
-			
+			ReceivingRelease(abmsg);
 		}else if(abmsg instanceof Relinquish){
-			
+			ReceivingRelinquish(abmsg);
 		}else if(abmsg instanceof Request){
-			
+			ReceivingRequest(abmsg);
 		}else{
 			return;
 		}
@@ -251,31 +256,38 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 	}
 
 	@Override
-	public void ReceivingRequest() {
+	public void ReceivingRequest(AbstractMsg abmsg) {
 		// TODO Auto-generated method stub
-
+		IMsgHandler imh = new RequestHandler(this,abmsg);
+		Thread t = new Thread(imh);
+		t.start();
 	}
 
 	@Override
-	public void ReceivingGrant() {
-		// TODO Auto-generated method stub
-
+	public void ReceivingGrant(AbstractMsg abmsg) {
+		IMsgHandler imh = new GrantHandler(this,abmsg);
+		Thread t = new Thread(imh);
+		t.start();
 	}
 
 	@Override
-	public void ReceivingInquire() {
+	public void ReceivingInquire(AbstractMsg abmsg) {
 		// TODO Auto-generated method stub
-
+		IMsgHandler imh = new InquireHandler(this,abmsg);
+		Thread t = new Thread(imh);
+		t.start();
 	}
 
 	@Override
-	public void ReceivingRelinquish() {
+	public void ReceivingRelinquish(AbstractMsg abmsg) {
 		// TODO Auto-generated method stub
-
+		IMsgHandler imh = new RelinquishHandler(this,abmsg);
+		Thread t = new Thread(imh);
+		t.start();
 	}
 
 	@Override
-	public void ReceivingRelease() {
+	public void ReceivingRelease(AbstractMsg abmsg) {
 		// TODO Auto-generated method stub
 
 	}

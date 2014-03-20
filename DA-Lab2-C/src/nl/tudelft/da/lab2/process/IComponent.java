@@ -19,11 +19,11 @@ public interface IComponent {
 	public List getRequestSet();
 	
 	public void MulticastingRequest();
-	public void ReceivingRequest();
-	public void ReceivingGrant();
-	public void ReceivingInquire();
-	public void ReceivingRelinquish();
-	public void ReceivingRelease();
+	public void ReceivingRequest(AbstractMsg abmsg);
+	public void ReceivingGrant(AbstractMsg abmsg);
+	public void ReceivingInquire(AbstractMsg abmsg);
+	public void ReceivingRelinquish(AbstractMsg abmsg);
+	public void ReceivingRelease(AbstractMsg abmsg);
 	public void ReceivingPostponed(AbstractMsg abmsg);
 	
 }
