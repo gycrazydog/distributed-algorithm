@@ -11,6 +11,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Random;
@@ -35,7 +36,7 @@ import nl.tudelft.da.lab2.msghandler.PostponedHandler;
 public class Process extends UnicastRemoteObject implements IProcessInterface,
 		IComponent {
 
-	private SClock clock;
+	
 	private PriorityQueue reqQ;
 	
 	private String name;
@@ -45,12 +46,22 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 	private List processesItemList;
 
 	//variables for the algorithm
-	private List reqSetList;
+	private List reqSetNumberList; // Number(s) of request sets to which the current process is belong. e.g. 3,6
+	private List reqSetList;// List of ProcessItems which are in the same request set with the current process. e.g. All the processes in the request set 3 and 6.
 	public Sender sender;
 
 	//status variables
-	private boolean postponed;
-	private boolean granted;
+	private int num_of_grants;// the number of grants got from the resource set
+	private SClock clock;// the time stamp, also the clock of the current process
+	private boolean granted;// whether this process has given the grants to other nodes
+	
+	//current_grant_node: the node that got the grant from the current process
+	//please call getCurrentGrantNode() instead.
+	
+	private boolean inquiring;// whether this process has given the inquire to other nodes
+	private int resourceSetProcessNumber;// |R|, the number of processes in the Resource Set of the current process.
+	private boolean postponed;// whether this process has been postponed, or has received the postponed message
+
 	//TODO adding all variables
 
 	public static void main(String[] args) throws RemoteException, Exception {
@@ -104,7 +115,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		};
 		this.reqQ = new PriorityQueue(11, OrderIsdn);
 
-		this.reqSetList = new ArrayList();
+		this.reqSetNumberList = new ArrayList();
 		
 		//initial the variables for the algorithm
 		this.postponed = false;
@@ -323,12 +334,12 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		this.port = port;
 	}
 	
-	public List getReqSetList() {
-		return reqSetList;
+	public List getReqSetNumberList() {
+		return reqSetNumberList;
 	}
 
-	public void setReqSetList(List reqSetList) {
-		this.reqSetList = reqSetList;
+	public void setReqSetNumberList(List reqSetList) {
+		this.reqSetNumberList = reqSetList;
 	}
 	
 	public List getProcessesItemList() {
@@ -337,5 +348,33 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 
 	public void setProcessesItemList(List processesItemList) {
 		this.processesItemList = processesItemList;
+	}
+	
+	public ProcessItem getCurrentGrantNode(){
+		// temp code below, need to be modified
+		ProcessItem pi = new ProcessItem("127.0.0.1", 3233, "GX");
+		return pi;
+	}
+	
+	public void initReqSetList(){
+		List l = new LinkedList();
+		Iterator it = this.getReqSetNumberList().iterator();
+		while(it.hasNext()){
+			String rsNum = (String) it.next();
+			
+			Iterator itPI = this.getProcessesItemList().iterator();
+			while(itPI.hasNext()){
+				ProcessItem pi = (ProcessItem) itPI.next();
+				Iterator itPIRS = pi.getResourceSet().iterator();
+				while(itPIRS.hasNext()){
+					String piRSNum = (String) itPIRS.next();
+					
+					if(piRSNum.equals(rsNum)){
+						l.add(piRSNum);
+					}
+				}
+			}
+		}
+		this.reqSetList = l;;
 	}
 }
