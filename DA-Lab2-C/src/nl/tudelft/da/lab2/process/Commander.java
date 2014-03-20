@@ -25,7 +25,7 @@ public class Commander {
 	 */
 	public static void main(String[] args) throws Exception {
 		/*
-		 * 1. get all processItems, including their resourceSet 2. if
+		 * 1. get all processItems, including their resourceSetNumber 2. if
 		 * processItems is not empty, initialize the registry 3. for each
 		 * processItems, put it into the registry with it's name
 		 */
@@ -46,8 +46,9 @@ public class Commander {
 			try {
 				Process process = new Process(pro.name, processID, pro.IP,
 						pro.port);
-				process.setReqSetList(pro.resourceSet);
-				process.setProcessesItemList(processItemList);
+				process.setReqSetNumberList(pro.resourceSetNumber);//pass the resource Set number of this process
+				process.setProcessesItemList(processItemList);//pass the ProcessItemList to this process
+				process.initReqSetList();//initialize the requestSet list of this process
 				
 				processList.add(process);
 				
