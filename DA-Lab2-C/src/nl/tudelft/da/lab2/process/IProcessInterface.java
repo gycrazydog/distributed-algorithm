@@ -5,7 +5,7 @@ package nl.tudelft.da.lab2.process;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import nl.tudelft.da.lab2.entity.AbstractMsg;
+import nl.tudelft.da.lab2.messages.AbstractMsg;
 
 /**
  * @author vincentgong
