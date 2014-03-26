@@ -19,7 +19,7 @@ public class GrantHandler implements IMsgHandler {
 		// TODO Auto-generated method stub
 		this.pro.num_of_grants++;
 		System.out.println("GrantHandler is running, for "
-				+ this.gr.toString());
+				+ this.gr.toString()+"  number of grants: "+this.pro.num_of_grants);
 		if(this.pro.num_of_grants==this.pro.resourceSetProcessNumber)
 		{
 			System.out.println("critical section entered!!!!!");
