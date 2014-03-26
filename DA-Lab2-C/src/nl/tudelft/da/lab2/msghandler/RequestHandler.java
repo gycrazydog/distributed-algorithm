@@ -12,6 +12,11 @@ import nl.tudelft.da.lab2.messages.Request;
 import nl.tudelft.da.lab2.process.Process;
 
 public class RequestHandler implements IMsgHandler {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	Process pro;
 	Request req;
 	public RequestHandler(Process p,AbstractMsg abmsg) {
@@ -23,6 +28,15 @@ public class RequestHandler implements IMsgHandler {
 		// TODO Auto-generated method stub
 		System.out.println("RequestHandler is running, for "
 				+ this.req.toString());
+		
+		if(this.req.sender.equals("GXY")){
+			System.out.println("GXY");
+		}
+		
+		if(this.req.sender.equals("GX")){
+			System.out.println("GX");
+		}
+		
 		ProcessItem oppo = null;
 		ProcessItem cg = null;
 		List prolist = this.pro.getProcessesItemList();
@@ -34,6 +48,15 @@ public class RequestHandler implements IMsgHandler {
 			else if(this.pro.currentGrant!=null&&pr.name.equals(this.pro.currentGrant.sender))
 				cg = pr;
 		}
+		
+//		//----test--
+//		if(this.pro.getName().equals("HKX")){
+//			this.pro.SendMsg(oppo.IP, oppo.port, oppo.name, new Postponed("",this.pro.getName(),this.pro.getClock().currentClock()));
+//			return;
+//		}
+//		//---test---
+		
+		
 		if(this.pro.currentGrant==null)
 		{
 			this.pro.SendMsg(oppo.IP,oppo.port ,oppo.name, new Grant("",this.pro.getName(),this.pro.getClock().currentClock()));

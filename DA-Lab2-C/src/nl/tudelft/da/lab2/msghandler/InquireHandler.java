@@ -4,12 +4,17 @@ import java.util.List;
 
 import nl.tudelft.da.lab2.messages.AbstractMsg;
 import nl.tudelft.da.lab2.messages.Inquire;
-import nl.tudelft.da.lab2.messages.Postponed;
+import nl.tudelft.da.lab2.messages.ProcessItem;
 import nl.tudelft.da.lab2.messages.Relinquish;
 import nl.tudelft.da.lab2.process.Process;
 
 public class InquireHandler implements IMsgHandler {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	Process pro;
 	Inquire iq;
 	public InquireHandler(Process p,AbstractMsg abmsg) {
@@ -28,10 +33,10 @@ public class InquireHandler implements IMsgHandler {
 			List prolist = this.pro.getProcessesItemList();
 			for(int i = 0 ; i< prolist.size();i++)
 			{
-				Process pr = (Process)prolist.get(i);
-				if(pr.getName().equals(this.iq.sender))
+				ProcessItem pr = (ProcessItem)prolist.get(i);
+				if(pr.name.equals(this.iq.sender))
 				{
-					this.pro.SendMsg(pr.getIp(),pr.getPort() ,pr.getName(), new Relinquish("",this.pro.getName(),this.pro.getClock().currentClock()));
+					this.pro.SendMsg(pr.IP,pr.port ,pr.name, new Relinquish("",this.pro.getName(),this.pro.getClock().currentClock()));
 					this.pro.num_of_grants = 0;
 					this.pro.postponed = false;
 					break;

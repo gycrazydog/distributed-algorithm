@@ -18,18 +18,20 @@ public class PostponedHandler implements IMsgHandler {
 	 */
 
 	private Postponed msg;
+	private Process pro;
 
 	private static final long serialVersionUID = 1L;
 
 	public PostponedHandler(Process p, AbstractMsg abmsg) {
 		this.msg = (Postponed) abmsg;
+		this.pro = p;
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		System.out.println("PostponedHandler is running, for "
-				+ this.msg.toString());
+		this.pro.postponed = true;
+		System.out.println("PostponedHandler is running, for " + this.pro.getName() + " to "
+				+ this.msg.sender);
 	}
 
 }
