@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import nl.tudelft.da.lab2.messages.AbstractMsg;
 import nl.tudelft.da.lab2.messages.Postponed;
+import nl.tudelft.da.lab2.messages.Request;
 
 /**
  * @author vincentgong
@@ -29,7 +30,7 @@ public class Sender implements Runnable, Serializable {
 	@Override
 	public void run() {
 		if (this.process.getName().equals("GX")) {
-			Postponed ppMsg = new Postponed("Broadcast by pro",
+			Request ppMsg = new Request("Broadcast by pro",
 					this.process.getName(), this.process.getClock().currentClock());
 			
 			// code for broadcast the msg

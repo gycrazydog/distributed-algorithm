@@ -18,8 +18,11 @@ public class GrantHandler implements IMsgHandler {
 	public void run() {
 		// TODO Auto-generated method stub
 		this.pro.num_of_grants++;
+		System.out.println("GrantHandler is running, for "
+				+ this.gr.toString());
 		if(this.pro.num_of_grants==this.pro.resourceSetProcessNumber)
 		{
+			System.out.println("critical section entered!!!!!");
 			//Critical Section
 			Random r = new Random(this.gr.clock.currentClock());
 			try {
