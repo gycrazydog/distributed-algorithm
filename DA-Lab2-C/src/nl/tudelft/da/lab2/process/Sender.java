@@ -45,6 +45,19 @@ public class Sender implements Runnable, Serializable {
 			// code for send one msg to someone:
 			// this.process.SendMsg("127.0.0.1", 3233, "HKX", ppMsg);
 		}
+		if (this.process.getName().equals("GXY")) {
+			Request ppMsg = new Request("Broadcast by gxy",
+					this.process.getName(), this.process.getClock()
+							.currentClock());
+			// code for broadcast the msg
+			System.out.println("process size:"
+					+ this.process.getRequestSet().size());
+			this.process.MulticastingRequest(ppMsg);
+			// this.process.broadcast(ppMsg);
+
+			// code for send one msg to someone:
+			// this.process.SendMsg("127.0.0.1", 3233, "HKX", ppMsg);
+		}
 
 		System.out.println("Sender.run() " + this.i);
 	}
