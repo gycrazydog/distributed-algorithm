@@ -262,7 +262,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 	@Override
 	public List getRequestSet() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.reqSetList;
 	}
 
 	@Override
