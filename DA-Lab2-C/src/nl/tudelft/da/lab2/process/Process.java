@@ -4,6 +4,7 @@
 package nl.tudelft.da.lab2.process;
 
 import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -142,6 +143,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		this.postponed = false;
 		this.currentGrant = null;
 		this.relinquished = false;
+		
 		this.sender = new Sender(this);
 	}
 
@@ -181,7 +183,6 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 			registry = LocateRegistry.getRegistry(ip, port);
 			IProcessInterface process = (IProcessInterface) registry
 					.lookup(name);
-
 			process.post(msg);
 			System.out.println("Msg sent sucessfully. " + msg.toString());
 			Logger.getInstance().log("Msg sent sucessfully. " + msg.toString());
