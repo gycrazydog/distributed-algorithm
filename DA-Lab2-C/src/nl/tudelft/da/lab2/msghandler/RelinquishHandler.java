@@ -18,6 +18,8 @@ public class RelinquishHandler implements IMsgHandler {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		System.out.println("RelinquishHandler is running, for "
+				+ this.rel.toString());
 		Request top = (Request)this.pro.reqQ.poll();
 		Process oppo = null;
 		List prolist = this.pro.getProcessesItemList();

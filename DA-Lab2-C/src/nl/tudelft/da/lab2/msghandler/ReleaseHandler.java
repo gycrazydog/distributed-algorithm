@@ -25,11 +25,11 @@ public class ReleaseHandler implements IMsgHandler {
 		// TODO Auto-generated method stub
 		System.out.println("ReleaseHandler is running, for "
 				+ this.rel.toString());
-		Request req = (Request)this.pro.reqQ.peek();
-		if(this.rel.sender.equals(req.sender))
-			this.pro.reqQ.poll();
 		this.pro.currentGrant = null;
 		if(!this.pro.reqQ.isEmpty()){
+			Request req = (Request)this.pro.reqQ.peek();
+			if(this.rel.sender.equals(req.sender))
+				this.pro.reqQ.poll();
 			Request top = (Request)this.pro.reqQ.peek();
 			Process oppo = null;
 			List prolist = this.pro.getProcessesItemList();
