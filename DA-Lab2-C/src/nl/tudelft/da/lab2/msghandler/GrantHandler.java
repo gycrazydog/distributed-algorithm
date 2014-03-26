@@ -5,6 +5,8 @@ import java.util.Random;
 import nl.tudelft.da.lab2.messages.AbstractMsg;
 import nl.tudelft.da.lab2.messages.Grant;
 import nl.tudelft.da.lab2.messages.Inquire;
+import nl.tudelft.da.lab2.messages.Release;
+import nl.tudelft.da.lab2.messages.Request;
 import nl.tudelft.da.lab2.process.Process;
 
 public class GrantHandler implements IMsgHandler {
@@ -20,13 +22,16 @@ public class GrantHandler implements IMsgHandler {
 		this.pro.num_of_grants++;
 		System.out.println("GrantHandler is running, for "
 				+ this.gr.toString()+"  number of grants: "+this.pro.num_of_grants);
-		if(this.pro.num_of_grants==this.pro.resourceSetProcessNumber)
+		if(this.pro.num_of_grants==this.pro.getRequestSet().size())
 		{
 			System.out.println("critical section entered!!!!!");
 			//Critical Section
 			Random r = new Random(this.gr.clock.currentClock());
 			try {
 				Thread.sleep(Math.abs(r.nextInt()) % 5000);
+				this.pro.MulticastingRequest(new Release("Broadcast by pro",
+					this.pro.getName(), this.pro.getClock()
+							.currentClock()));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
