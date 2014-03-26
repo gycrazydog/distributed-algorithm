@@ -30,6 +30,7 @@ import nl.tudelft.da.lab2.msghandler.GrantHandler;
 import nl.tudelft.da.lab2.msghandler.IMsgHandler;
 import nl.tudelft.da.lab2.msghandler.InquireHandler;
 import nl.tudelft.da.lab2.msghandler.PostponedHandler;
+import nl.tudelft.da.lab2.msghandler.ReleaseHandler;
 import nl.tudelft.da.lab2.msghandler.RelinquishHandler;
 import nl.tudelft.da.lab2.msghandler.RequestHandler;
 
@@ -315,7 +316,9 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 	@Override
 	public void ReceivingRelease(AbstractMsg abmsg) {
 		// TODO Auto-generated method stub
-
+		IMsgHandler imh = new ReleaseHandler(this, abmsg);
+		Thread t = new Thread(imh);
+		t.start();
 	}
 
 	@Override

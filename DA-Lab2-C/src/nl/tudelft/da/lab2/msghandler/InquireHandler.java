@@ -19,6 +19,8 @@ public class InquireHandler implements IMsgHandler {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		System.out.println("InquireHandler is running, for "
+				+ this.iq.toString());
 		while(!this.pro.postponed&&this.pro.num_of_grants!=this.pro.resourceSetProcessNumber){}
 		if(this.pro.postponed||this.pro.relinquished)
 		{	
