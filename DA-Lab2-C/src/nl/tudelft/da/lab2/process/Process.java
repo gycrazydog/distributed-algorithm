@@ -398,7 +398,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 					String piRSNum = (String) itPIRS.next();
 					
 					if(piRSNum.equals(rsNum)){
-						l.add(piRSNum);
+						l.add(pi);
 					}
 				}
 			}

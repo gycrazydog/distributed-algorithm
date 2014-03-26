@@ -65,7 +65,6 @@ public class Commander {
 			Process process = (Process) it1.next();
 			Thread t = new Thread(process.sender);
 			t.start();
-			break;
 		}
 
 	}

@@ -4,9 +4,12 @@
 package nl.tudelft.da.lab2.process;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.Random;
 
 import nl.tudelft.da.lab2.messages.AbstractMsg;
 import nl.tudelft.da.lab2.messages.Postponed;
+import nl.tudelft.da.lab2.messages.ProcessItem;
 import nl.tudelft.da.lab2.messages.Request;
 
 /**
@@ -32,9 +35,20 @@ public class Sender implements Runnable, Serializable {
 		if (this.process.getName().equals("GX")) {
 			Request ppMsg = new Request("Broadcast by pro",
 					this.process.getName(), this.process.getClock().currentClock());
-			
 			// code for broadcast the msg
-			this.process.broadcast(ppMsg);
+			System.out.println("process size:"+this.process.getRequestSet().size());
+			for(Object p : this.process.getRequestSet()){
+				ProcessItem pro = (ProcessItem)p;
+				Random r = new Random();
+					try {
+						Thread.sleep(Math.abs(r.nextInt()) % 3000);
+						this.process.SendMsg(pro.IP, pro.port, pro.name, ppMsg);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			//this.process.broadcast(ppMsg);
 			
 			// code for send one msg to someone:
 			// this.process.SendMsg("127.0.0.1", 3233, "HKX", ppMsg);

@@ -49,20 +49,20 @@ public class RequestHandler implements IMsgHandler {
 	}
 	private int comp(Request m1, Request m2) {
 		// TODO Auto-generated method stub
-		Process oppo1 = null;
-		Process oppo2 = null;
+		ProcessItem oppo1 = null;
+		ProcessItem oppo2 = null;
 		for(int i = 0 ; i< this.pro.getProcessesItemList().size();i++)
 		{
-			Process pr = (Process)this.pro.getProcessesItemList().get(i);
-			if(pr.getName().equals(m1.sender))
+			ProcessItem pr = (ProcessItem)this.pro.getProcessesItemList().get(i);
+			if(pr.name.equals(m1.sender))
 				oppo1 = pr;
-			else if(pr.getName().equals(m2.sender))
+			else if(pr.name.equals(m2.sender))
 				oppo2 = pr;
 		}
 		int clock1 = m1.clock.currentClock();
 		int clock2 = m2.clock.currentClock();
 		if ( clock1 == clock2) {
-			return oppo1.getId()<oppo2.getId()?-1 : 1;
+			return oppo1.name.compareTo(oppo2.name);
 		} else {
 			return clock1 < clock2 ? -1 : 1;
 		}
