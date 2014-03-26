@@ -23,6 +23,8 @@ public class ReleaseHandler implements IMsgHandler {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		System.out.println("ReleaseHandler is running, for "
+				+ this.rel.toString());
 		Request req = (Request)this.pro.reqQ.peek();
 		if(this.rel.sender.equals(req.sender))
 			this.pro.reqQ.poll();

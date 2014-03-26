@@ -267,9 +267,19 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 	}
 
 	@Override
-	public void MulticastingRequest() {
+	public void MulticastingRequest(AbstractMsg ppMsg) {
 		// TODO Auto-generated method stub
-
+		for (Object p : this.getRequestSet()) {
+			ProcessItem pro = (ProcessItem) p;
+			Random r = new Random();
+			try {
+				Thread.sleep(Math.abs(r.nextInt()) % 3000);
+				this.SendMsg(pro.IP, pro.port, pro.name, ppMsg);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -394,6 +404,11 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 			Iterator itPI = this.getProcessesItemList().iterator();
 			while(itPI.hasNext()){
 				ProcessItem pi = (ProcessItem) itPI.next();
+				
+				if(pi.name.equals(this.name)){
+					continue;
+				}
+				
 				Iterator itPIRS = pi.getResourceSet().iterator();
 				while(itPIRS.hasNext()){
 					String piRSNum = (String) itPIRS.next();

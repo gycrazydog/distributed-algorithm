@@ -18,7 +18,7 @@ public interface IComponent {
 	public SClock getSClock();
 	public List getRequestSet();
 	
-	public void MulticastingRequest();
+	public void MulticastingRequest(AbstractMsg abmsg);
 	public void ReceivingRequest(AbstractMsg abmsg);
 	public void ReceivingGrant(AbstractMsg abmsg);
 	public void ReceivingInquire(AbstractMsg abmsg);
