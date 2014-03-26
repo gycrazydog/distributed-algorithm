@@ -5,11 +5,15 @@ import java.util.List;
 import nl.tudelft.da.lab2.messages.AbstractMsg;
 import nl.tudelft.da.lab2.messages.Grant;
 import nl.tudelft.da.lab2.messages.Release;
-import nl.tudelft.da.lab2.messages.Relinquish;
 import nl.tudelft.da.lab2.messages.Request;
 import nl.tudelft.da.lab2.process.Process;
 
 public class ReleaseHandler implements IMsgHandler {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	Process pro;
 	Release rel;
 	public ReleaseHandler(Process p,AbstractMsg abmsg) {
