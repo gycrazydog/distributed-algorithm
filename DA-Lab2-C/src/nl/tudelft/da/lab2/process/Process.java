@@ -153,8 +153,8 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		//merge the process clock and abmsg clock
 		this.clock.mergeClock(abmsg.clock.currentClock());
 		
-		System.out.println("Receive Msg. Process Clock=" + this.clock.toString()
-				+ " Msg: " + abmsg.toString());
+//		System.out.println("Receive Msg. Process Clock=" + this.clock.toString()
+//				+ " Msg: " + abmsg.toString());
 		
 		// what is the type of message?
 		if(abmsg instanceof Grant){

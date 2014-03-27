@@ -31,13 +31,12 @@ public class ReleaseHandler implements IMsgHandler {
 			Request req = (Request)this.pro.reqQ.peek();
 			if(this.rel.sender.equals(req.sender))
 				this.pro.reqQ.poll();
-			Request top = (Request)this.pro.reqQ.peek();
 			ProcessItem oppo = null;
 			List prolist = this.pro.getProcessesItemList();
 			for(int i = 0 ; i< prolist.size();i++)
 			{
 				ProcessItem pr = (ProcessItem)prolist.get(i);
-				if(pr.name.equals(top.sender))
+				if(pr.name.equals(req.sender))
 				{
 					oppo = pr;
 					break;

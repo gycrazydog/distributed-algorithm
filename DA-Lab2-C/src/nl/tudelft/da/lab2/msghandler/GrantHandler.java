@@ -28,11 +28,16 @@ public class GrantHandler implements IMsgHandler {
 		System.out.println("GrantHandler is running, for " + this.gr.toString()
 				+ "  number of grants: " + this.pro.num_of_grants);
 		if (this.pro.num_of_grants == this.pro.getRequestSet().size()) {
-			System.out.println("critical section entered!!!!!");
+			System.out.println("critical section entered!!!!!---------------------------------------------------IN------------------------");
 			// Critical Section
 			Random r = new Random(this.gr.clock.currentClock());
 
-//				Thread.sleep(Math.abs(r.nextInt()) % 5000);
+				try {
+					Thread.sleep(Math.abs(r.nextInt()) % 5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	
 //			//-----test
 //			if(this.pro.getName().equals("WF")){
@@ -40,7 +45,7 @@ public class GrantHandler implements IMsgHandler {
 //				System.out.println();
 //			}
 //			//----test
-			
+			System.out.println("critical section exit!!!!---------------------------------------------------OUT------------------------");
 				this.pro.MulticastingRequest(new Release("Broadcast by pro",
 						this.pro.getName(), this.pro.getClock().currentClock()));
 			
