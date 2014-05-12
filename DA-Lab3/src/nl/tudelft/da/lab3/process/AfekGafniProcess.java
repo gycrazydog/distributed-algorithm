@@ -9,8 +9,10 @@ import java.util.List;
 
 import nl.tudelft.da.lab3.entity.IAlgorithmProcess;
 import nl.tudelft.da.lab3.entity.IComponent;
+import nl.tudelft.da.lab3.entity.IMsgHandler;
 import nl.tudelft.da.lab3.messages.AbstractMsg;
 import nl.tudelft.da.lab3.messages.CaptureAttempMsg;
+import nl.tudelft.da.lab3.msghandler.CapturedAttemptMsgHandler;
 
 /**
  * @author vincentgong
@@ -75,13 +77,14 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 		this.sender = new Sender(this);
 	}
 
+	@Override
 	public void Receive(AbstractMsg abmsg) {
 
 		// merge the process clock and abmsg clock
 
 		System.out.println("Receive Msg. " + " Msg: " + abmsg.toString());
 
-		// what is the type of message?
+		// what's the type of message?
 		if (abmsg instanceof CaptureAttempMsg) {
 			ReceivingCaputredAttemptMsg(abmsg);
 		}
@@ -96,15 +99,18 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 		System.out.println("Msg distributed. " + " Msg: " + abmsg.toString());
 	}
 
-	private void ReceivingCaputredAttemptMsg(AbstractMsg abmsg) {
+	@Override
+	public void ReceivingCaputredAttemptMsg(AbstractMsg abmsg) {
 		// TODO Auto-generated method stub
-
+		IMsgHandler imh = new CapturedAttemptMsgHandler(this, abmsg);
+		Thread t = new Thread(imh);
+		t.start();
 	}
 
+	@Override
 	public void SendMsg(String ip, int port, String name, AbstractMsg msg) {
 		this.process.SendMsg(ip, port, name, msg);
 	}
-
 
 	@Override
 	public String getName() {
@@ -122,12 +128,6 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 	public Sender getSender() {
 		// TODO Auto-generated method stub
 		return this.sender;
-	}
-
-	@Override
-	public void CaptureAttempt(AbstractMsg abmsg) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -8,5 +8,6 @@ public interface IAlgorithmProcess {
 	public String getName();
 	public String getID();
 	public Sender getSender();
+	public void SendMsg(String ip, int port, String name, AbstractMsg msg);
 	public void Receive(AbstractMsg abmsg);
 }
