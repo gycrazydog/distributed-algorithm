@@ -21,7 +21,7 @@ import nl.tudelft.da.lab2.messages.ProcessItem;
 import nl.tudelft.da.lab2.process.IProcessInterface;
 
 /**
- * @author vincentgong
+ * @author vincentgong canrangou
  * 
  */
 public class Utils {
