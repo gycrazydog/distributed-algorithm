@@ -48,8 +48,6 @@ public class Commander {
 			ProcessItem pro = (ProcessItem) it.next();
 			try {
 				Process process = new Process(pro.name, processID, pro.IP, pro.port);
-//				process.setReqSetNumberList(pro.resourceSetNumber);//pass the resource Set number of this process
-//				process.initReqSetList();//initialize the requestSet list of this process
 				
 				processList.add(process);
 				process.setProcessesItemList(processItemList);//pass the ProcessItemList to this process

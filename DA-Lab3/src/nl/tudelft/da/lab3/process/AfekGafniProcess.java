@@ -21,6 +21,8 @@ import nl.tudelft.da.lab3.msghandler.CapturedAttemptMsgHandler;
 public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 
 	Process process;
+	public List AlgorProcessItemList;
+	public List AlgorUntraversedLinkList;
 
 	// variables for the algorithm
 	private List reqSetList;// List of ProcessItems which are in the same
@@ -75,6 +77,18 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 		// this.relinquished = false;
 
 		this.sender = new Sender(this);
+		this.initialAlgorProcessItem();
+		this.initialAlgorUntraversedLinkList();
+	}
+
+	public void initialAlgorUntraversedLinkList() {
+		// TODO Auto-generated method stub
+		// build untraversedLinkList based on AlgorProcessItemList
+	}
+
+	public void initialAlgorProcessItem() {
+		// TODO Auto-generated method stub
+		// build AlgorProcessItems and put them into the AlgorProcessItemList
 	}
 
 	@Override

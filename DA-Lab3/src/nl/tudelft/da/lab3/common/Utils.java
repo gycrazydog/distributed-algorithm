@@ -75,16 +75,9 @@ public class Utils {
 					.getProperty("processesAmount"));
 			for (int i = 0; i< processesAmount; i++) {
 				String[] line = prop.getProperty("process" + i).split(",");
-				String[] resourceSetItems = line[3].split(":");
 
-				// parsing the Resource Set
-				List resourceSetList = new LinkedList();
-				for (int j = 0; j < resourceSetItems.length; j++) {
-					resourceSetList.add(resourceSetItems[j]);
-				}
 				ProcessItem pi = new ProcessItem(line[0],
 						Integer.parseInt(line[1]), line[2]);
-				pi.setResourceSet(resourceSetList);
 				processList.add(pi);
 			}
 		}

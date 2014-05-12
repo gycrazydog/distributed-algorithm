@@ -68,6 +68,7 @@ public class Process extends UnicastRemoteObject implements IProcessInterface
 		this.name = ProcessName;
 		this.ip = ip;
 		this.port = port;
+		
 	}
 
 	public void SendMsg(String ip, int port, String name, AbstractMsg msg) {

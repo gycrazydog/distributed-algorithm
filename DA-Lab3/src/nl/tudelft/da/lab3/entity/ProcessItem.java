@@ -20,7 +20,6 @@ public class ProcessItem implements Serializable {
 	public String IP;
 	public int port = 3323;
 	public String name;
-	public List resourceSetNumber;
 
 	public ProcessItem(String IP, int port, String name) {
 		// TODO Auto-generated constructor stub
@@ -32,17 +31,9 @@ public class ProcessItem implements Serializable {
 	@Override
 	public String toString() {
 
-		StringBuffer sb = new StringBuffer();
-
-		Iterator it = this.resourceSetNumber.iterator();
-		while (it.hasNext()) {
-			String rSet = (String) it.next();
-			sb.append(rSet);
-			sb.append(":");
-		}
 
 		String str = "Process1:" + this.name + " IP: " + this.IP + " Port: "
-				+ this.port + " Resource Set: " + sb.toString();
+				+ this.port;
 		return str;
 	}
 
@@ -61,11 +52,4 @@ public class ProcessItem implements Serializable {
 			return false;
 	}
 	
-	public List getResourceSet() {
-		return resourceSetNumber;
-	}
-
-	public void setResourceSet(List resourceSet) {
-		this.resourceSetNumber = resourceSet;
-	}
 }
