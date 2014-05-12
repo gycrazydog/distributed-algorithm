@@ -1,11 +1,11 @@
 /**
  * 
  */
-package nl.tudelft.da.lab3.process;
+package nl.tudelft.da.lab3.entity;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import nl.tudelft.da.lab2.messages.AbstractMsg;
+import nl.tudelft.da.lab3.messages.AbstractMsg;
 
 /**
  * @author vincentgong

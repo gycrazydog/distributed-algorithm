@@ -10,8 +10,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.tudelft.da.lab2.commom.Utils;
-import nl.tudelft.da.lab2.messages.ProcessItem;
+import nl.tudelft.da.lab3.common.Utils;
+import nl.tudelft.da.lab3.entity.ProcessItem;
+
 
 /**
  * @author vincentgong

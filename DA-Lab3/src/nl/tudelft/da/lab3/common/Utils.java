@@ -17,8 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import nl.tudelft.da.lab2.messages.ProcessItem;
-import nl.tudelft.da.lab2.process.IProcessInterface;
+import nl.tudelft.da.lab3.entity.*;
 
 /**
  * @author vincentgong

@@ -7,10 +7,8 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Random;
 
-import nl.tudelft.da.lab2.messages.AbstractMsg;
-import nl.tudelft.da.lab2.messages.Postponed;
-import nl.tudelft.da.lab2.messages.ProcessItem;
-import nl.tudelft.da.lab2.messages.Request;
+import nl.tudelft.da.lab3.messages.AbstractMsg;
+
 
 /**
  * @author vincentgong

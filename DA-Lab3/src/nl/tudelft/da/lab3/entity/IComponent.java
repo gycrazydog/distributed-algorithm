@@ -1,7 +1,7 @@
 /**
  * 
  */
-package nl.tudelft.da.lab3.process;
+package nl.tudelft.da.lab3.entity;
 
 import java.util.List;
 import java.util.PriorityQueue;
