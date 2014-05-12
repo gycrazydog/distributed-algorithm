@@ -9,16 +9,12 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Random;
 
 import nl.tudelft.da.lab3.common.Logger;
-import nl.tudelft.da.lab3.entity.IComponent;
+import nl.tudelft.da.lab3.entity.IAlgorithmProcess;
 import nl.tudelft.da.lab3.entity.IProcessInterface;
 import nl.tudelft.da.lab3.entity.ProcessItem;
 import nl.tudelft.da.lab3.messages.AbstractMsg;
@@ -27,16 +23,20 @@ import nl.tudelft.da.lab3.messages.AbstractMsg;
  * @author vincentgong
  * 
  */
-public class Process extends UnicastRemoteObject implements IProcessInterface,
-		IComponent {
+public class Process extends UnicastRemoteObject implements IProcessInterface
+		 {
 
-	public PriorityQueue reqQ;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private String name;
 	private int id;
 	private String ip;
 	private int port;
 	private List processesItemList;
+	private IAlgorithmProcess iap;
 
 	public static void main(String[] args) throws RemoteException, Exception {
 		// String id = args[0];
@@ -68,11 +68,9 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		this.name = ProcessName;
 		this.ip = ip;
 		this.port = port;
-
 	}
 
 	public void SendMsg(String ip, int port, String name, AbstractMsg msg) {
-		// this.clock.increase();
 		Registry registry;
 		try {
 			registry = LocateRegistry.getRegistry(ip, port);
@@ -109,15 +107,26 @@ public class Process extends UnicastRemoteObject implements IProcessInterface,
 		this.Receive(msg);
 	}
 
+	//call back
 	private void Receive(AbstractMsg msg) {
 		// TODO Auto-generated method stub
-
+		this.iap.Receive(msg);
 	}
 
-	@Override
-	public void CaptureAttempt(AbstractMsg abmsg) {
-		// TODO Auto-generated method stub
-		
+	public List getProcessesItemList() {
+		return processesItemList;
 	}
 
+	public void setProcessesItemList(List processesItemList) {
+		this.processesItemList = processesItemList;
+	}
+
+	public IAlgorithmProcess getIap() {
+		return iap;
+	}
+
+	public void setIap(IAlgorithmProcess iap) {
+		this.iap = iap;
+	}
+	
 }

@@ -4,15 +4,11 @@ package nl.tudelft.da.lab3.process;
  * 
  */
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.List;
 
-import nl.tudelft.da.lab3.common.Logger;
 import nl.tudelft.da.lab3.entity.IAlgorithmProcess;
-import nl.tudelft.da.lab3.entity.IProcessInterface;
+import nl.tudelft.da.lab3.entity.IComponent;
 import nl.tudelft.da.lab3.messages.AbstractMsg;
 import nl.tudelft.da.lab3.messages.CaptureAttempMsg;
 
@@ -20,7 +16,7 @@ import nl.tudelft.da.lab3.messages.CaptureAttempMsg;
  * @author vincentgong
  * 
  */
-public class AfekGafniProcess implements IAlgorithmProcess {
+public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 
 	Process process;
 
@@ -106,26 +102,9 @@ public class AfekGafniProcess implements IAlgorithmProcess {
 	}
 
 	public void SendMsg(String ip, int port, String name, AbstractMsg msg) {
-		// this.clock.increase();
-		Registry registry;
-		try {
-			registry = LocateRegistry.getRegistry(ip, port);
-			IProcessInterface process = (IProcessInterface) registry
-					.lookup(name);
-			process.post(msg);
-			System.out.println("Msg sent sucessfully. " + msg.toString());
-			Logger.getInstance().log("Msg sent sucessfully. " + msg.toString());
-
-		} catch (RemoteException | NotBoundException e) {
-			System.out.println("Msg Sent Failed!!! " + msg.toString());
-			e.printStackTrace();
-		}
+		this.process.SendMsg(ip, port, name, msg);
 	}
 
-	public boolean checkDeliver() {
-
-		return false;
-	}
 
 	@Override
 	public String getName() {
@@ -142,7 +121,13 @@ public class AfekGafniProcess implements IAlgorithmProcess {
 	@Override
 	public Sender getSender() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.sender;
+	}
+
+	@Override
+	public void CaptureAttempt(AbstractMsg abmsg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

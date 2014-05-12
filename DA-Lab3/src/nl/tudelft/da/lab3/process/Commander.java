@@ -27,9 +27,9 @@ public class Commander {
 	 */
 	public static void main(String[] args) throws Exception {
 		/*
-		 * 1. get all processItems, including their resourceSetNumber 2. if
-		 * processItems is not empty, initialize the registry 3. for each
-		 * processItems, put it into the registry with it's name
+		 * 1. get all processItems, including their resourceSetNumber 
+		 * 2. if processItems is not empty, initialize the registry 
+		 * 3. for each processItems, put it into the registry with it's name
 		 */
 
 		List processItemList = Utils.getInstance().getProcessesList();
@@ -47,15 +47,16 @@ public class Commander {
 		while (it.hasNext()) {
 			ProcessItem pro = (ProcessItem) it.next();
 			try {
-				Process process = new Process(pro.name, processID, pro.IP,
-						pro.port);
+				Process process = new Process(pro.name, processID, pro.IP, pro.port);
 //				process.setReqSetNumberList(pro.resourceSetNumber);//pass the resource Set number of this process
-//				process.setProcessesItemList(processItemList);//pass the ProcessItemList to this process
 //				process.initReqSetList();//initialize the requestSet list of this process
 				
 				processList.add(process);
+				process.setProcessesItemList(processItemList);//pass the ProcessItemList to this process
 				
+				//initial the Algorithm Process
 				IAlgorithmProcess iap = new AfekGafniProcess(process);
+				process.setIap(iap);
 				AlgorithmProcessList.add(iap);
 				
 				Utils.regProcess(registry, pro.name, process);
@@ -67,9 +68,9 @@ public class Commander {
 			processID++;
 		}
 		
-		Iterator it1 = AlgorithmProcessList.iterator();
-		while(it1.hasNext()){
-			IAlgorithmProcess iap = (IAlgorithmProcess) it1.next();
+		Iterator it2 = AlgorithmProcessList.iterator();
+		while(it2.hasNext()){
+			IAlgorithmProcess iap = (IAlgorithmProcess) it2.next();
 			Thread t = new Thread(iap.getSender());
 			t.start();
 		}
