@@ -12,6 +12,7 @@ import java.util.List;
 
 import nl.tudelft.da.lab3.common.Utils;
 import nl.tudelft.da.lab3.entity.ProcessItem;
+import nl.tudelft.da.lab3.entity.IAlgorithmProcess;
 
 
 /**
@@ -33,6 +34,7 @@ public class Commander {
 
 		List processItemList = Utils.getInstance().getProcessesList();
 		List processList = new LinkedList();
+		List AlgorithmProcessList = new LinkedList();
 
 		if (processItemList.isEmpty()) {
 			return;
@@ -47,13 +49,17 @@ public class Commander {
 			try {
 				Process process = new Process(pro.name, processID, pro.IP,
 						pro.port);
-				process.setReqSetNumberList(pro.resourceSetNumber);//pass the resource Set number of this process
-				process.setProcessesItemList(processItemList);//pass the ProcessItemList to this process
-				process.initReqSetList();//initialize the requestSet list of this process
+//				process.setReqSetNumberList(pro.resourceSetNumber);//pass the resource Set number of this process
+//				process.setProcessesItemList(processItemList);//pass the ProcessItemList to this process
+//				process.initReqSetList();//initialize the requestSet list of this process
 				
 				processList.add(process);
 				
+				IAlgorithmProcess iap = new AfekGafniProcess(process);
+				AlgorithmProcessList.add(iap);
+				
 				Utils.regProcess(registry, pro.name, process);
+				
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -61,10 +67,10 @@ public class Commander {
 			processID++;
 		}
 		
-		Iterator it1 = processList.iterator();
+		Iterator it1 = AlgorithmProcessList.iterator();
 		while(it1.hasNext()){
-			Process process = (Process) it1.next();
-			Thread t = new Thread(process.sender);
+			IAlgorithmProcess iap = (IAlgorithmProcess) it1.next();
+			Thread t = new Thread(iap.getSender());
 			t.start();
 		}
 

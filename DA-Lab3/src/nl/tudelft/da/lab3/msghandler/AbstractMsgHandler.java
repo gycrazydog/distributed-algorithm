@@ -3,8 +3,9 @@
  */
 package nl.tudelft.da.lab3.msghandler;
 
-import nl.tudelft.da.lab2.messages.AbstractMsg;
-import nl.tudelft.da.lab2.process.Process;
+import nl.tudelft.da.lab3.entity.IMsgHandler;
+import nl.tudelft.da.lab3.messages.AbstractMsg;
+
 
 
 /**
