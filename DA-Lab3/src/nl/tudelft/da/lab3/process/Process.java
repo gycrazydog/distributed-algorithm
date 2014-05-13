@@ -71,12 +71,12 @@ public class Process extends UnicastRemoteObject implements IProcessInterface
 		
 	}
 
-	public void SendMsg(String ip, int port, String name, AbstractMsg msg) {
+	public void SendMsg(String ip, int port, String receiverName, AbstractMsg msg) {
 		Registry registry;
 		try {
 			registry = LocateRegistry.getRegistry(ip, port);
 			IProcessInterface process = (IProcessInterface) registry
-					.lookup(name);
+					.lookup(receiverName);
 			process.post(msg);
 			System.out.println("Msg sent sucessfully. " + msg.toString());
 			Logger.getInstance().log("Msg sent sucessfully. " + msg.toString());
@@ -129,5 +129,35 @@ public class Process extends UnicastRemoteObject implements IProcessInterface
 	public void setIap(IAlgorithmProcess iap) {
 		this.iap = iap;
 	}
-	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
 }

@@ -7,12 +7,24 @@ public class AfekGafniProcessItem {
 	public int id;
 	public boolean Candidate;
 	public boolean Captured;
-	
-	public AfekGafniProcessItem(ProcessItem pi){
+
+	public AfekGafniProcessItem(ProcessItem pi) {
 		this.pi = pi;
 		this.id = 0;
 		this.Candidate = true;
 		this.Captured = false;
 	}
-	
+
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(pi.toString());
+		sb.append(" ");
+		sb.append("id=" + this.id);
+		sb.append(" Candidate=" + this.Candidate);
+		sb.append(" Captured=" + this.Captured);
+
+		return sb.toString();
+	}
+
 }

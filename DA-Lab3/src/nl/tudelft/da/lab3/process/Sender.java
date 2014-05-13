@@ -6,6 +6,7 @@ package nl.tudelft.da.lab3.process;
 import java.io.Serializable;
 
 import nl.tudelft.da.lab3.entity.IAlgorithmProcess;
+import nl.tudelft.da.lab3.messages.TestMessage;
 
 /**
  * @author vincentgong
@@ -17,10 +18,10 @@ public class Sender implements Runnable, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public IAlgorithmProcess process;
+	public IAlgorithmProcess iap;
 
 	public Sender(IAlgorithmProcess pro) {
-		this.process = pro;
+		this.iap = pro;
 	}
 
 	@Override
@@ -38,7 +39,21 @@ public class Sender implements Runnable, Serializable {
 		// // code for send one msg to someone:
 		// // this.process.SendMsg("127.0.0.1", 3233, "HKX", ppMsg);
 		// }
+		
+		this.sendTestMessage();
 		this.sendCamptureRequest();
+	}
+	
+	public void sendTestMessage(){
+		
+		if(this.iap.getProcess().getName().equals("HKX")){
+			Process p = this.iap.getProcess();
+			String msg = "Process: "+ p.getName() + " id=" + p.getId() + " ip: " + p.getIp();
+			TestMessage tm = new TestMessage(p.getName(), msg);
+//			this.iap.getProcess().broadcast(tm);
+			this.iap.getProcess().SendMsg("127.0.0.1", 3233, "GX", tm);;
+//			System.out.println("Test Message sent by "+ p.getName());
+		}
 	}
 
 	public void sendCamptureRequest() {

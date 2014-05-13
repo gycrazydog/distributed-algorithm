@@ -19,7 +19,11 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 		this.iap = iap;
 		this.ca = (CaptureAttempMsg) abmsg;
 	}
-
+	
+	public CapturedAttemptMsgHandler(){
+		
+	}
+	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

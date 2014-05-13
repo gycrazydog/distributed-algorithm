@@ -5,14 +5,19 @@ package nl.tudelft.da.lab3.process;
  */
 
 import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import nl.tudelft.da.lab3.entity.IAlgorithmProcess;
 import nl.tudelft.da.lab3.entity.IComponent;
 import nl.tudelft.da.lab3.entity.IMsgHandler;
+import nl.tudelft.da.lab3.entity.ProcessItem;
 import nl.tudelft.da.lab3.messages.AbstractMsg;
 import nl.tudelft.da.lab3.messages.CaptureAttempMsg;
+import nl.tudelft.da.lab3.messages.TestMessage;
 import nl.tudelft.da.lab3.msghandler.CapturedAttemptMsgHandler;
+import nl.tudelft.da.lab3.msghandler.TestMessageHandler;
 
 /**
  * @author vincentgong
@@ -20,7 +25,7 @@ import nl.tudelft.da.lab3.msghandler.CapturedAttemptMsgHandler;
  */
 public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 
-	Process process;
+	private Process process;
 	public List AlgorProcessItemList;
 	public List AlgorUntraversedLinkList;
 
@@ -77,6 +82,8 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 		// this.relinquished = false;
 
 		this.sender = new Sender(this);
+		this.AlgorProcessItemList = new LinkedList();
+		this.AlgorUntraversedLinkList = new LinkedList();
 		this.initialAlgorProcessItem();
 		this.initialAlgorUntraversedLinkList();
 	}
@@ -84,39 +91,53 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 	public void initialAlgorUntraversedLinkList() {
 		// TODO Auto-generated method stub
 		// build untraversedLinkList based on AlgorProcessItemList
+		Iterator it = this.AlgorProcessItemList.iterator();
+		while (it.hasNext()) {
+			AfekGafniProcessItem api = (AfekGafniProcessItem) it.next();
+			if (api.pi.name.equals(this.process.getName())) {
+				continue;
+			}
+			AlgorUntraversedLinkList.add(api);
+		}
 	}
 
 	public void initialAlgorProcessItem() {
 		// TODO Auto-generated method stub
 		// build AlgorProcessItems and put them into the AlgorProcessItemList
+		Iterator it = this.process.getProcessesItemList().iterator();
+		while (it.hasNext()) {
+			ProcessItem pi = (ProcessItem) it.next();
+			AfekGafniProcessItem api = new AfekGafniProcessItem(pi);
+			AlgorProcessItemList.add(api);
+		}
 	}
 
 	@Override
 	public void Receive(AbstractMsg abmsg) {
 
-		// merge the process clock and abmsg clock
-
-		System.out.println("Receive Msg. " + " Msg: " + abmsg.toString());
+		// System.out.println("Receive Msg. " + " Msg: " + abmsg.toString());
 
 		// what's the type of message?
-		if (abmsg instanceof CaptureAttempMsg) {
-			ReceivingCaputredAttemptMsg(abmsg);
+		if (abmsg instanceof TestMessage) {
+			HandleTheMessage(abmsg, new TestMessageHandler(this, abmsg));
+		} else if (abmsg instanceof CaptureAttempMsg) {
+			HandleTheMessage(abmsg, new CapturedAttemptMsgHandler(this, abmsg));
 		}
 		// else if(abmsg instanceof Inquire){
-		// ReceivingInquire(abmsg);
+		// HandleTheMessage(abmsg, new CapturedAttemptMsgHandler(this, abmsg));
 		// }
 
 		else {
 			return;
 		}
 
-		System.out.println("Msg distributed. " + " Msg: " + abmsg.toString());
+		// System.out.println("Msg distributed. " + " Msg: " +
+		// abmsg.toString());
 	}
 
+
 	@Override
-	public void ReceivingCaputredAttemptMsg(AbstractMsg abmsg) {
-		// TODO Auto-generated method stub
-		IMsgHandler imh = new CapturedAttemptMsgHandler(this, abmsg);
+	public void HandleTheMessage(AbstractMsg abmsg, IMsgHandler imh) {
 		Thread t = new Thread(imh);
 		t.start();
 	}
@@ -127,21 +148,31 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Sender getSender() {
 		// TODO Auto-generated method stub
 		return this.sender;
+	}
+
+	@Override
+	public Process getProcess() {
+		// TODO Auto-generated method stub
+		return this.process;
+	}
+
+	public List getAlgorProcessItemList() {
+		return AlgorProcessItemList;
+	}
+
+	public void setAlgorProcessItemList(List algorProcessItemList) {
+		AlgorProcessItemList = algorProcessItemList;
+	}
+
+	public List getAlgorUntraversedLinkList() {
+		return AlgorUntraversedLinkList;
+	}
+
+	public void setAlgorUntraversedLinkList(List algorUntraversedLinkList) {
+		AlgorUntraversedLinkList = algorUntraversedLinkList;
 	}
 
 }
