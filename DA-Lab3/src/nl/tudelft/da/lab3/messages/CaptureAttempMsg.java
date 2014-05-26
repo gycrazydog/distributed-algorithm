@@ -13,9 +13,11 @@ public class CaptureAttempMsg extends AbstractMsg {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	public CaptureAttempMsg(String content, String senderProcess){
-		this.content = content;
-		this.sender = senderProcess;
+	public int level;
+	public int id;
+	public CaptureAttempMsg(int level,int id,String ProcessName){
+		this.level = level;
+		this.sender = ProcessName;
+		this.id = id;
 	}
 }

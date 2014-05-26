@@ -28,23 +28,20 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 	private Process process;
 	public List AlgorProcessItemList;
 	public List AlgorUntraversedLinkList;
-
-	// variables for the algorithm
-	private List reqSetList;// List of ProcessItems which are in the same
-							// request set with the current process. e.g. All
-							// the processes in the request set 3 and 6.
 	public Sender sender;
-
+	
+	// variables for the algorithm
+	public int level;
+	public boolean Candidate;
+	public boolean Captured;
+	public boolean Link_killed = true;
+	public boolean elected = false;
+	public AfekGafniProcessItem current_link = null;
+	public AfekGafniProcessItem current_father = null;
+	public AfekGafniProcessItem potential_father = null;
+	
 	// status variables
 	public int num_of_grants;// the number of grants got from the resource set
-
-	// public boolean relinquished;
-	// private boolean inquiring;// whether this process has given the inquire
-	// to other nodes
-	// public int resourceSetProcessNumber;// |R|, the number of processes in
-	// the Resource Set of the current process.
-	// public boolean postponed;// whether this process has been postponed, or
-	// has received the postponed message
 
 	// TODO adding all variables
 
@@ -72,7 +69,7 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 
 	}
 
-	public AfekGafniProcess(Process process) throws RemoteException {
+	public AfekGafniProcess(Process process,boolean iscandidate) throws RemoteException {
 
 		this.process = process;
 
@@ -80,8 +77,13 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 		// this.postponed = false;
 		// this.currentGrant = null;
 		// this.relinquished = false;
-
 		this.sender = new Sender(this);
+		this.Candidate = iscandidate;
+		if(this.Candidate)
+			level = 0;
+		else
+			level = -1;
+		this.Captured = false;
 		this.AlgorProcessItemList = new LinkedList();
 		this.AlgorUntraversedLinkList = new LinkedList();
 		this.initialAlgorProcessItem();
@@ -123,9 +125,7 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 		} else if (abmsg instanceof CaptureAttempMsg) {
 			HandleTheMessage(abmsg, new CapturedAttemptMsgHandler(this, abmsg));
 		}
-		// else if(abmsg instanceof Inquire){
-		// HandleTheMessage(abmsg, new CapturedAttemptMsgHandler(this, abmsg));
-		// }
+		
 
 		else {
 			return;

@@ -6,6 +6,7 @@ package nl.tudelft.da.lab3.process;
 import java.io.Serializable;
 
 import nl.tudelft.da.lab3.entity.IAlgorithmProcess;
+import nl.tudelft.da.lab3.messages.CaptureAttempMsg;
 import nl.tudelft.da.lab3.messages.TestMessage;
 
 /**
@@ -26,22 +27,18 @@ public class Sender implements Runnable, Serializable {
 
 	@Override
 	public void run() {
-
-		// Sender: GX
-		// if (this.process.getName().equals("GX")) {
-		// Request ppMsg = new Request("Requested By GX",
-		// this.process.getName(), this.process.getClock()
-		// .currentClock());
-		// // code for broadcast the msg
-		// System.out.println("process size:"
-		// + this.process.getRequestSet().size());
-		// this.process.MulticastingRequest(ppMsg);
-		// // code for send one msg to someone:
-		// // this.process.SendMsg("127.0.0.1", 3233, "HKX", ppMsg);
-		// }
-		
-		this.sendTestMessage();
-		this.sendCamptureRequest();
+		AfekGafniProcess ap = (AfekGafniProcess)this.iap;
+		if(ap.Candidate){
+			while(ap.AlgorUntraversedLinkList.size()>1){
+				ap.current_link = (AfekGafniProcessItem)ap.AlgorUntraversedLinkList.get(0);
+				ap.Link_killed = false;
+				CaptureAttempMsg cm = new CaptureAttempMsg(ap.level,ap.getProcess().getId(),ap.getProcess().getName());
+				this.iap.getProcess().SendMsg(ap.current_link.pi.IP, ap.current_link.pi.port, ap.current_link.pi.name, cm);
+				while(!ap.Link_killed){}
+			}
+			ap.elected = true;
+			System.out.println("Process  "+ap.getProcess().getName()+"  Elected!");
+		}
 	}
 	
 	public void sendTestMessage(){
@@ -59,7 +56,13 @@ public class Sender implements Runnable, Serializable {
 	public void sendCamptureRequest() {
 		// start the while code in Candidate process. Send the capture request
 		// message to untraversed link.
-		// TODO code
+		Process p = this.iap.getProcess();
+		AfekGafniProcess ap = (AfekGafniProcess)this.iap;
+		String msg = "Process: "+ p.getName() + " id=" + p.getId() + " ip: " + p.getIp();
+		CaptureAttempMsg cm = new CaptureAttempMsg(ap.level,p.getId(),p.getName());
+//		this.iap.getProcess().broadcast(tm);
+		this.iap.getProcess().SendMsg("127.0.0.1", 3233, "GX", cm);
+//		System.out.println("Test Message sent by "+ p.getName());
 		
 	}
 }

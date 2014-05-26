@@ -4,6 +4,8 @@ import nl.tudelft.da.lab3.entity.IAlgorithmProcess;
 import nl.tudelft.da.lab3.entity.IMsgHandler;
 import nl.tudelft.da.lab3.messages.AbstractMsg;
 import nl.tudelft.da.lab3.messages.CaptureAttempMsg;
+import nl.tudelft.da.lab3.process.AfekGafniProcess;
+import nl.tudelft.da.lab3.process.AfekGafniProcessItem;
 
 
 public class CapturedAttemptMsgHandler implements IMsgHandler {
@@ -12,11 +14,11 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	IAlgorithmProcess iap;
+	AfekGafniProcess iap;
 	CaptureAttempMsg ca;
 
 	public CapturedAttemptMsgHandler(IAlgorithmProcess iap, AbstractMsg abmsg) {
-		this.iap = iap;
+		this.iap = (AfekGafniProcess)iap;
 		this.ca = (CaptureAttempMsg) abmsg;
 	}
 	
@@ -27,9 +29,60 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
-		//this.iap.SendMsg(ip, port, name, msg);// call SendMsg() from iap
-		//this.iap.getSender().sendCamptureRequest(); // call functions from sender of the iap
+		CaptureAttempMsg cam = (CaptureAttempMsg)this.ca;
+		int level = cam.level;
+		int id_ = cam.id;
+		if(this.iap.Candidate){
+			if(id_==this.iap.getProcess().getId()&&!this.iap.Captured){
+				this.iap.level++;
+				this.iap.Link_killed = true;
+				for(Object api : this.iap.AlgorUntraversedLinkList){
+					AfekGafniProcessItem link = (AfekGafniProcessItem)api;
+					if(link.id==this.iap.current_link.id)
+						this.iap.AlgorUntraversedLinkList.remove(link);
+				}
+			}
+			else{
+				if(level<this.iap.level||(level==this.iap.level&&id_<this.iap.getProcess().getId()))
+					return ;
+				else
+				{
+					CaptureAttempMsg msg = new CaptureAttempMsg(level,id_,this.iap.getProcess().getName());
+					for(Object api : this.iap.AlgorProcessItemList){
+						AfekGafniProcessItem process = (AfekGafniProcessItem)api;
+						if(process.id == id_){
+							this.iap.SendMsg(process.pi.IP, process.pi.port, process.pi.name, msg);
+							break;
+						}
+						this.iap.Captured = true;
+						return;
+					}
+				}
+			}
+		}else{
+			if(level<this.iap.level||(level==this.iap.level&&id_<this.iap.getProcess().getId())){
+				return;
+			}
+			else if(level>this.iap.level||(level==this.iap.level&&id_>this.iap.getProcess().getId())){
+				for(Object api : this.iap.AlgorProcessItemList){
+					AfekGafniProcessItem process = (AfekGafniProcessItem)api;
+					if(process.id == id_){
+						this.iap.current_father = process;
+						this.iap.getProcess().setId(id_);
+						this.iap.level = level;
+						if(this.iap.current_father==null) this.iap.current_father = this.iap.potential_father;
+						CaptureAttempMsg msg = new CaptureAttempMsg(level,id_,this.iap.getProcess().getName());
+						this.iap.SendMsg(this.iap.current_father.pi.IP, this.iap.current_father.pi.port, this.iap.current_father.pi.name, msg);
+						return;
+					}
+				}
+			}
+			else{
+				this.iap.current_father = this.iap.potential_father;
+				CaptureAttempMsg msg = new CaptureAttempMsg(level,id_,this.iap.getProcess().getName());
+				this.iap.SendMsg(this.iap.current_father.pi.IP, this.iap.current_father.pi.port, this.iap.current_father.pi.name, msg);
+			}
+		}
 
 	}
 
