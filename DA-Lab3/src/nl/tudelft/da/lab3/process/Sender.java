@@ -35,7 +35,6 @@ public class Sender implements Runnable, Serializable {
 				CaptureAttempMsg cm = new CaptureAttempMsg(ap.level,ap.getProcess().getId(),ap.getProcess().getName());
 				this.iap.getProcess().SendMsg(ap.current_link.pi.IP, ap.current_link.pi.port, ap.current_link.pi.name, cm);
 				System.out.println("Candidate "+this.iap.getProcess().getName()+" trying to capture "+ap.current_link.pi.name);
-				ap.AlgorUntraversedLinkList.remove(0);
 				while(!ap.Link_killed){}
 			}
 			ap.elected = true;
