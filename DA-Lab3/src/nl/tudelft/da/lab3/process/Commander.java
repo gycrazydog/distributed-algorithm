@@ -53,7 +53,7 @@ public class Commander {
 				process.setProcessesItemList(processItemList);//pass the ProcessItemList to this process
 				
 				//initial the Algorithm Process
-				IAlgorithmProcess iap = new AfekGafniProcess(process,true);
+				IAlgorithmProcess iap = new AfekGafniProcess(process, pro);
 				process.setIap(iap);
 				AlgorithmProcessList.add(iap);
 				

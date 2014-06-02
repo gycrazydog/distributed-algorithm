@@ -77,7 +77,7 @@ public class Utils {
 				String[] line = prop.getProperty("process" + i).split(",");
 
 				ProcessItem pi = new ProcessItem(line[0],
-						Integer.parseInt(line[1]), line[2]);
+						Integer.parseInt(line[1]), line[2], line[3]);
 				processList.add(pi);
 			}
 		}

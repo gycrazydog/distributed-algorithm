@@ -4,8 +4,6 @@
 package nl.tudelft.da.lab3.entity;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author vincentgong
@@ -20,20 +18,20 @@ public class ProcessItem implements Serializable {
 	public String IP;
 	public int port = 3323;
 	public String name;
+	public String algorithmFields;
 
-	public ProcessItem(String IP, int port, String name) {
+	public ProcessItem(String IP, int port, String name, String algorithmFields) {
 		// TODO Auto-generated constructor stub
 		this.IP = IP;
 		this.port = port;
 		this.name = name;
+		this.algorithmFields = algorithmFields;
 	}
 
 	@Override
 	public String toString() {
-
-
 		String str = "Process1:" + this.name + " IP: " + this.IP + " Port: "
-				+ this.port;
+				+ this.port + " Algoritm Fields: " + algorithmFields;
 		return str;
 	}
 

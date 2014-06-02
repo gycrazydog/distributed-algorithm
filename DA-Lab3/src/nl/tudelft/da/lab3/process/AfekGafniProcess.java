@@ -29,7 +29,7 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 	public List AlgorProcessItemList;
 	public List AlgorUntraversedLinkList;
 	public Sender sender;
-	
+
 	// variables for the algorithm
 	public int level;
 	public boolean Candidate;
@@ -39,7 +39,7 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 	public AfekGafniProcessItem current_link = null;
 	public AfekGafniProcessItem current_father = null;
 	public AfekGafniProcessItem potential_father = null;
-	
+
 	// status variables
 	public int num_of_grants;// the number of grants got from the resource set
 
@@ -69,7 +69,7 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 
 	}
 
-	public AfekGafniProcess(Process process,boolean iscandidate) throws RemoteException {
+	public AfekGafniProcess(Process process, ProcessItem proItem) throws RemoteException {
 
 		this.process = process;
 
@@ -78,7 +78,7 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 		// this.currentGrant = null;
 		// this.relinquished = false;
 		this.sender = new Sender(this);
-		this.Candidate = iscandidate;
+		this.Candidate = proItem.algorithmFields.equals("Candidate")? true:false;
 		if(this.Candidate)
 			level = 0;
 		else
@@ -88,6 +88,7 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 		this.AlgorUntraversedLinkList = new LinkedList();
 		this.initialAlgorProcessItem();
 		this.initialAlgorUntraversedLinkList();
+		System.out.println(this.getProcess().getName() + " Candidate? " + this.Candidate);
 	}
 
 	public void initialAlgorUntraversedLinkList() {
@@ -125,7 +126,6 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 		} else if (abmsg instanceof CaptureAttempMsg) {
 			HandleTheMessage(abmsg, new CapturedAttemptMsgHandler(this, abmsg));
 		}
-		
 
 		else {
 			return;
@@ -134,7 +134,6 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 		// System.out.println("Msg distributed. " + " Msg: " +
 		// abmsg.toString());
 	}
-
 
 	@Override
 	public void HandleTheMessage(AbstractMsg abmsg, IMsgHandler imh) {

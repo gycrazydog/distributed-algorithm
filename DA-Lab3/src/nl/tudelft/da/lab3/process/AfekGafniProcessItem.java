@@ -11,12 +11,12 @@ public class AfekGafniProcessItem {
 	public AfekGafniProcessItem(ProcessItem pi) {
 		this.pi = pi;
 		this.id = 0;
-		this.Candidate = true;
+		this.Candidate = "Candidate".equals(pi.algorithmFields) ? true : false;
 		this.Captured = false;
 	}
 
 	public String toString() {
-		
+
 		StringBuilder sb = new StringBuilder();
 		sb.append(pi.toString());
 		sb.append(" ");
