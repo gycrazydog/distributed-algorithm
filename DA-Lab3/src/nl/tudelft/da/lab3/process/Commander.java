@@ -43,11 +43,10 @@ public class Commander {
 		Registry registry = LocateRegistry.createRegistry(3233);
 
 		Iterator it = processItemList.iterator();
-		int processID = 0;
 		while (it.hasNext()) {
 			ProcessItem pro = (ProcessItem) it.next();
 			try {
-				Process process = new Process(pro.name, processID, pro.IP, pro.port);
+				Process process = new Process(pro.name, pro.ID, pro.IP, pro.port);
 				
 				processList.add(process);
 				process.setProcessesItemList(processItemList);//pass the ProcessItemList to this process
@@ -63,7 +62,6 @@ public class Commander {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			processID++;
 		}
 		
 		Iterator it2 = AlgorithmProcessList.iterator();

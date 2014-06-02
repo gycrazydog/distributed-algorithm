@@ -10,7 +10,7 @@ public class AfekGafniProcessItem {
 
 	public AfekGafniProcessItem(ProcessItem pi) {
 		this.pi = pi;
-		this.id = 0;
+		this.id = pi.ID;
 		this.Candidate = "Candidate".equals(pi.algorithmFields) ? true : false;
 		this.Captured = false;
 	}

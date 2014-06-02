@@ -18,10 +18,12 @@ public class ProcessItem implements Serializable {
 	public String IP;
 	public int port = 3323;
 	public String name;
+	public int ID;
 	public String algorithmFields;
 
-	public ProcessItem(String IP, int port, String name, String algorithmFields) {
+	public ProcessItem(int ID, String IP, int port, String name, String algorithmFields) {
 		// TODO Auto-generated constructor stub
+		this.ID = ID;
 		this.IP = IP;
 		this.port = port;
 		this.name = name;

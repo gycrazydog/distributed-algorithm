@@ -76,7 +76,7 @@ public class Utils {
 			for (int i = 0; i< processesAmount; i++) {
 				String[] line = prop.getProperty("process" + i).split(",");
 
-				ProcessItem pi = new ProcessItem(line[0],
+				ProcessItem pi = new ProcessItem(i, line[0],
 						Integer.parseInt(line[1]), line[2], line[3]);
 				processList.add(pi);
 			}

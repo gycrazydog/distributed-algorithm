@@ -47,7 +47,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 			else{
 				if(level<this.iap.level||(level==this.iap.level&&id_<this.iap.getProcess().getId()))
 				{
-					System.out.println("Candidate "+this.iap.getProcess().getName()+"discard message! "+cam.id+" "+cam.level);
+					System.out.println("Candidate "+this.iap.getProcess().getName()+" discard message! "+cam.id+" "+cam.level);
 					return ;
 				}
 				else

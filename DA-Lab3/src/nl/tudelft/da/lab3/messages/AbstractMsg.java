@@ -9,7 +9,7 @@ public abstract class AbstractMsg implements Serializable, Remote {
 	 */
 	private static final long serialVersionUID = 1L;
 	public String sender;
-	public String content;
+	public String content = "";
 
 	@Override
 	public String toString() {
