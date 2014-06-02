@@ -38,8 +38,10 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 				this.iap.Link_killed = true;
 				for(Object api : this.iap.AlgorUntraversedLinkList){
 					AfekGafniProcessItem link = (AfekGafniProcessItem)api;
-					if(link.id==this.iap.current_link.id)
+					if(link.id==this.iap.current_link.id){
 						this.iap.AlgorUntraversedLinkList.remove(link);
+						System.out.println("Candidate "+this.iap.getProcess().getName()+" captured current link to "+link.pi.name);
+					}
 				}
 			}
 			else{
@@ -52,11 +54,12 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 						AfekGafniProcessItem process = (AfekGafniProcessItem)api;
 						if(process.id == id_){
 							this.iap.SendMsg(process.pi.IP, process.pi.port, process.pi.name, msg);
+							System.out.println("Candidate "+this.iap.getProcess().getName()+" got killed by "+process.pi.name);
 							break;
 						}
-						this.iap.Captured = true;
-						return;
 					}
+					this.iap.Captured = true;
+					return;
 				}
 			}
 		}else{
@@ -73,6 +76,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 						if(this.iap.current_father==null) this.iap.current_father = this.iap.potential_father;
 						CaptureAttempMsg msg = new CaptureAttempMsg(level,id_,this.iap.getProcess().getName());
 						this.iap.SendMsg(this.iap.current_father.pi.IP, this.iap.current_father.pi.port, this.iap.current_father.pi.name, msg);
+						System.out.println("Ordinary "+this.iap.getProcess().getName()+" send kill attempt to "+process.pi.name);
 						return;
 					}
 				}
@@ -81,6 +85,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 				this.iap.current_father = this.iap.potential_father;
 				CaptureAttempMsg msg = new CaptureAttempMsg(level,id_,this.iap.getProcess().getName());
 				this.iap.SendMsg(this.iap.current_father.pi.IP, this.iap.current_father.pi.port, this.iap.current_father.pi.name, msg);
+				System.out.println("Ordinary "+this.iap.getProcess().getName()+" ack new father "+this.iap.current_father.pi.name);
 			}
 		}
 
