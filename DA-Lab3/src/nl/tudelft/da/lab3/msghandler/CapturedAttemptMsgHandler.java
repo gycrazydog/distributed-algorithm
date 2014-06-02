@@ -34,6 +34,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 		int id_ = cam.id;
 		if(this.iap.Candidate){
 			if(id_==this.iap.getProcess().getId()&&!this.iap.Captured){
+				System.out.println("Candidate "+this.iap.getProcess().getName()+" recieved "+cam.level+"  "+cam.id);
 				this.iap.level++;
 				this.iap.Link_killed = true;
 				for(Object api : this.iap.AlgorUntraversedLinkList){
