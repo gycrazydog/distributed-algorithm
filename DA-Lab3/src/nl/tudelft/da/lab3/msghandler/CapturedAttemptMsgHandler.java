@@ -28,7 +28,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 	}
 
 	@Override
-	public synchronized void run() {
+	public void run() {
 		// TODO Auto-generated method stub
 		CaptureAttempMsg cam = (CaptureAttempMsg) this.ca;
 		int level = cam.level;
@@ -40,15 +40,17 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 						+ cam.level + "  " + cam.id);
 				this.iap.level++;
 				this.iap.Link_killed = true;
-
-				Iterator it = this.iap.AlgorUntraversedLinkList.iterator();
-				while(it.hasNext()){
-					AfekGafniProcessItem link = (AfekGafniProcessItem) it.next();
-					if (link.id == this.iap.current_link.id) {
-						this.iap.AlgorUntraversedLinkList.remove(link);
-						System.out.println("Candidate "
-								+ this.iap.getProcess().getName()
-								+ " captured current link to " + link.pi.name);
+				
+				synchronized(this.iap.lock){
+					Iterator it = this.iap.AlgorUntraversedLinkList.iterator();
+					while(it.hasNext()){
+						AfekGafniProcessItem link = (AfekGafniProcessItem) it.next();
+						if (link.id == this.iap.current_link.id) {
+							this.iap.AlgorUntraversedLinkList.remove(link);
+							System.out.println("Candidate "
+									+ this.iap.getProcess().getName()
+									+ " captured current link to " + link.pi.name);
+						}
 					}
 				}
 				

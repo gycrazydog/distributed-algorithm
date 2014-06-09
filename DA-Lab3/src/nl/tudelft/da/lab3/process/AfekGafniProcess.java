@@ -39,6 +39,7 @@ public class AfekGafniProcess implements IAlgorithmProcess, IComponent {
 	public AfekGafniProcessItem current_link = null;
 	public AfekGafniProcessItem current_father = null;
 	public AfekGafniProcessItem potential_father = null;
+	public final Object lock = new Object();
 
 	// status variables
 	public int num_of_grants;// the number of grants got from the resource set

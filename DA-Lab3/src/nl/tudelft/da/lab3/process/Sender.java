@@ -30,12 +30,14 @@ public class Sender implements Runnable, Serializable {
 		AfekGafniProcess ap = (AfekGafniProcess)this.iap;
 		if(ap.Candidate){
 			while(ap.AlgorUntraversedLinkList.size()>1){
-				ap.current_link = (AfekGafniProcessItem)ap.AlgorUntraversedLinkList.get(0);
-				ap.Link_killed = false;
-				CaptureAttempMsg cm = new CaptureAttempMsg(ap.level,ap.getProcess().getId(),ap.getProcess().getName());
-				this.iap.getProcess().SendMsg(ap.current_link.pi.IP, ap.current_link.pi.port, ap.current_link.pi.name, cm);
-				System.out.println("Candidate "+this.iap.getProcess().getName()+" trying to capture "+ap.current_link.pi.name);
-				while(!ap.Link_killed){}
+				synchronized(((AfekGafniProcess)this.iap).lock){
+					ap.current_link = (AfekGafniProcessItem)ap.AlgorUntraversedLinkList.get(0);
+					ap.Link_killed = false;
+					CaptureAttempMsg cm = new CaptureAttempMsg(ap.level,ap.getProcess().getId(),ap.getProcess().getName());
+					this.iap.getProcess().SendMsg(ap.current_link.pi.IP, ap.current_link.pi.port, ap.current_link.pi.name, cm);
+					System.out.println("Candidate "+this.iap.getProcess().getName()+" trying to capture "+ap.current_link.pi.name);
+					while(!ap.Link_killed){}
+				}
 			}
 			ap.elected = true;
 			System.out.println("Process  "+ap.getProcess().getName()+"  Elected!");
