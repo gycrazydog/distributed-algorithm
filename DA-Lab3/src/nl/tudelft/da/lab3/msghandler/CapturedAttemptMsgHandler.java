@@ -10,7 +10,6 @@ import nl.tudelft.da.lab3.messages.CaptureAttempMsg;
 import nl.tudelft.da.lab3.process.AfekGafniProcess;
 import nl.tudelft.da.lab3.process.AfekGafniProcessItem;
 
-
 public class CapturedAttemptMsgHandler implements IMsgHandler {
 	/**
 	 * 
@@ -21,23 +20,25 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 	CaptureAttempMsg ca;
 
 	public CapturedAttemptMsgHandler(IAlgorithmProcess iap, AbstractMsg abmsg) {
-		this.iap = (AfekGafniProcess)iap;
+		this.iap = (AfekGafniProcess) iap;
 		this.ca = (CaptureAttempMsg) abmsg;
 	}
-	
-	public CapturedAttemptMsgHandler(){
-		
+
+	public CapturedAttemptMsgHandler() {
+
 	}
-	
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		CaptureAttempMsg cam = (CaptureAttempMsg)this.ca;
+		CaptureAttempMsg cam = (CaptureAttempMsg) this.ca;
 		int level = cam.level;
 		int id_ = cam.id;
-		if(this.iap.Candidate){
-			if(id_==this.iap.getProcess().getId()&&!this.iap.Captured){
-				System.out.println("Candidate "+this.iap.getProcess().getName()+" recieved "+cam.level+"  "+cam.id);
+		if (this.iap.Candidate) {
+			if (id_ == this.iap.getProcess().getId() && !this.iap.Captured) {
+				System.out.println("Candidate "
+						+ this.iap.getProcess().getName() + " recieved "
+						+ cam.level + "  " + cam.id);
 				this.iap.level++;
 				this.iap.Link_killed = true;
 				List delList = new ArrayList();
@@ -71,30 +72,43 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 					return;
 				}
 			}
-		}else{
-			if(level<this.iap.level||(level==this.iap.level&&id_<this.iap.getProcess().getId())){
+		} else {
+			if (level < this.iap.level
+					|| (level == this.iap.level && id_ < this.iap.getProcess()
+							.getId())) {
 				return;
-			}
-			else if(level>this.iap.level||(level==this.iap.level&&id_>this.iap.getProcess().getId())){
-				for(Object api : this.iap.AlgorProcessItemList){
-					AfekGafniProcessItem process = (AfekGafniProcessItem)api;
-					if(process.id == id_){
+			} else if (level > this.iap.level
+					|| (level == this.iap.level && id_ > this.iap.getProcess()
+							.getId())) {
+				for (Object api : this.iap.AlgorProcessItemList) {
+					AfekGafniProcessItem process = (AfekGafniProcessItem) api;
+					if (process.id == id_) {
 						this.iap.current_father = process;
 						this.iap.getProcess().setId(id_);
 						this.iap.level = level;
-						if(this.iap.current_father==null) this.iap.current_father = this.iap.potential_father;
-						CaptureAttempMsg msg = new CaptureAttempMsg(level,id_,this.iap.getProcess().getName());
-						this.iap.SendMsg(this.iap.current_father.pi.IP, this.iap.current_father.pi.port, this.iap.current_father.pi.name, msg);
-						System.out.println("Ordinary "+this.iap.getProcess().getName()+" send kill attempt to "+process.pi.name);
+						if (this.iap.current_father == null)
+							this.iap.current_father = this.iap.potential_father;
+						CaptureAttempMsg msg = new CaptureAttempMsg(level, id_,
+								this.iap.getProcess().getName());
+						this.iap.SendMsg(this.iap.current_father.pi.IP,
+								this.iap.current_father.pi.port,
+								this.iap.current_father.pi.name, msg);
+						System.out.println("Ordinary "
+								+ this.iap.getProcess().getName()
+								+ " send kill attempt to " + process.pi.name);
 						return;
 					}
 				}
-			}
-			else{
+			} else {
 				this.iap.current_father = this.iap.potential_father;
-				CaptureAttempMsg msg = new CaptureAttempMsg(level,id_,this.iap.getProcess().getName());
-				this.iap.SendMsg(this.iap.current_father.pi.IP, this.iap.current_father.pi.port, this.iap.current_father.pi.name, msg);
-				System.out.println("Ordinary "+this.iap.getProcess().getName()+" ack new father "+this.iap.current_father.pi.name);
+				CaptureAttempMsg msg = new CaptureAttempMsg(level, id_,
+						this.iap.getProcess().getName());
+				this.iap.SendMsg(this.iap.current_father.pi.IP,
+						this.iap.current_father.pi.port,
+						this.iap.current_father.pi.name, msg);
+				System.out.println("Ordinary "
+						+ this.iap.getProcess().getName() + " ack new father "
+						+ this.iap.current_father.pi.name);
 			}
 		}
 
