@@ -31,6 +31,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+
 		CaptureAttempMsg cam = (CaptureAttempMsg) this.ca;
 		int level = cam.level;
 		int id_ = cam.id;
@@ -46,7 +47,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 					AfekGafniProcessItem link = (AfekGafniProcessItem)api;
 					if(link.id==this.iap.current_link.id){
 						delList.add(link);
-						System.out.println("Candidate "+this.iap.getProcess().getName()+" captured current link to "+link.pi.name);
+						System.out.println("Candidate "+this.iap.getProcess().getName()+" captured current link to "+link.pi.name+"  current level: "+this.iap.level+" current set number: "+(this.iap.AlgorUntraversedLinkList.size()-1));
 					}
 				}
 				this.iap.AlgorUntraversedLinkList.removeAll(delList);
@@ -64,7 +65,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 						AfekGafniProcessItem process = (AfekGafniProcessItem)api;
 						if(process.id == id_){
 							this.iap.SendMsg(process.pi.IP, process.pi.port, process.pi.name, msg);
-							System.out.println("Candidate "+this.iap.getProcess().getName()+" got killed by "+process.pi.name);
+							System.out.println("Candidate "+this.iap.getProcess().getName()+" got killed by "+process.pi.name+" of id: "+id_+" and level: "+level);
 							break;
 						}
 					}
@@ -95,7 +96,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 								this.iap.current_father.pi.name, msg);
 						System.out.println("Ordinary "
 								+ this.iap.getProcess().getName()
-								+ " send kill attempt to " + process.pi.name);
+								+ " send kill attempt or ack to " + process.pi.name);
 						return;
 					}
 				}

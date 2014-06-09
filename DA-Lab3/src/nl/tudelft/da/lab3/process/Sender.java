@@ -27,20 +27,34 @@ public class Sender implements Runnable, Serializable {
 
 	@Override
 	public void run() {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		AfekGafniProcess ap = (AfekGafniProcess)this.iap;
 		if(ap.Candidate){
-			while(ap.AlgorUntraversedLinkList.size()>1){
+			while(ap.AlgorUntraversedLinkList.size()>0&&!ap.Captured){
 				ap.current_link = (AfekGafniProcessItem)ap.AlgorUntraversedLinkList.get(0);
 				ap.Link_killed = false;
 				CaptureAttempMsg cm = new CaptureAttempMsg(ap.level,ap.getProcess().getId(),ap.getProcess().getName());
 				this.iap.getProcess().SendMsg(ap.current_link.pi.IP, ap.current_link.pi.port, ap.current_link.pi.name, cm);
-				System.out.println("Candidate "+this.iap.getProcess().getName()+" trying to capture "+ap.current_link.pi.name);
-				while(!ap.Link_killed){
-					System.out.println(ap.Link_killed);
+				System.out.println("Candidate "+this.iap.getProcess().getName()+" trying to capture "+ap.current_link.pi.name+" Captured: "+ap.Captured);
+				while(!ap.Link_killed&&!ap.Captured){
+//					System.out.println(ap.getProcess().getName());
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
-			ap.elected = true;
-			System.out.println("Process  "+ap.getProcess().getName()+"  Elected!");
+			if(!ap.Captured){
+				ap.elected = true;
+				System.out.println("Process  "+ap.getProcess().getName()+"  Elected at level : "+ap.level);
+			}
 		}
 	}
 	
