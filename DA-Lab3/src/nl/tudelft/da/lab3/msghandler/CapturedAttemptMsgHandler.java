@@ -1,5 +1,8 @@
 package nl.tudelft.da.lab3.msghandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.tudelft.da.lab3.entity.IAlgorithmProcess;
 import nl.tudelft.da.lab3.entity.IMsgHandler;
 import nl.tudelft.da.lab3.messages.AbstractMsg;
@@ -27,7 +30,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 	}
 	
 	@Override
-	public synchronized void run() {
+	public void run() {
 		// TODO Auto-generated method stub
 		CaptureAttempMsg cam = (CaptureAttempMsg)this.ca;
 		int level = cam.level;
@@ -37,15 +40,15 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 				System.out.println("Candidate "+this.iap.getProcess().getName()+" recieved "+cam.level+"  "+cam.id);
 				this.iap.level++;
 				this.iap.Link_killed = true;
-//				synchronized(this) {
+				List delList = new ArrayList();
 				for(Object api : this.iap.AlgorUntraversedLinkList){
 					AfekGafniProcessItem link = (AfekGafniProcessItem)api;
 					if(link.id==this.iap.current_link.id){
-						this.iap.AlgorUntraversedLinkList.remove(link);
+						delList.add(link);
 						System.out.println("Candidate "+this.iap.getProcess().getName()+" captured current link to "+link.pi.name);
 					}
 				}
-//				}
+				this.iap.AlgorUntraversedLinkList.removeAll(delList);
 			}
 			else{
 				if(level<this.iap.level||(level==this.iap.level&&id_<this.iap.getProcess().getId()))
