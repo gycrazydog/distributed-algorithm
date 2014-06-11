@@ -27,12 +27,12 @@ public class Sender implements Runnable, Serializable {
 
 	@Override
 	public void run() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		AfekGafniProcess ap = (AfekGafniProcess)this.iap;
 		if(ap.Candidate){
 			while(ap.AlgorUntraversedLinkList.size()>0&&!ap.Captured){

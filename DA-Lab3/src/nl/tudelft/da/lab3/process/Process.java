@@ -79,8 +79,8 @@ public class Process extends UnicastRemoteObject implements IProcessInterface
 			IProcessInterface process = (IProcessInterface) registry
 					.lookup(receiverName);
 			process.post(msg);
-			System.out.println("Msg sent sucessfully. " + msg.toString());
-			Logger.getInstance().log("Msg sent sucessfully. " + msg.toString());
+			System.out.println("Msg sent sucessfully. " + msg.toString()+" to "+receiverName);
+			Logger.getInstance().log("Msg sent sucessfully. " + msg.toString()+" to "+receiverName);
 
 		} catch (RemoteException | NotBoundException e) {
 			System.out.println("Msg Sent Failed!!! " + msg.toString());

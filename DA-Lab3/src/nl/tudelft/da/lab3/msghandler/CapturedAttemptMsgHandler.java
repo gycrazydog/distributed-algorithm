@@ -41,7 +41,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 						+ this.iap.getProcess().getName() + " recieved "
 						+ cam.level + "  " + cam.id);
 				this.iap.level++;
-				this.iap.Link_killed = true;
+				System.out.println(this.iap.level);
 				List delList = new ArrayList();
 				for(Object api : this.iap.AlgorUntraversedLinkList){
 					AfekGafniProcessItem link = (AfekGafniProcessItem)api;
@@ -51,6 +51,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 					}
 				}
 				this.iap.AlgorUntraversedLinkList.removeAll(delList);
+				this.iap.Link_killed = true;
 			}
 			else{
 				if(level<this.iap.level||(level==this.iap.level&&id_<this.iap.getProcess().getId()))
@@ -61,11 +62,13 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 				else
 				{
 					CaptureAttempMsg msg = new CaptureAttempMsg(level,id_,this.iap.getProcess().getName());
+					this.iap.getProcess().setId(id_);
+					this.iap.level = level;
 					for(Object api : this.iap.AlgorProcessItemList){
 						AfekGafniProcessItem process = (AfekGafniProcessItem)api;
 						if(process.id == id_){
 							this.iap.SendMsg(process.pi.IP, process.pi.port, process.pi.name, msg);
-							System.out.println("Candidate "+this.iap.getProcess().getName()+" got killed by "+process.pi.name+" of id: "+id_+" and level: "+level);
+							System.out.println("Candidate "+this.iap.getProcess().getName()+" got killed by "+cam.sender+" of id: "+id_+" and level: "+level);
 							break;
 						}
 					}
@@ -84,7 +87,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 				for (Object api : this.iap.AlgorProcessItemList) {
 					AfekGafniProcessItem process = (AfekGafniProcessItem) api;
 					if (process.id == id_) {
-						this.iap.current_father = process;
+						this.iap.potential_father = process;
 						this.iap.getProcess().setId(id_);
 						this.iap.level = level;
 						if (this.iap.current_father == null)
