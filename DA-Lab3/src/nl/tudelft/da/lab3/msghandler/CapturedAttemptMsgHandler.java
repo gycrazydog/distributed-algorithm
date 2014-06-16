@@ -88,6 +88,7 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 							this.iap.SendMsg(process.pi.IP, process.pi.port,
 									process.pi.name, msg);
 
+							
 							Utils.record("\n--------------------------------------------------------------\n"
 									+ "Candidate "
 									+ this.iap.getProcess().getId()
