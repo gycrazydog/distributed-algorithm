@@ -32,6 +32,11 @@ public class Commander {
 		 * 3. for each processItems, put it into the registry with it's name
 		 */
 
+
+		int totalProcessCount=0;
+		int totalCandidateCount = 0;
+		int totalOrdinaryCount=0;
+		
 		List processItemList = Utils.getInstance().getProcessesList();
 		List processList = new LinkedList();
 		List AlgorithmProcessList = new LinkedList();
@@ -56,13 +61,26 @@ public class Commander {
 				process.setIap(iap);
 				AlgorithmProcessList.add(iap);
 				
+				AfekGafniProcess tmpIap = (AfekGafniProcess) iap;
+				if(tmpIap.Candidate){
+					totalCandidateCount++;
+				}else{
+					totalOrdinaryCount++;
+				}
+				
 				Utils.regProcess(registry, pro.name, process);
+				totalProcessCount++;
 				
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		
+		Utils.record("--------------------------------------------------------------");
+
+		Utils.record("Total Process: "+ totalProcessCount+"; Candidate: " + totalCandidateCount +"; Ordinary: "+totalOrdinaryCount+".");
+		Utils.record("--------------------------------------------------------------");
 		
 		Iterator it2 = AlgorithmProcessList.iterator();
 		while(it2.hasNext()){
