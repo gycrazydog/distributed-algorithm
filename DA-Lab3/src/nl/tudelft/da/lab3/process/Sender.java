@@ -28,12 +28,6 @@ public class Sender implements Runnable, Serializable {
 
 	@Override
 	public void run() {
-//		try {
-//			Thread.sleep(3000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		AfekGafniProcess ap = (AfekGafniProcess)this.iap;
 		if(ap.Candidate){
 			while(ap.AlgorUntraversedLinkList.size()>0&&!ap.Captured){
@@ -42,12 +36,12 @@ public class Sender implements Runnable, Serializable {
 				CaptureAttempMsg cm = new CaptureAttempMsg(ap.level,ap.getProcess().getId(),ap.getProcess().getName());
 				this.iap.getProcess().SendMsg(ap.current_link.pi.IP, ap.current_link.pi.port, ap.current_link.pi.name, cm);
 				
-				Utils.record("Candidate "+this.iap.getProcess().getId()+ " "+ this.iap.getProcess().getName() +" (level: "+ap.level+") trying to capture "+ap.current_link.pi.ID);
+				Utils.record("Candidate "+this.iap.getProcess().getId()+ " "+ this.iap.getProcess().getName() +" (level: "+ap.level+") trying to capture "+ap.current_link.pi.ID + " "+ ap.current_link.pi.name);
 //				System.out.println("Candidate "+this.iap.getProcess().getId()+"(level: "+ap.level+") trying to capture "+ap.current_link.pi.ID);
 				while(!ap.Link_killed&&!ap.Captured){
 //					System.out.println(ap.getProcess().getName());
 					try {
-						Thread.sleep(500);
+						Thread.sleep(1);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

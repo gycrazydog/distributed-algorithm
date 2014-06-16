@@ -51,7 +51,8 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 								+ this.iap.getProcess().getName() + " (level: "
 								+ this.iap.level
 								+ ") received an ACK-Captured message from "
-								+ link.pi.ID + "(level:" + cam.level + ")");
+								+ link.pi.ID + " " + link.pi.name + " (level:"
+								+ cam.level + ")");
 						// System.out.println("Candidate "+this.iap.getProcess().getName()+" captured current link to "+link.pi.name+"  current level: "+this.iap.level+" current set number: "+(this.iap.AlgorUntraversedLinkList.size()-1));
 					}
 				}
@@ -69,13 +70,15 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 							+ " (level: "
 							+ this.iap.level
 							+ ") received an INVALID Capture-Attempt message from "
-							+ cam.id + "(level: " + cam.level + ") ");
+							+ cam.id + " " + cam.sender + " (level: "
+							+ cam.level + ") ");
 					return;
 				} else {
 					CaptureAttempMsg msg = new CaptureAttempMsg(level, id_,
 							this.iap.getProcess().getName());
 					Utils.record("ID changed event: original "
-							+ this.iap.getProcess().getId() + " to " + id_
+							+ this.iap.getProcess().getId() + " "
+							+ this.iap.getProcess().getName() + " to " + id_
 							+ ".");
 					this.iap.getProcess().setId(id_);
 					this.iap.level = level;
@@ -85,14 +88,22 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 							this.iap.SendMsg(process.pi.IP, process.pi.port,
 									process.pi.name, msg);
 
-							Utils.record("Candidate "
+							
+							Utils.record("\n--------------------------------------------------------------\n"
+									+ "Candidate "
 									+ this.iap.getProcess().getId()
 									+ " "
 									+ this.iap.getProcess().getName()
 									+ " (level: "
 									+ this.iap.level
 									+ ") received a VALID Capture-Attempt message from "
-									+ cam.id + "(level: " + cam.level + ") ");
+									+ cam.id
+									+ " "
+									+ cam.sender
+									+ " (level: "
+									+ cam.level
+									+ ") "
+									+ "\n--------------------------------------------------------------\n");
 							break;
 						}
 					}
@@ -104,28 +115,39 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 			if (level < this.iap.level
 					|| (level == this.iap.level && id_ < this.iap.getProcess()
 							.getId())) {
-				Utils.record("Ordinary " + this.iap.getProcess().getId() + " " + this.iap.getProcess().getName()
-						+ " (level: " + this.iap.level
+				Utils.record("Ordinary " + this.iap.getProcess().getId() + " "
+						+ this.iap.getProcess().getName() + " (level: "
+						+ this.iap.level
 						+ ") received an INVALID Capture-Attempt message from "
-						+ cam.id + "(level: " + cam.level + ") ");
+						+ cam.id + " " + cam.sender + " (level: " + cam.level
+						+ ") ");
 				return;
 			} else if (level > this.iap.level
 					|| (level == this.iap.level && id_ > this.iap.getProcess()
 							.getId())) {
 
-				Utils.record("Ordinary " + this.iap.getProcess().getId()
-						+ " " + this.iap.getProcess().getName()
-						+ " (level: " + this.iap.level
+				Utils.record("\n--------------------------------------------------------------\n"
+						+ "Ordinary "
+						+ this.iap.getProcess().getId()
+						+ " "
+						+ this.iap.getProcess().getName()
+						+ " (level: "
+						+ this.iap.level
 						+ ") received a VALID Capture-Attempt message from "
-						+ cam.id + "(level: " + cam.level + ") ");
+						+ cam.id
+						+ "(level: "
+						+ cam.level
+						+ ") "
+						+ "\n--------------------------------------------------------------\n");
 
 				for (Object api : this.iap.AlgorProcessItemList) {
 					AfekGafniProcessItem process = (AfekGafniProcessItem) api;
 					if (process.id == id_) {
 						this.iap.potential_father = process;
 						Utils.record("ID change event: original "
-								+ this.iap.getProcess().getId() + " " + this.iap.getProcess().getName() + " to " + id_
-								+ ".");
+								+ this.iap.getProcess().getId() + " "
+								+ this.iap.getProcess().getName() + " to "
+								+ id_ + ".");
 						this.iap.getProcess().setId(id_);
 
 						this.iap.level = level;
@@ -133,11 +155,12 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 							this.iap.current_father = this.iap.potential_father;
 
 							Utils.record("Ordinary "
-									+ this.iap.getProcess().getId()
-									+ " " + this.iap.getProcess().getName()
+									+ this.iap.getProcess().getId() + " "
+									+ this.iap.getProcess().getName()
 									+ " (level: " + this.iap.level
 									+ ") send an ACK-Captured message to "
-									+ process.id + "(level: " + level + ") ");
+									+ process.id + " " + process.pi.name
+									+ " (level: " + level + ") ");
 
 						} else {
 							Utils.record("Ordinary "
@@ -145,7 +168,8 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 									+ this.iap.getProcess().getName()
 									+ " (level: " + this.iap.level
 									+ ") send a Kill-Attempt message to "
-									+ this.iap.current_father.id);
+									+ this.iap.current_father.id + " "
+									+ this.iap.current_father.pi.name);
 						}
 
 						CaptureAttempMsg msg = new CaptureAttempMsg(level, id_,
@@ -159,11 +183,12 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 				}
 			} else {
 
-				Utils.record("Ordinary " + this.iap.getProcess().getId()
-						+ " " +this.iap.getProcess().getName()
-						+ " (level: " + this.iap.level
+				Utils.record("Ordinary " + this.iap.getProcess().getId() + " "
+						+ this.iap.getProcess().getName() + " (level: "
+						+ this.iap.level
 						+ ") receives an ACK-Killed message from "
-						+ this.iap.current_father.id);
+						+ this.iap.current_father.id + " "
+						+ this.iap.current_father.pi.name);
 
 				this.iap.current_father = this.iap.potential_father;
 				CaptureAttempMsg msg = new CaptureAttempMsg(level, id_,
@@ -172,11 +197,12 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 						this.iap.current_father.pi.port,
 						this.iap.current_father.pi.name, msg);
 
-				Utils.record("Ordinary " + this.iap.getProcess().getId()
-						+ " " + this.iap.getProcess().getName()
-						+ " (level: " + this.iap.level
+				Utils.record("Ordinary " + this.iap.getProcess().getId() + " "
+						+ this.iap.getProcess().getName() + " (level: "
+						+ this.iap.level
 						+ ") sends an ACK-Captured message to "
-						+ this.iap.current_father.id);
+						+ this.iap.current_father.id + " "
+						+ this.iap.current_father.pi.name);
 
 			}
 		}
