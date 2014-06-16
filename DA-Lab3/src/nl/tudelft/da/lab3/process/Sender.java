@@ -5,6 +5,7 @@ package nl.tudelft.da.lab3.process;
 
 import java.io.Serializable;
 
+import nl.tudelft.da.lab3.common.Utils;
 import nl.tudelft.da.lab3.entity.IAlgorithmProcess;
 import nl.tudelft.da.lab3.messages.CaptureAttempMsg;
 import nl.tudelft.da.lab3.messages.TestMessage;
@@ -40,11 +41,13 @@ public class Sender implements Runnable, Serializable {
 				ap.Link_killed = false;
 				CaptureAttempMsg cm = new CaptureAttempMsg(ap.level,ap.getProcess().getId(),ap.getProcess().getName());
 				this.iap.getProcess().SendMsg(ap.current_link.pi.IP, ap.current_link.pi.port, ap.current_link.pi.name, cm);
-				System.out.println("Candidate "+this.iap.getProcess().getName()+" trying to capture "+ap.current_link.pi.name+" Captured: "+ap.Captured);
+				
+				Utils.record("Candidate "+this.iap.getProcess().getId()+ " "+ this.iap.getProcess().getName() +" (level: "+ap.level+") trying to capture "+ap.current_link.pi.ID);
+//				System.out.println("Candidate "+this.iap.getProcess().getId()+"(level: "+ap.level+") trying to capture "+ap.current_link.pi.ID);
 				while(!ap.Link_killed&&!ap.Captured){
 //					System.out.println(ap.getProcess().getName());
 					try {
-						Thread.sleep(1);
+						Thread.sleep(500);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -53,7 +56,7 @@ public class Sender implements Runnable, Serializable {
 			}
 			if(!ap.Captured){
 				ap.elected = true;
-				System.out.println("Process  "+ap.getProcess().getName()+"  Elected at level : "+ap.level);
+				Utils.record("Process "+ap.getProcess().getId()  + " " +ap.getProcess().getName()+"  Elected at level : "+ap.level);
 			}
 		}
 	}

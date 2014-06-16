@@ -140,4 +140,9 @@ public class Utils {
 			regProcessWithNewRegistry(name, port, process);
 		}
 	}
+	
+	public static void record(String line){
+		System.out.println(line);
+		Logger.getInstance().log(line);
+	}
 }
