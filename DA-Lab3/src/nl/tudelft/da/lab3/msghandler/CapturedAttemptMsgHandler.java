@@ -32,7 +32,8 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-
+		int myOriginalID = Utils.getInstance().queryID(
+				iap.AlgorProcessItemList, this.iap.getProcess().getName());
 		CaptureAttempMsg cam = (CaptureAttempMsg) this.ca;
 		int level = cam.level;
 		int id_ = cam.id;
@@ -49,8 +50,9 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 						Utils.record("Candidate "
 								+ this.iap.getProcess().getId() + " "
 								+ this.iap.getProcess().getName() + " (level: "
-								+ this.iap.level
-								+ ") received an ACK-Captured message from "
+								+ this.iap.level + " original ID: "
+								+ myOriginalID
+								+ " ) received an ACK-Captured message from "
 								+ link.pi.ID + " " + link.pi.name + " (level:"
 								+ cam.level + ")");
 						// System.out.println("Candidate "+this.iap.getProcess().getName()+" captured current link to "+link.pi.name+"  current level: "+this.iap.level+" current set number: "+(this.iap.AlgorUntraversedLinkList.size()-1));
@@ -69,7 +71,9 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 							+ this.iap.getProcess().getName()
 							+ " (level: "
 							+ this.iap.level
-							+ ") received an INVALID Capture-Attempt message from "
+							+ " original ID: "
+							+ myOriginalID
+							+ " ) received an INVALID Capture-Attempt message from "
 							+ cam.id + " " + cam.sender + " (level: "
 							+ cam.level + ") ");
 					return;
@@ -88,22 +92,37 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 							this.iap.SendMsg(process.pi.IP, process.pi.port,
 									process.pi.name, msg);
 
-							
-							Utils.record("\n--------------------------------------------------------------\n"
+							String killOrCapture = Utils.getInstance()
+									.isCandidate(iap.AlgorProcessItemList,
+											cam.sender) ? "Capture-Attempt"
+									: "Kill";
+							// int myOriginalID =
+							// Utils.getInstance().queryID(iap.AlgorProcessItemList,this.iap.getProcess().getName());
+
+							String line = "\n----------------------------------------------------------------------------------------------------------------------------\n"
 									+ "Candidate "
 									+ this.iap.getProcess().getId()
 									+ " "
 									+ this.iap.getProcess().getName()
 									+ " (level: "
 									+ this.iap.level
-									+ ") received a VALID Capture-Attempt message from "
+									+ " original ID: "
+									+ myOriginalID
+									+ ") received a VALID "
+									+ killOrCapture
+									+ " message from "
 									+ cam.id
 									+ " "
 									+ cam.sender
 									+ " (level: "
 									+ cam.level
 									+ ") "
-									+ "\n--------------------------------------------------------------\n");
+									+ "\n----------------------------------------------------------------------------------------------------------------------------\n";
+
+							String w4rFileName = "Candidate_" + myOriginalID
+									+ "_" + this.iap.getProcess().getName();
+							Utils.getInstance().write4report(w4rFileName, line);
+							Utils.record(line);
 							break;
 						}
 					}
@@ -115,10 +134,15 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 			if (level < this.iap.level
 					|| (level == this.iap.level && id_ < this.iap.getProcess()
 							.getId())) {
-				Utils.record("Ordinary " + this.iap.getProcess().getId() + " "
-						+ this.iap.getProcess().getName() + " (level: "
+				Utils.record("Ordinary "
+						+ this.iap.getProcess().getId()
+						+ " "
+						+ this.iap.getProcess().getName()
+						+ " (level: "
 						+ this.iap.level
-						+ ") received an INVALID Capture-Attempt message from "
+						+ " original ID: "
+						+ myOriginalID
+						+ " ) received an INVALID Capture-Attempt message from "
 						+ cam.id + " " + cam.sender + " (level: " + cam.level
 						+ ") ");
 				return;
@@ -126,19 +150,23 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 					|| (level == this.iap.level && id_ > this.iap.getProcess()
 							.getId())) {
 
-				Utils.record("\n--------------------------------------------------------------\n"
+				Utils.record("\n----------------------------------------------------------------------------------------------------------------------------\n"
 						+ "Ordinary "
 						+ this.iap.getProcess().getId()
 						+ " "
 						+ this.iap.getProcess().getName()
 						+ " (level: "
 						+ this.iap.level
-						+ ") received a VALID Capture-Attempt message from "
+						+ " original ID: "
+						+ myOriginalID
+						+ " ) received a VALID Capture-Attempt message from "
 						+ cam.id
-						+ "(level: "
+						+ " "
+						+ cam.sender
+						+ " (level: "
 						+ cam.level
 						+ ") "
-						+ "\n--------------------------------------------------------------\n");
+						+ "\n----------------------------------------------------------------------------------------------------------------------------\n");
 
 				for (Object api : this.iap.AlgorProcessItemList) {
 					AfekGafniProcessItem process = (AfekGafniProcessItem) api;
@@ -158,7 +186,8 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 									+ this.iap.getProcess().getId() + " "
 									+ this.iap.getProcess().getName()
 									+ " (level: " + this.iap.level
-									+ ") send an ACK-Captured message to "
+									+ " original ID: " + myOriginalID
+									+ " ) send an ACK-Captured message to "
 									+ process.id + " " + process.pi.name
 									+ " (level: " + level + ") ");
 
@@ -167,7 +196,8 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 									+ this.iap.getProcess().getId() + " "
 									+ this.iap.getProcess().getName()
 									+ " (level: " + this.iap.level
-									+ ") send a Kill-Attempt message to "
+									+ " original ID: " + myOriginalID
+									+ " ) send a Kill-Attempt message to "
 									+ this.iap.current_father.id + " "
 									+ this.iap.current_father.pi.name);
 						}
@@ -185,8 +215,8 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 
 				Utils.record("Ordinary " + this.iap.getProcess().getId() + " "
 						+ this.iap.getProcess().getName() + " (level: "
-						+ this.iap.level
-						+ ") receives an ACK-Killed message from "
+						+ this.iap.level + " original ID: " + myOriginalID
+						+ " ) receives an ACK-Killed message from "
 						+ this.iap.current_father.id + " "
 						+ this.iap.current_father.pi.name);
 
@@ -199,8 +229,8 @@ public class CapturedAttemptMsgHandler implements IMsgHandler {
 
 				Utils.record("Ordinary " + this.iap.getProcess().getId() + " "
 						+ this.iap.getProcess().getName() + " (level: "
-						+ this.iap.level
-						+ ") sends an ACK-Captured message to "
+						+ this.iap.level + " original ID: " + myOriginalID
+						+ " ) sends an ACK-Captured message to "
 						+ this.iap.current_father.id + " "
 						+ this.iap.current_father.pi.name);
 

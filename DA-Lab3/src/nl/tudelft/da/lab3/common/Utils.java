@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Properties;
 
 import nl.tudelft.da.lab3.entity.*;
+import nl.tudelft.da.lab3.process.AfekGafniProcessItem;
 
 /**
  * @author vincentgong
@@ -29,6 +30,7 @@ public class Utils {
 	 * @param args
 	 */
 	public final String processFilePath = "Resource/processes.properties";
+	public final String REPORT_PATH = "Resource/Candidates/";
 	public final String logFilePath = "Resource/Logs.log";
 
 	public static void main(String[] args) {
@@ -144,5 +146,42 @@ public class Utils {
 	public static void record(String line){
 		System.out.println(line);
 		Logger.getInstance().log(line);
+	}
+
+	
+	public boolean isCandidate(List algorProcessItemList, String sender) {
+		// TODO Auto-generated method stub
+		Iterator it = algorProcessItemList.iterator();
+		while (it.hasNext()) {
+			AfekGafniProcessItem api = (AfekGafniProcessItem) it.next();
+			if (api.pi.name.equals(sender)) {
+				if(api.Candidate){
+					return true;
+				}
+				return false;
+			}
+		}
+		return false;
+	}
+
+	public void write4report(String w4rFileName, String line) {
+		try {
+			MyLineWriter.getInstance().writeLine(Utils.getInstance().REPORT_PATH + w4rFileName, line, true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public int queryID(List algorProcessItemList, String name) {
+		// TODO Auto-generated method stub
+		Iterator it = algorProcessItemList.iterator();
+		while (it.hasNext()) {
+			AfekGafniProcessItem api = (AfekGafniProcessItem) it.next();
+			if (api.pi.name.equals(name)){
+				return api.pi.ID;
+			}
+		}
+		return -1;
 	}
 }
