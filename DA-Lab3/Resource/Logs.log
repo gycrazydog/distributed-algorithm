@@ -1,0 +1,172 @@
+--------------------------------------------------------------
+Total Process: 18; Candidate: 3; Ordinary: 15.
+--------------------------------------------------------------
+Candidate 12 XTY (level: 0) trying to capture 0 GX
+Candidate 0 GX (level: 0) trying to capture 1 GCR
+ID changed event: original 0 GX to 12.
+Candidate 6 HR (level: 0) trying to capture 0 GX
+Candidate 12 GX (level: 0) received an INVALID Capture-Attempt message from 6 HR (level: 0) 
+
+--------------------------------------------------------------
+Ordinary 1 GCR (level: -1) received a VALID Capture-Attempt message from 0(level: 0) 
+--------------------------------------------------------------
+
+ID change event: original 1 GCR to 0.
+Ordinary 0 GCR (level: 0) send an ACK-Captured message to 0 GX (level: 0) 
+
+--------------------------------------------------------------
+Candidate 12 GX (level: 0) received a VALID Capture-Attempt message from 12 XTY (level: 0) 
+--------------------------------------------------------------
+
+Candidate 12 XTY (level: 1) received an ACK-Captured message from 0 GX (level:0)
+Candidate 12 GX (level: 0) received an INVALID Capture-Attempt message from 0 GCR (level: 0) 
+Candidate 12 XTY (level: 1) trying to capture 1 GCR
+
+--------------------------------------------------------------
+Ordinary 0 GCR (level: 0) received a VALID Capture-Attempt message from 12(level: 1) 
+--------------------------------------------------------------
+
+ID change event: original 0 GCR to 12.
+Ordinary 12 GCR (level: 1) send a Kill-Attempt message to 0 GX
+ID changed event: original 12 GX to 12.
+
+--------------------------------------------------------------
+Candidate 12 GX (level: 1) received a VALID Capture-Attempt message from 12 GCR (level: 1) 
+--------------------------------------------------------------
+
+Candidate 12 XTY (level: 2) received an ACK-Captured message from 1 GCR (level:1)
+
+--------------------------------------------------------------
+Ordinary 2 HKX (level: -1) received a VALID Capture-Attempt message from 12(level: 2) 
+--------------------------------------------------------------
+
+Candidate 12 XTY (level: 2) trying to capture 2 HKX
+ID change event: original 2 HKX to 12.
+Ordinary 12 HKX (level: 2) send an ACK-Captured message to 12 XTY (level: 2) 
+Candidate 12 XTY (level: 3) received an ACK-Captured message from 2 HKX (level:2)
+Candidate 12 XTY (level: 3) trying to capture 3 WF
+
+--------------------------------------------------------------
+Ordinary 3 WF (level: -1) received a VALID Capture-Attempt message from 12(level: 3) 
+--------------------------------------------------------------
+
+ID change event: original 3 WF to 12.
+Ordinary 12 WF (level: 3) send an ACK-Captured message to 12 XTY (level: 3) 
+Candidate 12 XTY (level: 4) received an ACK-Captured message from 3 WF (level:3)
+Candidate 12 XTY (level: 4) trying to capture 4 LXP
+
+--------------------------------------------------------------
+Ordinary 4 LXP (level: -1) received a VALID Capture-Attempt message from 12(level: 4) 
+--------------------------------------------------------------
+
+ID change event: original 4 LXP to 12.
+Ordinary 12 LXP (level: 4) send an ACK-Captured message to 12 XTY (level: 4) 
+Candidate 12 XTY (level: 5) received an ACK-Captured message from 4 LXP (level:4)
+Candidate 12 XTY (level: 5) trying to capture 5 TZ
+
+--------------------------------------------------------------
+Ordinary 5 TZ (level: -1) received a VALID Capture-Attempt message from 12(level: 5) 
+--------------------------------------------------------------
+
+ID change event: original 5 TZ to 12.
+Ordinary 12 TZ (level: 5) send an ACK-Captured message to 12 XTY (level: 5) 
+Candidate 12 XTY (level: 6) received an ACK-Captured message from 5 TZ (level:5)
+ID changed event: original 6 HR to 12.
+Candidate 12 XTY (level: 6) trying to capture 6 HR
+Candidate 12 XTY (level: 7) received an ACK-Captured message from 6 HR (level:6)
+
+--------------------------------------------------------------
+Candidate 12 HR (level: 6) received a VALID Capture-Attempt message from 12 XTY (level: 6) 
+--------------------------------------------------------------
+
+Candidate 12 XTY (level: 7) trying to capture 7 GXY
+
+--------------------------------------------------------------
+Ordinary 7 GXY (level: -1) received a VALID Capture-Attempt message from 12(level: 7) 
+--------------------------------------------------------------
+
+ID change event: original 7 GXY to 12.
+Ordinary 12 GXY (level: 7) send an ACK-Captured message to 12 XTY (level: 7) 
+Candidate 12 XTY (level: 8) received an ACK-Captured message from 7 GXY (level:7)
+Candidate 12 XTY (level: 8) trying to capture 8 HH
+
+--------------------------------------------------------------
+Ordinary 8 HH (level: -1) received a VALID Capture-Attempt message from 12(level: 8) 
+--------------------------------------------------------------
+
+ID change event: original 8 HH to 12.
+Ordinary 12 HH (level: 8) send an ACK-Captured message to 12 XTY (level: 8) 
+Candidate 12 XTY (level: 9) received an ACK-Captured message from 8 HH (level:8)
+Candidate 12 XTY (level: 9) trying to capture 9 LY
+
+--------------------------------------------------------------
+Ordinary 9 LY (level: -1) received a VALID Capture-Attempt message from 12(level: 9) 
+--------------------------------------------------------------
+
+ID change event: original 9 LY to 12.
+Ordinary 12 LY (level: 9) send an ACK-Captured message to 12 XTY (level: 9) 
+Candidate 12 XTY (level: 10) received an ACK-Captured message from 9 LY (level:9)
+Candidate 12 XTY (level: 10) trying to capture 10 WY
+
+--------------------------------------------------------------
+Ordinary 10 WY (level: -1) received a VALID Capture-Attempt message from 12(level: 10) 
+--------------------------------------------------------------
+
+ID change event: original 10 WY to 12.
+Ordinary 12 WY (level: 10) send an ACK-Captured message to 12 XTY (level: 10) 
+Candidate 12 XTY (level: 11) received an ACK-Captured message from 10 WY (level:10)
+Candidate 12 XTY (level: 11) trying to capture 11 YZ
+
+--------------------------------------------------------------
+Ordinary 11 YZ (level: -1) received a VALID Capture-Attempt message from 12(level: 11) 
+--------------------------------------------------------------
+
+ID change event: original 11 YZ to 12.
+Ordinary 12 YZ (level: 11) send an ACK-Captured message to 12 XTY (level: 11) 
+Candidate 12 XTY (level: 12) received an ACK-Captured message from 11 YZ (level:11)
+Candidate 12 XTY (level: 12) trying to capture 13 ZN
+
+--------------------------------------------------------------
+Ordinary 13 ZN (level: -1) received a VALID Capture-Attempt message from 12(level: 12) 
+--------------------------------------------------------------
+
+ID change event: original 13 ZN to 12.
+Ordinary 12 ZN (level: 12) send an ACK-Captured message to 12 XTY (level: 12) 
+Candidate 12 XTY (level: 13) received an ACK-Captured message from 13 ZN (level:12)
+
+--------------------------------------------------------------
+Ordinary 14 XYT (level: -1) received a VALID Capture-Attempt message from 12(level: 13) 
+--------------------------------------------------------------
+
+Candidate 12 XTY (level: 13) trying to capture 14 XYT
+ID change event: original 14 XYT to 12.
+Ordinary 12 XYT (level: 13) send an ACK-Captured message to 12 XTY (level: 13) 
+Candidate 12 XTY (level: 14) received an ACK-Captured message from 14 XYT (level:13)
+
+--------------------------------------------------------------
+Ordinary 15 YG (level: -1) received a VALID Capture-Attempt message from 12(level: 14) 
+--------------------------------------------------------------
+
+Candidate 12 XTY (level: 14) trying to capture 15 YG
+ID change event: original 15 YG to 12.
+Ordinary 12 YG (level: 14) send an ACK-Captured message to 12 XTY (level: 14) 
+Candidate 12 XTY (level: 15) received an ACK-Captured message from 15 YG (level:14)
+Candidate 12 XTY (level: 15) trying to capture 16 XLN
+
+--------------------------------------------------------------
+Ordinary 16 XLN (level: -1) received a VALID Capture-Attempt message from 12(level: 15) 
+--------------------------------------------------------------
+
+ID change event: original 16 XLN to 12.
+Ordinary 12 XLN (level: 15) send an ACK-Captured message to 12 XTY (level: 15) 
+Candidate 12 XTY (level: 16) received an ACK-Captured message from 16 XLN (level:15)
+Candidate 12 XTY (level: 16) trying to capture 17 LJ
+
+--------------------------------------------------------------
+Ordinary 17 LJ (level: -1) received a VALID Capture-Attempt message from 12(level: 16) 
+--------------------------------------------------------------
+
+ID change event: original 17 LJ to 12.
+Ordinary 12 LJ (level: 16) send an ACK-Captured message to 12 XTY (level: 16) 
+Candidate 12 XTY (level: 17) received an ACK-Captured message from 17 LJ (level:16)
+Process 12 XTY  Elected at level : 17
